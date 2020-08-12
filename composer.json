@@ -1,6 +1,6 @@
 {
-    "name": "greenter/soap-mock",
-    "description": "SUNAT Soap WebServices MOCK",
+    "name": "greenter/beatose",
+    "description": "OSE SUNAT SOAP Server",
     "type": "project",
     "license": "MIT",
     "require": {
