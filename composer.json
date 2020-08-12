@@ -1,8 +1,10 @@
 {
+    "name": "greenter/soap-mock",
+    "description": "SUNAT Soap WebServices MOCK",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-soap": "*",
