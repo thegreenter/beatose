@@ -29,6 +29,10 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Services\BillServiceInterface: '@App\Services\BillService'
+    App\Services\AuthenticationFilter:
+        arguments:
+            - '@App\Services\BillService'
+
+    App\Services\BillServiceInterface: '@App\Services\AuthenticationFilter'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
