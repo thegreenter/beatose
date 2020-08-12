@@ -32,16 +32,16 @@ class BillServiceController extends AbstractController
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml; charset=utf-8');
-        $url = $this->generateUrl('bill_service', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $endpoint = $this->generateUrl('bill_service', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $wsdlPath = __DIR__.'/../../public/billService.wsdl';
 
         if ($request->query->has('wsdl')) {
             $wsdl = file_get_contents($wsdlPath);
 
-            return $response->setContent(str_replace('%URL_SERVICE%', $url, $wsdl));
+            return $response->setContent(str_replace('%URL_SERVICE%', $endpoint, $wsdl));
         }
 
-        $options = ['uri' => $url];
+        $options = ['uri' => $endpoint];
         $soapServer = new SoapServer($wsdlPath, $options);
         $soapServer->setObject($this->billService);
 
