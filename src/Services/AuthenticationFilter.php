@@ -43,7 +43,7 @@ class AuthenticationFilter implements BillServiceInterface
      *
      * @param object $header
      */
-    public function Security(object $header): void
+    public function security(object $header): void
     {
         $credential = $this->credentialStore->get();
 
