@@ -1,4 +1,4 @@
-# BeatOSE
+# ![beatOSE](https://raw.githubusercontent.com/thegreenter/beatose/master/public/beat-ose.png) beatOSE
 [![Heroku](https://heroku-badge.herokuapp.com/?app=beatose)](https://beatose.herokuapp.com/)
 
 Una implementación de SUNAT Soap Server para recepcionar comprobantes electrónicos.
