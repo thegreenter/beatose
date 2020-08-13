@@ -35,6 +35,10 @@ services:
     App\Services\AuthenticationFilter:
         decorates: App\Services\BillService
 
+    App\Handler\WsdlHandler:
+        decorates: App\Handler\SoapServerHandler
+
+    App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
     App\Services\BillServiceInterface: '@App\Services\AuthenticationFilter'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
