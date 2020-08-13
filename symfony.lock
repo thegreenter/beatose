@@ -2,6 +2,9 @@
     "greenter/ubl-validator": {
         "version": "v2.1.0"
     },
+    "greenter/xmldsig": {
+        "version": "v5.0.3"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },
