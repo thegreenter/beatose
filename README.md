@@ -1,4 +1,5 @@
 # BeatOSE
+[![Heroku](https://heroku-badge.herokuapp.com/?app=beatose)]
 
 Una implementación de SUNAT Soap Server para recepcionar comprobantes electrónicos.
 
@@ -6,8 +7,13 @@ Propósito
 - **Mock Server**, para realizar pruebas con diferentes respuestas que 
 actualmente el servidor BETA de SUNAT no ofrece.
 
+**Live**
+
+https://beatose.herokuapp.com/ol-ti-itcpe/billService?wsdl
+
+## Build
 Ejecutar
-```
+```bash
 php -S 127.0.0.1:8000 -t public
 ```
 
