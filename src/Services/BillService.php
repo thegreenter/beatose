@@ -9,8 +9,11 @@ use App\Entity\SendBillResponse;
 use App\Entity\SendPackResponse;
 use App\Entity\SendSummaryResponse;
 use App\Entity\StatusResponse;
+use Greenter\Ubl\UblValidator;
+use PhpZip\ZipFile;
 use Psr\Log\LoggerInterface;
 use SoapFault;
+use Twig\Environment;
 
 class BillService implements BillServiceInterface
 {
@@ -20,20 +23,50 @@ class BillService implements BillServiceInterface
     private $logger;
 
     /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
      * BillService constructor.
      * @param LoggerInterface $logger
+     * @param Environment $twig
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, Environment $twig)
     {
         $this->logger = $logger;
+        $this->twig = $twig;
     }
 
     public function sendBill(object $request): SendBillResponse
     {
-        file_put_contents($request->fileName, $request->contentFile);
+        $zipFile = new ZipFile();
+        $zipFile->openFromString($request->contentFile);
+
+        $xmlPath = str_replace('.ZIP', '', strtoupper($request->fileName)).'.xml';
+        $xml = $zipFile->getEntryContents($xmlPath);
+
+        $zipFile->close();
+
+        $validator = new UblValidator();
+
+        if (!$validator->isValid($xml)) {
+            throw new SoapFault(
+                '0306',
+                'No se puede leer (parsear) el archivo XML',
+                null, $validator->getError(),
+            );
+        }
+
+        $xmlResponse = $this->twig->render('ApplicationResponse.xml.twig');
+
+        $zipFile = new ZipFile();
+        $zipFile->addFromString('R-'.$xmlPath, $xmlResponse);
+        $zip = $zipFile->outputAsString();
+        $zipFile->close();
 
         $obj = new SendBillResponse();
-        $obj->applicationResponse = 'xxxx';
+        $obj->applicationResponse = $zip;
 
         return $obj;
     }
