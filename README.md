@@ -11,7 +11,7 @@ Ejecutar
 php -S 127.0.0.1:8000 -t public
 ```
 
-La especificación del servicio la encontrarás en http://127.0.0.1:8000/billService?wsdl
+La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
 **Credencials**
 
