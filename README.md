@@ -12,3 +12,9 @@ php -S 127.0.0.1:8000 -t public
 ```
 
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/billService?wsdl
+
+**Credencials**
+
+Puedes cambiar las credenciales en el archivo `.env`, por defecto son:
+- Usuario: `20123456789MODDATOS`
+- Contraseña: `moddatos`
