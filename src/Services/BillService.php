@@ -30,14 +30,21 @@ class BillService implements BillServiceInterface
     private $twig;
 
     /**
+     * @var Signer
+     */
+    private $signer;
+
+    /**
      * BillService constructor.
      * @param LoggerInterface $logger
      * @param Environment $twig
+     * @param Signer $signer
      */
-    public function __construct(LoggerInterface $logger, Environment $twig)
+    public function __construct(LoggerInterface $logger, Environment $twig, Signer $signer)
     {
         $this->logger = $logger;
         $this->twig = $twig;
+        $this->signer = $signer;
     }
 
     public function sendBill(object $request): SendBillResponse
@@ -66,14 +73,14 @@ class BillService implements BillServiceInterface
         }
 
         $cdr = (new ApplicationResponse())
-            ->setId('20'.uniqid())
+            ->setId((string)(int)(microtime(true) * 1000))
             ->setFechaRecepcion($dateReceived)
             ->setFechaGeneracion(new DateTime())
             ->setRucEmisorCdr('20000000001')
             ->setRucEmisorCpe(substr($docName, 0, 11))
             ->setTipoDocReceptorCpe('6')
             ->setNroDocReceptorCpe('20000000002')
-            ->setCpeId(substr($docName, 12, strlen($docName) - 12))
+            ->setCpeId(substr($docName, 15, strlen($docName) - 15))
             ->setCodigoRespuesta('0')
             ->setCodigoRespuesta('El comprobante ha sido aceptado')
             ->setNotasAsociadas([])
@@ -81,7 +88,7 @@ class BillService implements BillServiceInterface
         $xmlResponse = $this->twig->render('ApplicationResponse.xml.twig', ['doc' => $cdr]);
 
         $zipFile = new ZipFile();
-        $zipFile->addFromString('R-'.$xmlPath, $xmlResponse);
+        $zipFile->addFromString('R-'.$xmlPath, $this->signer->sign($xmlResponse));
         $zip = $zipFile->outputAsString();
         $zipFile->close();
 
@@ -96,7 +103,7 @@ class BillService implements BillServiceInterface
         file_put_contents($request->fileName, $request->contentFile);
 
         $obj = new SendSummaryResponse();
-        $obj->ticket = '1597268056006';
+        $obj->ticket = (string)(int)(microtime(true) * 1000);
 
         return $obj;
     }
