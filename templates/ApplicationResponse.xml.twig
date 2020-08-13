@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ar:ApplicationResponse xmlns:ar="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+<ar:ApplicationResponse xmlns:ar="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
     <ext:UBLExtensions>
         <ext:UBLExtension>
             <ext:ExtensionContent/>
@@ -7,16 +7,21 @@
     </ext:UBLExtensions>
     <cbc:UBLVersionID>2.0</cbc:UBLVersionID>
     <cbc:CustomizationID>1.0</cbc:CustomizationID>
-    <cbc:ID>201802013996275</cbc:ID>
-    <cbc:IssueDate>2018-04-11</cbc:IssueDate>
-    <cbc:IssueTime>00:00:00</cbc:IssueTime>
-    <cbc:ResponseDate>2018-04-11</cbc:ResponseDate>
-    <cbc:ResponseTime>18:07:36</cbc:ResponseTime>
+    <cbc:ID>{{ doc.id }}</cbc:ID>
+    <cbc:IssueDate>{{ doc.fechaRecepcion|date('Y-m-d') }}</cbc:IssueDate>
+    <cbc:IssueTime>{{ doc.fechaRecepcion|date('H:i:s') }}</cbc:IssueTime>
+    <cbc:ResponseDate>{{ doc.fechaGeneracion|date('Y-m-d') }}</cbc:ResponseDate>
+    <cbc:ResponseTime>{{ doc.fechaGeneracion|date('H:i:s') }}</cbc:ResponseTime>
+    {% if doc.notasAsociadas is not null -%}
+        {% for note in doc.notasAsociadas -%}
+            <cbc:Note>{{ note }}</cbc:Note>
+        {% endfor -%}
+    {% endif -%}
     <cac:Signature>
         <cbc:ID>SignBeatOSE</cbc:ID>
         <cac:SignatoryParty>
             <cac:PartyIdentification>
-                <cbc:ID>20000000001</cbc:ID>
+                <cbc:ID>{{ doc.rucEmisorCdr }}</cbc:ID>
             </cac:PartyIdentification>
             <cac:PartyName>
                 <cbc:Name>beatOSE</cbc:Name>
@@ -30,26 +35,26 @@
     </cac:Signature>
     <cac:SenderParty>
         <cac:PartyIdentification>
-            <cbc:ID>20000000001</cbc:ID>
+            <cbc:ID>{{ doc.rucEmisorCdr }}</cbc:ID>
         </cac:PartyIdentification>
     </cac:SenderParty>
     <cac:ReceiverParty>
         <cac:PartyIdentification>
-            <cbc:ID>20600055519</cbc:ID>
+            <cbc:ID>{{ doc.rucEmisorCpe }}</cbc:ID>
         </cac:PartyIdentification>
     </cac:ReceiverParty>
     <cac:DocumentResponse>
         <cac:Response>
-            <cbc:ReferenceID>F001-00000100</cbc:ReferenceID>
-            <cbc:ResponseCode>0</cbc:ResponseCode>
-            <cbc:Description>La Factura numero F001-00000100, ha sido aceptada</cbc:Description>
+            <cbc:ReferenceID>{{ doc.cpeId }}</cbc:ReferenceID>
+            <cbc:ResponseCode>{{ doc.codigoRespuesta }}</cbc:ResponseCode>
+            <cbc:Description>{{ doc.descripcionRespuesta }}</cbc:Description>
         </cac:Response>
         <cac:DocumentReference>
-            <cbc:ID>F001-00000100</cbc:ID>
+            <cbc:ID>{{ doc.cpeId }}</cbc:ID>
         </cac:DocumentReference>
         <cac:RecipientParty>
             <cac:PartyIdentification>
-                <cbc:ID>6-20490084577</cbc:ID>
+                <cbc:ID>{{ doc.tipoDocReceptorCpe }}-{{ doc.nroDocReceptorCpe }}</cbc:ID>
             </cac:PartyIdentification>
         </cac:RecipientParty>
     </cac:DocumentResponse>
