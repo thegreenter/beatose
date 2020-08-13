@@ -1,3 +1,7 @@
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
 bill_service:
   path: /ol-ti-itcpe/billService
   controller: App\Controller\BillServiceController::index
