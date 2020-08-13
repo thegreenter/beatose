@@ -1,6 +1,12 @@
 {
+    "greenter/ubl-validator": {
+        "version": "v2.1.0"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
+    },
+    "nelexa/zip": {
+        "version": "3.3.3"
     },
     "php": {
         "version": "7.3"
@@ -13,6 +19,9 @@
     },
     "psr/event-dispatcher": {
         "version": "1.0.0"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/log": {
         "version": "1.1.3"
