@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entity\GetStatusCdrResponse;
 use App\Entity\GetStatusResponse;
 use App\Entity\SendBillResponse;
 use App\Entity\SendPackResponse;
@@ -18,4 +19,6 @@ interface BillServiceInterface
     public function getStatus(object $request): GetStatusResponse;
 
     public function sendPack(object $request): SendPackResponse;
+
+    public function getStatusCdr(object $request): GetStatusCdrResponse;
 }

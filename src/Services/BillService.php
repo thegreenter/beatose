@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Entity\ApplicationResponse;
+use App\Entity\GetStatusCdrResponse;
 use App\Entity\GetStatusResponse;
 use App\Entity\SendBillResponse;
 use App\Entity\SendPackResponse;
@@ -121,13 +122,12 @@ class BillService implements BillServiceInterface
         return $obj;
     }
 
-    /**
-     * @param object $request
-     * @return SendPackResponse
-     *
-     * @throws SoapFault
-     */
     public function sendPack(object $request): SendPackResponse
+    {
+        throw new SoapFault('0000', 'NO IMPLEMENTADO');
+    }
+
+    public function getStatusCdr(object $request): GetStatusCdrResponse
     {
         throw new SoapFault('0000', 'NO IMPLEMENTADO');
     }

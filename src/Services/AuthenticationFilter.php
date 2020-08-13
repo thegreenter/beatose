@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entity\GetStatusCdrResponse;
 use App\Entity\GetStatusResponse;
 use App\Entity\SendBillResponse;
 use App\Entity\SendPackResponse;
@@ -81,6 +82,13 @@ class AuthenticationFilter implements BillServiceInterface
         $this->ensureAuthenticated();
 
         return $this->service->sendPack($request);
+    }
+
+    public function getStatusCdr(object $request): GetStatusCdrResponse
+    {
+        $this->ensureAuthenticated();
+
+        return $this->service->getStatusCdr($request);
     }
 
     private function ensureAuthenticated()
