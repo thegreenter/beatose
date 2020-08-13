@@ -1,5 +1,5 @@
 # BeatOSE
-![Heroku](https://badgen.net/badge/heroku/deploy/green)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=beatose)](https://beatose.herokuapp.com/)
 
 Una implementación de SUNAT Soap Server para recepcionar comprobantes electrónicos.
 
