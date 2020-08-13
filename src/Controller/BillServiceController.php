@@ -4,51 +4,30 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Services\BillServiceInterface;
-use SoapServer;
+use App\Handler\RequestHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BillServiceController extends AbstractController
 {
     /**
-     * @var BillServiceInterface
+     * @var RequestHandlerInterface
      */
-    private $billService;
+    private $handler;
 
     /**
      * BillServiceController constructor.
      *
-     * @param BillServiceInterface $billService
+     * @param RequestHandlerInterface $handler
      */
-    public function __construct(BillServiceInterface $billService)
+    public function __construct(RequestHandlerInterface $handler)
     {
-        $this->billService = $billService;
+        $this->handler = $handler;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml; charset=utf-8');
-        $endpoint = $this->generateUrl('bill_service', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $wsdlPath = __DIR__.'/../../public/billService.wsdl';
-
-        if ($request->query->has('wsdl')) {
-            $wsdl = file_get_contents($wsdlPath);
-
-            return $response->setContent(str_replace('%URL_SERVICE%', $endpoint, $wsdl));
-        }
-
-        $options = ['uri' => $endpoint];
-        $soapServer = new SoapServer($wsdlPath, $options);
-        $soapServer->setObject($this->billService);
-
-        ob_start();
-        $soapServer->handle();
-        $response->setContent(ob_get_clean());
-
-        return $response;
+        return $this->handler->handle($request);
     }
 }
