@@ -7,7 +7,7 @@ parameters:
     env(CERT_FILE): '%kernel.project_dir%/keys/cert.pfx'
     app.soap_user: '%env(SOAP_USER)%'
     app.soap_pass: '%env(SOAP_PASS)%'
-    app.soap_wsdl: '%kernel.project_dir%/public/billService.wsdl'
+    app.soap_wsdl: '%kernel.project_dir%/public/ol-ti-itcpe/billService.wsdl'
     app.sign_cert: '%env(file:CERT_FILE)%'
     app.sign_pass: '%env(SIGN_PASS)%'
 
