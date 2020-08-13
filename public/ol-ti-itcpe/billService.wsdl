@@ -39,6 +39,15 @@
                 <soap11:body use="literal" />
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="getStatusCdr">
+            <soap11:operation soapAction="urn:getStatusCdr" style="document"/>
+            <wsdl:input name="getStatusCdrRequest">
+                <soap11:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="getStatusCdrResponse">
+                <soap11:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="billService">
         <wsdl:port name="BillServicePort" binding="ns0:BillServicePortBinding">

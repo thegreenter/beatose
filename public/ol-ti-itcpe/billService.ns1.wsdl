@@ -29,6 +29,12 @@
     <wsdl:message name="sendSummaryResponse">
         <wsdl:part xmlns:xsns="http://service.sunat.gob.pe" name="parameters" element="xsns:sendSummaryResponse" />
     </wsdl:message>
+    <wsdl:message name="getStatusCdr">
+        <wsdl:part xmlns:xsns="http://service.sunat.gob.pe" name="parameters" element="xsns:getStatusCdr"/>
+    </wsdl:message>
+    <wsdl:message name="getStatusCdrResponse">
+        <wsdl:part xmlns:xsns="http://service.sunat.gob.pe" name="parameters" element="xsns:getStatusCdrResponse"/>
+    </wsdl:message>
     <wsdl:portType name="billService">
         <wsdl:operation name="getStatus">
             <wsdl:input name="getStatusRequest" message="ns1:getStatus" />
@@ -45,6 +51,10 @@
         <wsdl:operation name="sendSummary">
             <wsdl:input name="sendSummaryRequest" message="ns1:sendSummary" />
             <wsdl:output name="sendSummaryResponse" message="ns1:sendSummaryResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="getStatusCdr">
+            <wsdl:input name="getStatusCdrRequest" message="ns1:getStatusCdr" />
+            <wsdl:output name="getStatusCdrResponse" message="ns1:getStatusCdrResponse" />
         </wsdl:operation>
     </wsdl:portType>
 </wsdl:definitions>

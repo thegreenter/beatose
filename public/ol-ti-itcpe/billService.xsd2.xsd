@@ -8,6 +8,8 @@
 	<xs:element name="sendPackResponse" type="tns:sendPackResponse" />
 	<xs:element name="sendSummary" type="tns:sendSummary" />
 	<xs:element name="sendSummaryResponse" type="tns:sendSummaryResponse" />
+	<xs:element name="getStatusCdr" type="tns:getStatusCdr" />
+	<xs:element name="getStatusCdrResponse" type="tns:getStatusCdrResponse" />
 	<xs:complexType name="sendSummary">
 		<xs:sequence>
 			<xs:element name="fileName" type="xs:string" minOccurs="0" />
@@ -58,6 +60,26 @@
 	<xs:complexType name="sendBillResponse">
 		<xs:sequence>
 			<xs:element name="applicationResponse" type="xs:base64Binary" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getStatusCdr">
+		<xs:sequence>
+			<xs:element name="rucComprobante" type="xs:string" minOccurs="0"/>
+			<xs:element name="tipoComprobante" type="xs:string" minOccurs="0"/>
+			<xs:element name="serieComprobante" type="xs:string" minOccurs="0"/>
+			<xs:element name="numeroComprobante" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getStatusCdrResponse">
+		<xs:sequence>
+			<xs:element name="statusCdr" type="tns:statusCdrResponse" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusCdrResponse">
+		<xs:sequence>
+			<xs:element name="content" type="xs:base64Binary" minOccurs="0"/>
+			<xs:element name="statusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="statusMessage" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
