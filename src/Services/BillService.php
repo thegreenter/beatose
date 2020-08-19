@@ -13,6 +13,7 @@ use App\Entity\SendSummaryResponse;
 use App\Entity\StatusResponse;
 use DateTime;
 use Greenter\Ubl\UblValidator;
+use Greenter\XMLSecLibs\Sunat\SignedXml;
 use PhpZip\ZipFile;
 use Psr\Log\LoggerInterface;
 use SoapFault;
@@ -73,6 +74,15 @@ class BillService implements BillServiceInterface
             );
         }
 
+        $sign = new SignedXml();
+
+        if (!$sign->verifyXml($xml)) {
+            throw new SoapFault(
+                '2334',
+                'El documento electrónico ingresado ha sido alterado',
+            );
+        }
+
         $cdr = (new ApplicationResponse())
             ->setId((string)(int)(microtime(true) * 1000))
             ->setFechaRecepcion($dateReceived)
@@ -101,8 +111,6 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(object $request): SendSummaryResponse
     {
-        file_put_contents($request->fileName, $request->contentFile);
-
         $obj = new SendSummaryResponse();
         $obj->ticket = (string)(int)(microtime(true) * 1000);
 
