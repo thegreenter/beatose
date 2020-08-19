@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Services\BillServiceInterface;
+use App\Services\AuthSoapService;
 use SoapServer;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SoapServerHandler implements RequestHandlerInterface
 {
     /**
-     * @var BillServiceInterface
+     * @var AuthSoapService
      */
-    private $billService;
+    private $service;
 
     /**
      * @var UrlGeneratorInterface
@@ -31,13 +31,13 @@ class SoapServerHandler implements RequestHandlerInterface
     /**
      * SoapServerHandler constructor.
      *
-     * @param BillServiceInterface $billService
+     * @param AuthSoapService $service
      * @param UrlGeneratorInterface $router
      * @param ContainerBagInterface $params
      */
-    public function __construct(BillServiceInterface $billService, UrlGeneratorInterface $router, ContainerBagInterface $params)
+    public function __construct(AuthSoapService $service, UrlGeneratorInterface $router, ContainerBagInterface $params)
     {
-        $this->billService = $billService;
+        $this->service = $service;
         $this->router = $router;
         $this->params = $params;
     }
@@ -51,7 +51,7 @@ class SoapServerHandler implements RequestHandlerInterface
 
         $options = ['uri' => $endpoint];
         $soapServer = new SoapServer($wsdlPath, $options);
-        $soapServer->setObject($this->billService);
+        $soapServer->setObject($this->service);
 
         ob_start();
         $soapServer->handle();
