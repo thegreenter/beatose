@@ -37,6 +37,7 @@ services:
         decorates: App\Handler\SoapServerHandler
 
     App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
-    App\Services\BillServiceInterface: 'App\Services\BillService'
+    App\Services\BillServiceInterface:
+        class: App\Services\BillService
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
