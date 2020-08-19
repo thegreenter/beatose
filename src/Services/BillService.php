@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\ApplicationResponse;
-use App\Entity\GetStatusCdrResponse;
-use App\Entity\GetStatusResponse;
-use App\Entity\SendBillResponse;
-use App\Entity\SendPackResponse;
-use App\Entity\SendSummaryResponse;
-use App\Entity\StatusResponse;
+use App\Entity\{
+    ApplicationResponse,
+    GetStatusCdrRequest,
+    GetStatusCdrResponse,
+    GetStatusRequest,
+    GetStatusResponse,
+    SendBillRequest,
+    SendBillResponse,
+    SendPackRequest,
+    SendPackResponse,
+    SendSummaryRequest,
+    SendSummaryResponse,
+    StatusResponse,
+};
 use DateTime;
 use Greenter\Ubl\UblValidator;
 use Greenter\XMLSecLibs\Sunat\SignedXml;
@@ -49,7 +56,7 @@ class BillService implements BillServiceInterface
         $this->signer = $signer;
     }
 
-    public function sendBill(object $request): SendBillResponse
+    public function sendBill(SendBillRequest $request): SendBillResponse
     {
         $dateReceived = new DateTime();
         $zipFile = new ZipFile();
@@ -109,7 +116,7 @@ class BillService implements BillServiceInterface
         return $obj;
     }
 
-    public function sendSummary(object $request): SendSummaryResponse
+    public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
         $obj = new SendSummaryResponse();
         $obj->ticket = (string)(int)(microtime(true) * 1000);
@@ -117,7 +124,7 @@ class BillService implements BillServiceInterface
         return $obj;
     }
 
-    public function getStatus(object $request): GetStatusResponse
+    public function getStatus(GetStatusRequest $request): GetStatusResponse
     {
         $ticket = $request->ticket;
         $this->logger->info('Ticket '.$ticket);
@@ -130,12 +137,12 @@ class BillService implements BillServiceInterface
         return $obj;
     }
 
-    public function sendPack(object $request): SendPackResponse
+    public function sendPack(SendPackRequest $request): SendPackResponse
     {
         throw new SoapFault('0000', 'NO IMPLEMENTADO');
     }
 
-    public function getStatusCdr(object $request): GetStatusCdrResponse
+    public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
     {
         throw new SoapFault('0000', 'NO IMPLEMENTADO');
     }
