@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
+use App\Entity\ErrorCodeList;
 use App\Entity\ValidationError;
 use DOMDocument;
 use Greenter\Ubl\Resolver\PathResolverInterface;
@@ -36,7 +37,7 @@ class XmlSchemaValidator implements XmlValidatorInterface
     public function validate(string $filename, DOMDocument $document): ?ValidationError
     {
         if (empty($document->documentElement)) {
-            return new ValidationError('0300');
+            return new ValidationError(ErrorCodeList::XML_NO_RAIZ);
         }
 
         $schemaPath = $this->pathResolver->getPath($document);
@@ -45,10 +46,10 @@ class XmlSchemaValidator implements XmlValidatorInterface
         }
 
         if (empty($path) || !file_exists($path)) {
-            new ValidationError('0304');
+            new ValidationError(ErrorCodeList::XML_NO_SCHEMA_FILE);
         }
 
-        return new ValidationError('0306', $this->getErrorMessage($this->schema->getErrors()));
+        return new ValidationError(ErrorCodeList::XML_NO_PARSE, $this->getErrorMessage($this->schema->getErrors()));
     }
 
     /**
