@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Services\Zip;
 
@@ -47,7 +48,7 @@ class XmlZipFly implements XmlZipInterface
         }
     }
 
-    private function openZip($zip): ?ZipFile
+    private function openZip(?string $zip): ?ZipFile
     {
         try {
             $zipFile = new ZipFile();
