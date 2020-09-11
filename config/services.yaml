@@ -39,5 +39,7 @@ services:
     App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
     App\Services\BillServiceInterface:
         class: App\Services\BillService
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    Greenter\XMLSecLibs\Sunat\SignedXml:
+        factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
+        arguments: ['%app.sign_cert%', '%app.sign_pass%']
