@@ -33,13 +33,13 @@ class ZipCdrWriter implements CdrWriterInterface
 
     /**
      * @param ApplicationResponse $applicationResponse
-     * @param string $name
+     *
      * @return string|null
      */
-    public function write(ApplicationResponse $applicationResponse, string $name): ?string
+    public function write(ApplicationResponse $applicationResponse): ?string
     {
-        $xmlSigned = $this->xmlCdrWriter->write($applicationResponse, $name);
+        $xmlSigned = $this->xmlCdrWriter->write($applicationResponse);
 
-        return $this->compressor->compress($name.'.xml', $xmlSigned)->getContent();
+        return $this->compressor->compress($applicationResponse->getFilename().'.xml', $xmlSigned)->getContent();
     }
 }

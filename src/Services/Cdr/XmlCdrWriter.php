@@ -32,7 +32,7 @@ class XmlCdrWriter implements CdrWriterInterface
         $this->twig = $twig;
     }
 
-    public function write(ApplicationResponse $applicationResponse, string $name): ?string
+    public function write(ApplicationResponse $applicationResponse): ?string
     {
         $xml = $this->twig->render('ApplicationResponse.xml.twig', ['doc' => $applicationResponse]);
 

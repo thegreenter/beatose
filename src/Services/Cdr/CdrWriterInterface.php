@@ -8,5 +8,12 @@ use App\Entity\ApplicationResponse;
 
 interface CdrWriterInterface
 {
-    public function write(ApplicationResponse $applicationResponse, string $name): ?string;
+    /**
+     * Write APP CDR to output format.
+     *
+     * @param ApplicationResponse $applicationResponse
+     *
+     * @return string|null
+     */
+    public function write(ApplicationResponse $applicationResponse): ?string;
 }
