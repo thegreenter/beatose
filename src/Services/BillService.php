@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Services\Cdr\CdrOutputInterface;
+use App\Services\Soap\ExceptionCreator;
+use App\Services\Zip\XmlZipInterface;
+use App\Validator\XmlValidatorInterface;
 use App\Entity\{
-    ApplicationResponse,
+    CpeCdrResult,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
     GetStatusRequest,
@@ -16,15 +20,11 @@ use App\Entity\{
     SendPackResponse,
     SendSummaryRequest,
     SendSummaryResponse,
-    StatusResponse,
-};
+    StatusResponse};
 use DateTime;
-use Greenter\Ubl\UblValidator;
-use Greenter\XMLSecLibs\Sunat\SignedXml;
-use PhpZip\ZipFile;
+use DOMDocument;
 use Psr\Log\LoggerInterface;
 use SoapFault;
-use Twig\Environment;
 
 class BillService implements BillServiceInterface
 {
@@ -34,84 +34,49 @@ class BillService implements BillServiceInterface
     private $logger;
 
     /**
-     * @var Environment
+     * @var XmlZipInterface
      */
-    private $twig;
+    private $zipReader;
 
     /**
-     * @var Signer
+     * @var XmlValidatorInterface
      */
-    private $signer;
+    private $xmlValidator;
 
     /**
-     * BillService constructor.
-     * @param LoggerInterface $logger
-     * @param Environment $twig
-     * @param Signer $signer
+     * @var ExceptionCreator
      */
-    public function __construct(LoggerInterface $logger, Environment $twig, Signer $signer)
-    {
-        $this->logger = $logger;
-        $this->twig = $twig;
-        $this->signer = $signer;
-    }
+    private $exceptionCreator;
+
+    /**
+     * @var CdrOutputInterface
+     */
+    private $cdrOut;
 
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
         $dateReceived = new DateTime();
-        $zipFile = new ZipFile();
-        $zipFile->openFromString($request->contentFile);
 
-        $docName = str_replace('.ZIP', '', strtoupper($request->fileName));
-        $xmlPath = $docName.'.xml';
-        if (!$zipFile->hasEntry($xmlPath)) {
-            throw new SoapFault('0157', 'El archivo ZIP no contiene comprobantes');
-        }
-        $xml = $zipFile->getEntryContents($xmlPath);
-
-        $zipFile->close();
-
-        $validator = new UblValidator();
-
-        if (!$validator->isValid($xml)) {
-            throw new SoapFault(
-                '0306',
-                'No se puede leer (parsear) el archivo XML',
-                null, $validator->getError(),
-            );
+        $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
+        if ($result->getError() !== null) {
+            throw $this->exceptionCreator->fromValidation($result->getError());
         }
 
-        $sign = new SignedXml();
+        $doc = new DOMDocument();
+        $doc->loadXML($result->getContent());
 
-        if (!$sign->verifyXml($xml)) {
-            throw new SoapFault(
-                '2334',
-                'El documento electrónico ingresado ha sido alterado',
-            );
+        $error = $this->xmlValidator->validate($request->fileName, $doc);
+        if ($error !== null && (int)$error->getCode() < 2000) {
+            throw $this->exceptionCreator->fromValidation($error);
         }
 
-        $cdr = (new ApplicationResponse())
-            ->setId((string)(int)(microtime(true) * 1000))
-            ->setFechaRecepcion($dateReceived)
-            ->setFechaGeneracion(new DateTime())
-            ->setRucEmisorCdr('20000000001')
-            ->setRucEmisorCpe(substr($docName, 0, 11))
-            ->setTipoDocReceptorCpe('6')
-            ->setNroDocReceptorCpe('20000000002')
-            ->setCpeId(substr($docName, 15, strlen($docName) - 15))
-            ->setCodigoRespuesta('0')
-            ->setCodigoRespuesta('El comprobante ha sido aceptado')
-            ->setNotasAsociadas([])
-        ;
-        $xmlResponse = $this->twig->render('ApplicationResponse.xml.twig', ['doc' => $cdr]);
-
-        $zipFile = new ZipFile();
-        $zipFile->addFromString('R-'.$xmlPath, $this->signer->sign($xmlResponse));
-        $zip = $zipFile->outputAsString();
-        $zipFile->close();
+        $cdrResult = (new CpeCdrResult())
+            ->setDateReceived($dateReceived)
+            ->setCodeResult($error !== null ? $error->getCode() : '0')
+            ->setNotes([]);
 
         $obj = new SendBillResponse();
-        $obj->applicationResponse = $zip;
+        $obj->applicationResponse = $this->cdrOut->output($doc, $cdrResult);
 
         return $obj;
     }
