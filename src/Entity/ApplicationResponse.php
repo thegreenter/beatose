@@ -54,6 +54,13 @@ class ApplicationResponse
     private $notasAsociadas;
 
     /**
+     * Filename without extension.
+     *
+     * @var string
+     */
+    private $filename;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -248,6 +255,29 @@ class ApplicationResponse
     public function setNotasAsociadas(?array $notasAsociadas): ApplicationResponse
     {
         $this->notasAsociadas = $notasAsociadas;
+        return $this;
+    }
+
+    /**
+     * Get Filename without extension.
+     *
+     * @return string|null
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set Filename without extension.
+     *
+     * @param string|null $filename
+     *
+     * @return ApplicationResponse
+     */
+    public function setFilename(?string $filename): ApplicationResponse
+    {
+        $this->filename = $filename;
         return $this;
     }
 }
