@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Cdr;
 
 use App\Entity\ApplicationResponse;
-use DateTime;
+use App\Entity\CpeCdrResult;
 use DOMDocument;
 
 interface AppCdrCreatorInterface
@@ -14,10 +14,9 @@ interface AppCdrCreatorInterface
      * Create from CPE and code CDR.
      *
      * @param DOMDocument $document XML CPE document
-     * @param DateTime $received Receive datetime
-     * @param string|null $codeResult Code CDR Result
+     * @param CpeCdrResult $result CDR validation result
      *
      * @return ApplicationResponse
      */
-    public function create(DOMDocument $document, DateTime $received, ?string $codeResult): ApplicationResponse;
+    public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse;
 }
