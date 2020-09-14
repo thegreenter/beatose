@@ -11,6 +11,11 @@ use DOMDocument;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
 {
+    /**
+     * @var FilenameResolverInterface
+     */
+    private $filenameResolver;
+
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse
     {
         return (new ApplicationResponse())
@@ -24,7 +29,9 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
             ->setNroDocReceptorCpe('20000000002')
             ->setCpeId(substr($docName, 15, strlen($docName) - 15))
             ->setCodigoRespuesta($this->getDescription((int)$result->getCodeResult()))
-            ->setNotasAsociadas($result->getNotes());
+            ->setNotasAsociadas($result->getNotes())
+            ->setFilename($this->filenameResolver->getFilename($document))
+        ;
     }
 
     private function createId(): string
