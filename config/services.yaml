@@ -40,6 +40,11 @@ services:
     App\Services\BillServiceInterface:
         class: App\Services\BillService
 
+    App\Services\Zip\XmlZipInterface:
+        stack:
+            - App\Services\Zip\XmlZipFly: ~
+            - App\Services\Zip\XmlFilenameDecorator: ~
+
     Greenter\XMLSecLibs\Sunat\SignedXml:
         factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
         arguments: ['%app.sign_cert%', '%app.sign_pass%']
