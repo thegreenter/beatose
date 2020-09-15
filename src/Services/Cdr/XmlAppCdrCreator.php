@@ -16,22 +16,39 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
      */
     private $filenameResolver;
 
+    /**
+     * @var string
+     */
+    private $oseRuc;
+
+    /**
+     * XmlAppCdrCreator constructor.
+     *
+     * @param string $oseRuc
+     * @param FilenameResolverInterface $filenameResolver
+     */
+    public function __construct(string $oseRuc, FilenameResolverInterface $filenameResolver)
+    {
+        $this->oseRuc = $oseRuc;
+        $this->filenameResolver = $filenameResolver;
+    }
+
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse
     {
-        $docName = '20000000002-01-F001-1';
+        $docName = $this->filenameResolver->getFilename($document);
         return (new ApplicationResponse())
             ->setId($this->createId())
             ->setFechaRecepcion($result->getDateReceived())
             ->setCodigoRespuesta($result->getCodeResult())
             ->setFechaGeneracion(new DateTime())
-            ->setRucEmisorCdr('20000000001')
+            ->setRucEmisorCdr($this->oseRuc)
             ->setRucEmisorCpe(substr($docName, 0, 11))
             ->setTipoDocReceptorCpe('6')
             ->setNroDocReceptorCpe('20000000002')
             ->setCpeId(substr($docName, 15, strlen($docName) - 15))
             ->setCodigoRespuesta($this->getDescription((int)$result->getCodeResult()))
             ->setNotasAsociadas($result->getNotes())
-            ->setFilename($this->filenameResolver->getFilename($document))
+            ->setFilename($docName)
         ;
     }
 
