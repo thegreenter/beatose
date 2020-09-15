@@ -77,3 +77,6 @@ services:
 
     Greenter\Validator\ErrorCodeProviderInterface:
         class: Greenter\Validator\XmlErrorCodeProvider
+
+    Greenter\Ws\Reader\FilenameExtractorInterface:
+        class: Greenter\Ws\Reader\XmlFilenameExtractor

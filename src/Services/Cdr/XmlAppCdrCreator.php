@@ -9,6 +9,7 @@ use App\Entity\CpeCdrResult;
 use App\Services\Xml\XmlParserInterface;
 use DateTime;
 use DOMDocument;
+use Greenter\Ws\Reader\FilenameExtractorInterface;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
 {
@@ -18,7 +19,7 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
     private $oseRuc;
 
     /**
-     * @var FilenameResolverInterface
+     * @var FilenameExtractorInterface
      */
     private $filenameResolver;
 
@@ -31,10 +32,10 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
      * XmlAppCdrCreator constructor.
      *
      * @param string $oseRuc
-     * @param FilenameResolverInterface $filenameResolver
+     * @param FilenameExtractorInterface $filenameResolver
      * @param XmlParserInterface $xmlParser
      */
-    public function __construct(string $oseRuc, FilenameResolverInterface $filenameResolver, XmlParserInterface $xmlParser)
+    public function __construct(string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser)
     {
         $this->oseRuc = $oseRuc;
         $this->filenameResolver = $filenameResolver;
