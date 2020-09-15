@@ -9,15 +9,9 @@ use DOMDocument;
 
 class CdrBridge implements CdrOutputInterface
 {
-    /**
-     * @var AppCdrCreatorInterface
-     */
-    private $appCdrCreator;
+    private AppCdrCreatorInterface $appCdrCreator;
 
-    /**
-     * @var CdrWriterInterface
-     */
-    private $cdrWriter;
+    private CdrWriterInterface $cdrWriter;
 
     /**
      * CdrBridge constructor.
