@@ -70,10 +70,10 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
 
     private function getDescription(int $code)
     {
-        if ($code >= 4000) {
-            $state = 'aceptado con observaciones';
-        } elseif ($code >= 2000 && $code <= 3999) {
+        if (2000 <= $code && $code <= 3999) {
             $state = 'rechazado';
+        } elseif ($code >= 4000) {
+            $state = 'aceptado con observaciones';
         } else {
             $state = 'aceptado';
         }
