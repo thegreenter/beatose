@@ -11,22 +11,10 @@ use Greenter\XMLSecLibs\Sunat\SignedXml;
 
 class XmlSignValidator implements XmlValidatorInterface
 {
-    /**
-     * @var SignedXml
-     */
-    private $signer;
-
-    /**
-     * XmlSignValidator constructor.
-     * @param SignedXml $signer
-     */
-    public function __construct(SignedXml $signer)
-    {
-        $this->signer = $signer;
-    }
-
     public function validate(string $filename, DOMDocument $document): ?ValidationError
     {
-        return $this->signer->verify($document) ? null : new ValidationError(ErrorCodeList::XML_ALTERADO);
+        $signValidator = new SignedXml();
+
+        return $signValidator->verify($document) ? null : new ValidationError(ErrorCodeList::XML_ALTERADO);
     }
 }
