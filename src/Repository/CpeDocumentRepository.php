@@ -21,32 +21,23 @@ class CpeDocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, CpeDocument::class);
     }
 
-    // /**
-    //  * @return CpeDocument[] Returns an array of CpeDocument objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneByName(?string $name): ?CpeDocument
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CpeDocument
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.name = :val')
+            ->setParameter('val', $name)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findOneByTicket(?string $ticket): ?CpeDocument
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.ticket = :val')
+            ->setParameter('val', $ticket)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
