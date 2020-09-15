@@ -82,6 +82,7 @@ class BillService implements BillServiceInterface
 
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
+        $dateReceived = new DateTime();
         $allowedTypes = [
             DocumentType::FACTURA,
             DocumentType::BOLETA,
@@ -96,8 +97,6 @@ class BillService implements BillServiceInterface
                 new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
             );
         }
-
-        $dateReceived = new DateTime();
 
         $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
         if ($result->getError() !== null) {
