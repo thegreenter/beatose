@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Model\ErrorCodeList;
 use App\Model\GetStatusCdrRequest;
 use App\Model\GetStatusRequest;
 use App\Model\SendBillRequest;
 use App\Model\SendPackRequest;
 use App\Model\SendSummaryRequest;
-use SoapFault;
+use App\Model\ValidationError;
+use App\Services\Soap\ExceptionCreator;
 
 class AuthSoapService
 {
@@ -29,22 +31,28 @@ class AuthSoapService
     private $credentialStore;
 
     /**
+     * @var ExceptionCreator
+     */
+    private $exceptionCretor;
+
+    /**
      * @var bool
      */
     private $isAuthenticated = false;
 
     /**
-     * SoapService constructor
-     *
+     * AuthSoapService constructor.
      * @param BillServiceInterface $billService
      * @param Mapper $mapper
      * @param CredentialStore $credentialStore
+     * @param ExceptionCreator $exceptionCretor
      */
-    public function __construct(BillServiceInterface $billService, Mapper $mapper, CredentialStore $credentialStore)
+    public function __construct(BillServiceInterface $billService, Mapper $mapper, CredentialStore $credentialStore, ExceptionCreator $exceptionCretor)
     {
         $this->billService = $billService;
         $this->mapper = $mapper;
         $this->credentialStore = $credentialStore;
+        $this->exceptionCretor = $exceptionCretor;
     }
 
     /**
@@ -107,7 +115,7 @@ class AuthSoapService
     private function ensureAuthenticated()
     {
         if (!$this->isAuthenticated) {
-            throw new SoapFault("0102", "Usuario o contraseña incorrectos");
+            throw $this->exceptionCretor->fromValidation(new ValidationError(ErrorCodeList::INVALID_USER));
         }
     }
 }
