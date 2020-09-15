@@ -45,6 +45,13 @@ services:
             - App\Services\Zip\XmlZipFly: ~
             - App\Services\Zip\XmlFilenameDecorator: ~
 
+    App\Validator\XmlValidatorInterface:
+        class: App\Validator\MultiValidator
+        arguments:
+            - '@App\Validator\XmlSchemaValidator'
+            - '@App\Validator\XmlSignValidator'
+            - '@App\Validator\CpeXslValidator'
+
     Greenter\XMLSecLibs\Sunat\SignedXml:
         factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
         arguments: ['%app.sign_cert%', '%app.sign_pass%']
