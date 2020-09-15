@@ -1,9 +1,15 @@
 {
+    "greenter/core": {
+        "version": "v4.0.2"
+    },
     "greenter/cpe-validator": {
         "version": "v4.0.2"
     },
     "greenter/ubl-validator": {
         "version": "v2.1.0"
+    },
+    "greenter/xcodes": {
+        "version": "v4.0.2"
     },
     "greenter/xmldsig": {
         "version": "v5.0.3"
