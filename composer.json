@@ -69,7 +69,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "lint": "phpstan analyse",
+        "lint:ci": "phpstan analyse --error-format=github"
     },
     "conflict": {
         "symfony/symfony": "*"
