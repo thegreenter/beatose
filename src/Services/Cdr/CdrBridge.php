@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Cdr;
 
 use App\Entity\CpeCdrResult;
-use App\Services\Cdr\AppCdrCreatorInterface;
-use App\Services\Cdr\CdrOutputInterface;
-use App\Services\Cdr\CdrWriterInterface;
 use DOMDocument;
 
 class CdrBridge implements CdrOutputInterface
