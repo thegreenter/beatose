@@ -1,4 +1,7 @@
 {
+    "greenter/cpe-validator": {
+        "version": "v4.0.2"
+    },
     "greenter/ubl-validator": {
         "version": "v2.1.0"
     },
@@ -12,7 +15,7 @@
         "version": "3.3.3"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "psr/cache": {
         "version": "1.0.1"

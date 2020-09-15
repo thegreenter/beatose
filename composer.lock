@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8fa332a3b0ad0db500a01e0858763211",
+    "content-hash": "25e7051aae2a683cfc86e74f984784a6",
     "packages": [
+        {
+            "name": "greenter/cpe-validator",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thegreenter/cpe-validator.git",
+                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thegreenter/cpe-validator/zipball/cd85e4a3475ef6b31829910397782a1aa507a9b8",
+                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-xsl": "*",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Greenter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giancarlos Salas",
+                    "email": "giansalex@gmail.com"
+                }
+            ],
+            "description": "Validador de Reglas de Validación CPE - SUNAT",
+            "homepage": "https://greenter.dev/",
+            "keywords": [
+                "facturacion-electronica",
+                "greenter",
+                "sunat"
+            ],
+            "time": "2020-08-18T03:49:37+00:00"
+        },
         {
             "name": "greenter/ubl-validator",
             "version": "v2.1.0",
@@ -3288,6 +3340,7 @@
     "platform": {
         "php": "^7.3",
         "ext-ctype": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
         "ext-soap": "*"
     },
