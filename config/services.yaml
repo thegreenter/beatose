@@ -38,7 +38,7 @@ services:
     App\Handler\WsdlHandler:
         decorates: App\Handler\SoapServerHandler
 
-    App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
+    App\Handler\RequestHandlerInterface: '@App\Handler\SoapServerHandler'
 
     App\Services\Bill\BillService:
         stack:
@@ -51,7 +51,7 @@ services:
     App\Services\Zip\XmlFilenameDecorator:
         decorates: App\Services\Zip\XmlZipFly
 
-    App\Services\Zip\XmlZipInterface: '@App\Services\Zip\XmlFilenameDecorator'
+    App\Services\Zip\XmlZipInterface: '@App\Services\Zip\XmlZipFly'
 
     App\Validator\XmlValidatorInterface:
         class: App\Validator\MultiValidator
@@ -61,8 +61,8 @@ services:
                 - '@App\Validator\XmlSignValidator'
                 - '@App\Validator\CpeXslValidator'
 
-    App\Services\Cdr\ZipCdrWriter:
-        decorates: App\Services\Cdr\XmlCdrWriter
+#    App\Services\Cdr\ZipCdrWriter:
+#        decorates: App\Services\Cdr\XmlCdrWriter
 
     App\Services\Cdr\XmlAppCdrCreator:
         arguments:
