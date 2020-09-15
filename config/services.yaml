@@ -50,9 +50,10 @@ services:
     App\Validator\XmlValidatorInterface:
         class: App\Validator\MultiValidator
         arguments:
-            - '@App\Validator\XmlSchemaValidator'
-            - '@App\Validator\XmlSignValidator'
-            - '@App\Validator\CpeXslValidator'
+            -
+                - '@App\Validator\XmlSchemaValidator'
+                - '@App\Validator\XmlSignValidator'
+                - '@App\Validator\CpeXslValidator'
 
     App\Services\Cdr\ZipCdrWriter:
         decorates: App\Services\Cdr\XmlCdrWriter
@@ -78,5 +79,8 @@ services:
     Greenter\Validator\ErrorCodeProviderInterface:
         class: Greenter\Validator\XmlErrorCodeProvider
 
+    Greenter\Ws\Reader\XmlReader: ~
+
     Greenter\Ws\Reader\FilenameExtractorInterface:
         class: Greenter\Ws\Reader\XmlFilenameExtractor
+
