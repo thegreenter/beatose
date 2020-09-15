@@ -61,6 +61,25 @@ class BillService implements BillServiceInterface
      */
     private $cdrOut;
 
+    /**
+     * BillService constructor.
+     * @param LoggerInterface $logger
+     * @param FilenameValidator $typesValidator
+     * @param XmlZipInterface $zipReader
+     * @param XmlValidatorInterface $xmlValidator
+     * @param ExceptionCreator $exceptionCreator
+     * @param CdrOutputInterface $cdrOut
+     */
+    public function __construct(LoggerInterface $logger, FilenameValidator $typesValidator, XmlZipInterface $zipReader, XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut)
+    {
+        $this->logger = $logger;
+        $this->typesValidator = $typesValidator;
+        $this->zipReader = $zipReader;
+        $this->xmlValidator = $xmlValidator;
+        $this->exceptionCreator = $exceptionCreator;
+        $this->cdrOut = $cdrOut;
+    }
+
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
         $allowedTypes = [
