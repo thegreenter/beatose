@@ -16,7 +16,7 @@ LIVE (Pruebas)
 
 
 ## Build
-Ejecutar
+Ejecutar (require `PHP +7.4`)
 ```bash
 php -S 127.0.0.1:8000 -t public
 ```
