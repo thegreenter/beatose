@@ -11,6 +11,7 @@ parameters:
     app.sign_cert: '%env(file:CERT_FILE)%'
     app.sign_pass: '%env(SIGN_PASS)%'
     app.ose_ruc: '20000000001'
+    app.xsl_basepath: '%kernel.project_dir%/var/xslt/sunat_archivos/sfs/VALI/commons/xsl/validation'
 
 services:
     # default configuration for services in *this* file
@@ -97,4 +98,4 @@ services:
     Greenter\Validator\Resolver\RuleResolverInterface:
         class: Greenter\Validator\Resolver\XslPathResolver
         arguments:
-            $basePath: '%kernel.project_dir%/var/xslt/sunat_archivos/sfs/VALI/commons/xsl/validation'
+            $basePath: '%app.xsl_basepath%'
