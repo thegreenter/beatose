@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Model\ErrorCodeList;
-use App\Model\GetStatusCdrRequest;
-use App\Model\GetStatusRequest;
-use App\Model\SendBillRequest;
-use App\Model\SendPackRequest;
-use App\Model\SendSummaryRequest;
-use App\Model\ValidationError;
+use App\Model\{
+    ErrorCodeList,
+    GetStatusCdrRequest,
+    GetStatusRequest,
+    SendBillRequest,
+    SendPackRequest,
+    SendSummaryRequest,
+    ValidationError,
+};
 use App\Services\Soap\ExceptionCreator;
 
 class AuthSoapService
