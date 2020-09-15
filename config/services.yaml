@@ -37,13 +37,14 @@ services:
         decorates: App\Handler\SoapServerHandler
 
     App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
+
     App\Services\BillServiceInterface:
         class: App\Services\BillService
 
-    App\Services\Zip\XmlZipInterface:
-        stack:
-            - App\Services\Zip\XmlZipFly: ~
-            - App\Services\Zip\XmlFilenameDecorator: ~
+    App\Services\Zip\XmlFilenameDecorator:
+        decorates: App\Services\Zip\XmlZipFly
+
+    App\Services\Zip\XmlZipInterface: '@App\Services\Zip\XmlFilenameDecorator'
 
     App\Validator\XmlValidatorInterface:
         class: App\Validator\MultiValidator
