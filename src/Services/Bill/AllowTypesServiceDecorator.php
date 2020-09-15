@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Bill;
 
 use App\Services\Soap\ExceptionCreator;
 use App\Validator\FilenameValidator;

@@ -40,8 +40,8 @@ services:
 
     App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
 
-    App\Services\BillServiceInterface:
-        class: App\Services\BillService
+    App\Services\Bill\BillServiceInterface:
+        class: App\Services\Bill\BillService
 
     App\Services\Zip\XmlFilenameDecorator:
         decorates: App\Services\Zip\XmlZipFly
