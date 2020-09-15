@@ -8,18 +8,11 @@ use DateTime;
 
 class CpeCdrResult
 {
-    /**
-     * @var DateTime|null
-     */
-    private $dateReceived;
-    /**
-     * @var string|null
-     */
-    private $codeResult;
-    /**
-     * @var array|null
-     */
-    private $notes;
+    private ?DateTime $dateReceived;
+
+    private ?string $codeResult;
+
+    private ?array $notes;
 
     /**
      * @return DateTime|null
