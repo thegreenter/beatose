@@ -9,6 +9,10 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-soap": "*",
+        "composer/package-versions-deprecated": "^1.11",
+        "doctrine/doctrine-bundle": "^2.1",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/orm": "^2.7",
         "greenter/cpe-validator": "^4.0",
         "greenter/ubl-validator": "^2.1",
         "greenter/ws": "^4.0",
@@ -26,7 +30,8 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.42"
+        "phpstan/phpstan": "^0.12.42",
+        "symfony/maker-bundle": "^1.21"
     },
     "config": {
         "optimize-autoloader": true,
