@@ -58,7 +58,7 @@ class ZipFormatBillDecorator implements BillServiceInterface
         $request->contentFile = $result->getContent();
         $response = $this->service->sendBill($request);
 
-        $response->applicationResponse = $this->zipper->compress('R-'.$request->fileName, $response->applicationResponse);
+        $response->applicationResponse = $this->zipper->compress('R-'.$request->fileName, $response->applicationResponse)->getContent();
 
         return $response;
     }
@@ -89,7 +89,7 @@ class ZipFormatBillDecorator implements BillServiceInterface
         $xmlContent = $response->status->content;
         if ($xmlContent !== null) {
             $name = $this->filenameResolver->getFilename($xmlContent);
-            $response->status->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent);
+            $response->status->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent)->getContent();
         }
 
         return $response;
@@ -114,7 +114,7 @@ class ZipFormatBillDecorator implements BillServiceInterface
         $xmlContent = $response->statusCdr->content;
         if ($xmlContent !== null) {
             $name = $this->filenameResolver->getFilename($xmlContent);
-            $response->statusCdr->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent);
+            $response->statusCdr->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent)->getContent();
         }
 
         return $response;
