@@ -18,7 +18,7 @@ use App\Model\{ErrorCodeList,
     ValidationError};
 use Greenter\Validator\Entity\DocumentType;
 
-class AllowTypesServiceDecorator implements BillServiceInterface
+class AllowTypesBillDecorator implements BillServiceInterface
 {
     private BillServiceInterface $service;
 
@@ -27,7 +27,7 @@ class AllowTypesServiceDecorator implements BillServiceInterface
     private ExceptionCreator $exceptionCreator;
 
     /**
-     * AllowTypesServiceDecorator constructor.
+     * AllowTypesBillDecorator constructor.
      *
      * @param BillServiceInterface $service
      * @param FilenameValidator $typesValidator
