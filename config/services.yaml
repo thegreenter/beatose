@@ -55,3 +55,9 @@ services:
     Greenter\XMLSecLibs\Sunat\SignedXml:
         factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
         arguments: ['%app.sign_cert%', '%app.sign_pass%']
+
+    Greenter\Ubl\SchemaValidatorInterface:
+        class: Greenter\Ubl\SchemaValidator
+
+    Greenter\Ubl\Resolver\PathResolverInterface:
+        class: Greenter\Ubl\Resolver\UblPathResolver
