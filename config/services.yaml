@@ -74,3 +74,6 @@ services:
 
     Greenter\Ubl\Resolver\PathResolverInterface:
         class: Greenter\Ubl\Resolver\UblPathResolver
+
+    Greenter\Validator\ErrorCodeProviderInterface:
+        class: Greenter\Validator\XmlErrorCodeProvider
