@@ -13,29 +13,20 @@ use Greenter\Ws\Reader\FilenameExtractorInterface;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
 {
-    /**
-     * @var string
-     */
-    private $oseRuc;
+    private ?string $oseRuc;
 
-    /**
-     * @var FilenameExtractorInterface
-     */
-    private $filenameResolver;
+    private FilenameExtractorInterface $filenameResolver;
 
-    /**
-     * @var XmlParserInterface
-     */
-    private $xmlParser;
+    private XmlParserInterface $xmlParser;
 
     /**
      * XmlAppCdrCreator constructor.
      *
-     * @param string $oseRuc
+     * @param string|null $oseRuc
      * @param FilenameExtractorInterface $filenameResolver
      * @param XmlParserInterface $xmlParser
      */
-    public function __construct(string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser)
+    public function __construct(?string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser)
     {
         $this->oseRuc = $oseRuc;
         $this->filenameResolver = $filenameResolver;
