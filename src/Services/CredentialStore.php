@@ -9,10 +9,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CredentialStore
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    private $params;
+    private ParameterBagInterface $params;
 
     /**
      * CredentialStore constructor.

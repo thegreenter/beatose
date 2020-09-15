@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Services\Bill\BillServiceInterface;
+use App\Services\Util\Mapper;
 use App\Model\{
     ErrorCodeList,
     GetStatusCdrRequest,
@@ -17,30 +19,15 @@ use App\Services\Soap\ExceptionCreator;
 
 class AuthSoapService
 {
-    /**
-     * @var BillServiceInterface
-     */
-    private $billService;
+    private BillServiceInterface $billService;
 
-    /**
-     * @var Mapper
-     */
-    private $mapper;
+    private Mapper $mapper;
 
-    /**
-     * @var CredentialStore
-     */
-    private $credentialStore;
+    private CredentialStore $credentialStore;
 
-    /**
-     * @var ExceptionCreator
-     */
-    private $exceptionCretor;
+    private ExceptionCreator $exceptionCretor;
 
-    /**
-     * @var bool
-     */
-    private $isAuthenticated = false;
+    private bool $isAuthenticated = false;
 
     /**
      * AuthSoapService constructor.
