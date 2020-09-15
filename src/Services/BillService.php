@@ -20,7 +20,8 @@ use App\Entity\{
     SendPackResponse,
     SendSummaryRequest,
     SendSummaryResponse,
-    StatusResponse};
+    StatusResponse
+};
 use DateTime;
 use DOMDocument;
 use Psr\Log\LoggerInterface;

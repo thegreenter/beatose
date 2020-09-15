@@ -18,6 +18,7 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
 
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse
     {
+        $docName = '20000000002-01-F001-1';
         return (new ApplicationResponse())
             ->setId($this->createId())
             ->setFechaRecepcion($result->getDateReceived())
