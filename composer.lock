@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "faabee750b746e685510cd7f1b2fb168",
+    "content-hash": "a50dfe4909d05a2652588ae2aa51678f",
     "packages": [
         {
             "name": "greenter/core",
@@ -52,6 +52,58 @@
                 "sunat"
             ],
             "time": "2020-08-16T02:50:03+00:00"
+        },
+        {
+            "name": "greenter/cpe-validator",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thegreenter/cpe-validator.git",
+                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thegreenter/cpe-validator/zipball/cd85e4a3475ef6b31829910397782a1aa507a9b8",
+                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-xsl": "*",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Greenter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giancarlos Salas",
+                    "email": "giansalex@gmail.com"
+                }
+            ],
+            "description": "Validador de Reglas de Validación CPE - SUNAT",
+            "homepage": "https://greenter.dev/",
+            "keywords": [
+                "facturacion-electronica",
+                "greenter",
+                "sunat"
+            ],
+            "time": "2020-08-18T03:49:37+00:00"
         },
         {
             "name": "greenter/ubl-validator",
@@ -3435,58 +3487,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "greenter/cpe-validator",
-            "version": "v4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thegreenter/cpe-validator.git",
-                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thegreenter/cpe-validator/zipball/cd85e4a3475ef6b31829910397782a1aa507a9b8",
-                "reference": "cd85e4a3475ef6b31829910397782a1aa507a9b8",
-                "shasum": ""
-            },
-            "require": {
-                "ext-libxml": "*",
-                "ext-xsl": "*",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Greenter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giancarlos Salas",
-                    "email": "giansalex@gmail.com"
-                }
-            ],
-            "description": "Validador de Reglas de Validación CPE - SUNAT",
-            "homepage": "https://greenter.dev/",
-            "keywords": [
-                "facturacion-electronica",
-                "greenter",
-                "sunat"
-            ],
-            "time": "2020-08-18T03:49:37+00:00"
-        },
         {
             "name": "phpstan/phpstan",
             "version": "0.12.42",

@@ -9,6 +9,7 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-soap": "*",
+        "greenter/cpe-validator": "^4.0",
         "greenter/ubl-validator": "^2.1",
         "greenter/ws": "^4.0",
         "greenter/xcodes": "^4.0",
