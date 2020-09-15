@@ -10,6 +10,7 @@
         "ext-iconv": "*",
         "ext-soap": "*",
         "greenter/ubl-validator": "^2.1",
+        "greenter/ws": "^4.0",
         "greenter/xcodes": "^4.0",
         "greenter/xmldsig": "^5.0",
         "nelexa/zip": "^3.3",

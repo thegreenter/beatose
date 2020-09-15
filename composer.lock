@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e83a856edfde6ab718f5eefd98486d8b",
+    "content-hash": "d6ad241e948d9a5b1ef8710a35d03da1",
     "packages": [
         {
             "name": "greenter/core",
@@ -149,6 +149,63 @@
                 "validator"
             ],
             "time": "2019-02-10T20:58:02+00:00"
+        },
+        {
+            "name": "greenter/ws",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thegreenter/ws.git",
+                "reference": "bc9fc954a313652fb500d7ea96fd9ae07c9997fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thegreenter/ws/zipball/bc9fc954a313652fb500d7ea96fd9ae07c9997fa",
+                "reference": "bc9fc954a313652fb500d7ea96fd9ae07c9997fa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-soap": "*",
+                "ext-zip": "*",
+                "ext-zlib": "*",
+                "greenter/core": "^4.0.2",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Greenter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giancarlos Salas",
+                    "email": "giansalex@gmail.com"
+                }
+            ],
+            "description": "WebServices Sunat Facturación Electrónica - Perú",
+            "homepage": "https://greenter.dev/",
+            "keywords": [
+                "facturacion-electronica",
+                "greenter",
+                "soap",
+                "sunat"
+            ],
+            "time": "2020-08-22T19:38:02+00:00"
         },
         {
             "name": "greenter/xcodes",

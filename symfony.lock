@@ -8,6 +8,9 @@
     "greenter/ubl-validator": {
         "version": "v2.1.0"
     },
+    "greenter/ws": {
+        "version": "v4.0.2"
+    },
     "greenter/xcodes": {
         "version": "v4.0.2"
     },
