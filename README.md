@@ -6,8 +6,9 @@ Una implementación de SUNAT Soap Server para recepcionar comprobantes electrón
 **Alternativa a SUNAT BETA**
 - Realizar pruebas con diferentes código de respuestas que el servicio de SUNAT no ofrece.
 - Soporte de comprobantes extensos (_si envías un CPE con 300 items al servicio de SUNAT, se cae_).
-- Verificación de Credenciales
-- Rechazo de comprobantes
+- Endpoint unificado para todos los comprobantes.
+- Verificación de Credenciales.
+- Rechazo de comprobantes.
 - Consulta de CDR (_SUNAT no posee un servicio BETA para consultar CDR_).
 - Almacenamiento de comprobantes enviados.
 
