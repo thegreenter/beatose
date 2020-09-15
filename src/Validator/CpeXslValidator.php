@@ -7,6 +7,7 @@ namespace App\Validator;
 use App\Model\ValidationError;
 use App\Services\Xml\XslDocResolverInterface;
 use DOMDocument;
+use Greenter\Validator\Entity\CpeError;
 use Greenter\Validator\Xml\XslValidator;
 
 class CpeXslValidator implements XmlValidatorInterface
@@ -40,8 +41,13 @@ class CpeXslValidator implements XmlValidatorInterface
             return null;
         }
 
-        $mapErrors = array_map(fn($error) => new ValidationError($error->getCode(), $error->getMessage()), $result);
+        $mapErrors = array_map(fn($error) => new ValidationError($error->getCode(), $this->getErrorMessage($error)), $result);
 
         return $mapErrors[0];
+    }
+
+    private function getErrorMessage(CpeError $error): string
+    {
+        return $error->getMessage().' (Nodo: '.$error->getNodePath().'='.$error->getNodeValue().').';
     }
 }
