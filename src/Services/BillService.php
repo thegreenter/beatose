@@ -7,11 +7,9 @@ namespace App\Services;
 use App\Services\Cdr\CdrOutputInterface;
 use App\Services\Soap\ExceptionCreator;
 use App\Services\Zip\XmlZipInterface;
-use App\Validator\FilenameValidator;
 use App\Validator\XmlValidatorInterface;
 use App\Model\{
     CpeCdrResult,
-    ErrorCodeList,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
     GetStatusRequest,
@@ -23,59 +21,35 @@ use App\Model\{
     SendSummaryRequest,
     SendSummaryResponse,
     StatusResponse,
-    ValidationError
 };
 use DateTime;
 use DOMDocument;
-use Greenter\Validator\Entity\DocumentType;
 use Psr\Log\LoggerInterface;
 use SoapFault;
 
 class BillService implements BillServiceInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /**
-     * @var FilenameValidator
-     */
-    private $typesValidator;
+    private XmlZipInterface $zipReader;
 
-    /**
-     * @var XmlZipInterface
-     */
-    private $zipReader;
+    private XmlValidatorInterface $xmlValidator;
 
-    /**
-     * @var XmlValidatorInterface
-     */
-    private $xmlValidator;
+    private ExceptionCreator $exceptionCreator;
 
-    /**
-     * @var ExceptionCreator
-     */
-    private $exceptionCreator;
-
-    /**
-     * @var CdrOutputInterface
-     */
-    private $cdrOut;
+    private CdrOutputInterface $cdrOut;
 
     /**
      * BillService constructor.
      * @param LoggerInterface $logger
-     * @param FilenameValidator $typesValidator
      * @param XmlZipInterface $zipReader
      * @param XmlValidatorInterface $xmlValidator
      * @param ExceptionCreator $exceptionCreator
      * @param CdrOutputInterface $cdrOut
      */
-    public function __construct(LoggerInterface $logger, FilenameValidator $typesValidator, XmlZipInterface $zipReader, XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut)
+    public function __construct(LoggerInterface $logger, XmlZipInterface $zipReader, XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut)
     {
         $this->logger = $logger;
-        $this->typesValidator = $typesValidator;
         $this->zipReader = $zipReader;
         $this->xmlValidator = $xmlValidator;
         $this->exceptionCreator = $exceptionCreator;
@@ -85,20 +59,6 @@ class BillService implements BillServiceInterface
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
         $dateReceived = new DateTime();
-        $allowedTypes = [
-            DocumentType::FACTURA,
-            DocumentType::BOLETA,
-            DocumentType::NOTA_CREDITO,
-            DocumentType::NOTA_DEBITO,
-            DocumentType::PERCEPCION,
-            DocumentType::RETENCION,
-            DocumentType::GUIA_REMISION,
-        ];
-        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
-            throw $this->exceptionCreator->fromValidation(
-                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
-            );
-        }
 
         $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
         if ($result->getError() !== null) {
@@ -126,16 +86,6 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
-        $allowedTypes = [
-            DocumentType::RESUMEN_DIARIO,
-            DocumentType::COMUNICACION_BAJA,
-            DocumentType::RESUMEN_REVERSION,
-        ];
-        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
-            throw $this->exceptionCreator->fromValidation(
-                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
-            );
-        }
 
         $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
         if ($result->getError() !== null) {
