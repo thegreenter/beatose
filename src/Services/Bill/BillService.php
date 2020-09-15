@@ -71,7 +71,7 @@ class BillService implements BillServiceInterface
         $cdrResult = (new CpeCdrResult())
             ->setDateReceived($dateReceived)
             ->setCodeResult($error !== null ? $error->getCode() : '0')
-            ->setNotes([]);
+            ->setNotes([$error->getCode().'-'.$error->getDetail()]);
 
         $obj = new SendBillResponse();
         $obj->applicationResponse = $this->cdrOut->output($doc, $cdrResult);
