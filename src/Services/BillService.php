@@ -7,9 +7,10 @@ namespace App\Services;
 use App\Services\Cdr\CdrOutputInterface;
 use App\Services\Soap\ExceptionCreator;
 use App\Services\Zip\XmlZipInterface;
+use App\Validator\FilenameValidator;
 use App\Validator\XmlValidatorInterface;
-use App\Entity\{
-    CpeCdrResult,
+use App\Entity\{CpeCdrResult,
+    ErrorCodeList,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
     GetStatusRequest,
@@ -20,8 +21,8 @@ use App\Entity\{
     SendPackResponse,
     SendSummaryRequest,
     SendSummaryResponse,
-    StatusResponse
-};
+    StatusResponse,
+    ValidationError};
 use DateTime;
 use DOMDocument;
 use Psr\Log\LoggerInterface;
@@ -33,6 +34,11 @@ class BillService implements BillServiceInterface
      * @var LoggerInterface
      */
     private $logger;
+
+    /**
+     * @var FilenameValidator
+     */
+    private $typesValidator;
 
     /**
      * @var XmlZipInterface
@@ -56,6 +62,12 @@ class BillService implements BillServiceInterface
 
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
+        if (!$this->typesValidator->isAllow($request->fileName, ['01', '03'])) {
+            throw $this->exceptionCreator->fromValidation(
+                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
+            );
+        }
+
         $dateReceived = new DateTime();
 
         $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
@@ -84,6 +96,12 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
+        if (!$this->typesValidator->isAllow($request->fileName, ['RC', 'RA', 'RR'])) {
+            throw $this->exceptionCreator->fromValidation(
+                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
+            );
+        }
+
         $obj = new SendSummaryResponse();
         $obj->ticket = (string)(int)(microtime(true) * 1000);
 

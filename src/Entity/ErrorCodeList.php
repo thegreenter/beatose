@@ -6,6 +6,7 @@ namespace App\Entity;
 
 final class ErrorCodeList
 {
+    public const ZIP_INVALID_NAME = '0151';
     public const ZIP_EMPTY = '0155';
     public const ZIP_CORRUPTO = '0156';
     public const ZIP_SIN_CPE = '0157';
