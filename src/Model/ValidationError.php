@@ -6,15 +6,9 @@ namespace App\Model;
 
 class ValidationError
 {
-    /**
-     * @var string
-     */
-    private $code;
+    private ?string $code;
 
-    /**
-     * @var string|null
-     */
-    private $detail;
+    private ?string $detail;
 
     /**
      * ValidationError constructor.
@@ -28,18 +22,18 @@ class ValidationError
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
     /**
-     * @param string $code
+     * @param string|null $code
      * @return ValidationError
      */
-    public function setCode(string $code): self
+    public function setCode(?string $code): self
     {
         $this->code = $code;
         return $this;
