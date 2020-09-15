@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\SoapCredential;
+use App\Model\SoapCredential;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CredentialStore

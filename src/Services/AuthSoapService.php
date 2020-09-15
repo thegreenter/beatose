@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\GetStatusCdrRequest;
-use App\Entity\GetStatusRequest;
-use App\Entity\SendBillRequest;
-use App\Entity\SendPackRequest;
-use App\Entity\SendSummaryRequest;
+use App\Model\GetStatusCdrRequest;
+use App\Model\GetStatusRequest;
+use App\Model\SendBillRequest;
+use App\Model\SendPackRequest;
+use App\Model\SendSummaryRequest;
 use SoapFault;
 
 class AuthSoapService

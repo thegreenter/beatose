@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Xml;
 
-use App\Entity\MinimalDocInfo;
+use App\Model\MinimalDocInfo;
 use DOMDocument;
 use DOMElement;
 use DOMNode;

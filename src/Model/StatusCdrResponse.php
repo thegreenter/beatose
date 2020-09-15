@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Model;
 
 class StatusCdrResponse
 {
     /**
      * @var string
      */
-    private $content;
+    public $content;
     /**
      * @var string
      */
-    private $statusCode;
+    public $statusCode;
     /**
      * @var string
      */
-    private $statusMessage;
+    public $statusMessage;
 }

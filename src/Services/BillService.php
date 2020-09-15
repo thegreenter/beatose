@@ -9,7 +9,8 @@ use App\Services\Soap\ExceptionCreator;
 use App\Services\Zip\XmlZipInterface;
 use App\Validator\FilenameValidator;
 use App\Validator\XmlValidatorInterface;
-use App\Entity\{CpeCdrResult,
+use App\Model\{
+    CpeCdrResult,
     ErrorCodeList,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
@@ -22,7 +23,8 @@ use App\Entity\{CpeCdrResult,
     SendSummaryRequest,
     SendSummaryResponse,
     StatusResponse,
-    ValidationError};
+    ValidationError
+};
 use DateTime;
 use DOMDocument;
 use Greenter\Validator\Entity\DocumentType;
@@ -129,6 +131,11 @@ class BillService implements BillServiceInterface
             DocumentType::COMUNICACION_BAJA,
             DocumentType::RESUMEN_REVERSION,
         ];
+        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
+            throw $this->exceptionCreator->fromValidation(
+                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
+            );
+        }
 
         $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
         if ($result->getError() !== null) {

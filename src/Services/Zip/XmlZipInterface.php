@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Zip;
 
-use App\Entity\ValueResult;
+use App\Model\ValueResult;
 
 interface XmlZipInterface
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Cdr;
 
-use App\Entity\ApplicationResponse;
-use App\Entity\CpeCdrResult;
+use App\Model\ApplicationResponse;
+use App\Model\CpeCdrResult;
 use App\Services\Xml\XmlParserInterface;
 use DateTime;
 use DOMDocument;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Model;
 
-class SendSummaryRequest
+class SendPackRequest
 {
     /**
      * @var string

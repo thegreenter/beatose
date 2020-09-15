@@ -26,6 +26,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Model/'
             - '../src/Tests/'
 
     # controllers are imported separately to make sure services can be injected

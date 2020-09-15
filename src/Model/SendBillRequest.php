@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Model;
 
-class StatusResponse
+class SendBillRequest
 {
     /**
      * @var string
      */
-    public $content;
+    public $fileName;
+
     /**
      * @var string
      */
-    public $statusCode;
+    public $contentFile;
 }

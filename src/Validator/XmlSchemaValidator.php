@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Entity\ErrorCodeList;
-use App\Entity\ValidationError;
+use App\Model\ErrorCodeList;
+use App\Model\ValidationError;
 use DOMDocument;
 use Greenter\Ubl\Resolver\PathResolverInterface;
 use Greenter\Ubl\SchemaValidatorInterface;

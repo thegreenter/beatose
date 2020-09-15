@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Cdr;
 
-use App\Entity\ApplicationResponse;
+use App\Model\ApplicationResponse;
 use App\Services\Zip\XmlZipInterface;
 
 class ZipCdrWriter implements CdrWriterInterface

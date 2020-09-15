@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Zip;
 
-use App\Entity\ErrorCodeList;
-use App\Entity\ValidationError;
-use App\Entity\ValueResult;
+use App\Model\ErrorCodeList;
+use App\Model\ValidationError;
+use App\Model\ValueResult;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Soap;
 
-use App\Entity\ValidationError;
+use App\Model\ValidationError;
 use Greenter\Validator\ErrorCodeProviderInterface;
 use SoapFault;
 

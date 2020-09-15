@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Entity\ValidationError;
+use App\Model\ValidationError;
 use DOMDocument;
 
 class CpeXslValidator implements XmlValidatorInterface

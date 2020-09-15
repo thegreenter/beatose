@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\GetStatusCdrRequest;
-use App\Entity\GetStatusCdrResponse;
-use App\Entity\GetStatusRequest;
-use App\Entity\GetStatusResponse;
-use App\Entity\SendBillRequest;
-use App\Entity\SendBillResponse;
-use App\Entity\SendPackRequest;
-use App\Entity\SendPackResponse;
-use App\Entity\SendSummaryRequest;
-use App\Entity\SendSummaryResponse;
+use App\Model\{
+    GetStatusCdrRequest,
+    GetStatusCdrResponse,
+    GetStatusRequest,
+    GetStatusResponse,
+    SendBillRequest,
+    SendBillResponse,
+    SendPackRequest,
+    SendPackResponse,
+    SendSummaryRequest,
+    SendSummaryResponse,
+};
 
 interface BillServiceInterface
 {
