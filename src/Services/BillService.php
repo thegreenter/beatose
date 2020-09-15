@@ -129,10 +129,18 @@ class BillService implements BillServiceInterface
             DocumentType::COMUNICACION_BAJA,
             DocumentType::RESUMEN_REVERSION,
         ];
-        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
-            throw $this->exceptionCreator->fromValidation(
-                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
-            );
+
+        $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
+        if ($result->getError() !== null) {
+            throw $this->exceptionCreator->fromValidation($result->getError());
+        }
+
+        $doc = new DOMDocument();
+        $doc->loadXML($result->getContent());
+
+        $error = $this->xmlValidator->validate($request->fileName, $doc);
+        if ($error !== null && (int)$error->getCode() < 2000) {
+            throw $this->exceptionCreator->fromValidation($error);
         }
 
         $obj = new SendSummaryResponse();
