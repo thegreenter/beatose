@@ -25,6 +25,7 @@ use App\Entity\{CpeCdrResult,
     ValidationError};
 use DateTime;
 use DOMDocument;
+use Greenter\Validator\Entity\DocumentType;
 use Psr\Log\LoggerInterface;
 use SoapFault;
 
@@ -62,7 +63,16 @@ class BillService implements BillServiceInterface
 
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
-        if (!$this->typesValidator->isAllow($request->fileName, ['01', '03'])) {
+        $allowedTypes = [
+            DocumentType::FACTURA,
+            DocumentType::BOLETA,
+            DocumentType::NOTA_CREDITO,
+            DocumentType::NOTA_DEBITO,
+            DocumentType::PERCEPCION,
+            DocumentType::RETENCION,
+            DocumentType::GUIA_REMISION,
+        ];
+        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
             throw $this->exceptionCreator->fromValidation(
                 new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
             );
@@ -96,7 +106,12 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
-        if (!$this->typesValidator->isAllow($request->fileName, ['RC', 'RA', 'RR'])) {
+        $allowedTypes = [
+            DocumentType::RESUMEN_DIARIO,
+            DocumentType::COMUNICACION_BAJA,
+            DocumentType::RESUMEN_REVERSION,
+        ];
+        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
             throw $this->exceptionCreator->fromValidation(
                 new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
             );
