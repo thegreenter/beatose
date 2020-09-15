@@ -6,7 +6,7 @@ namespace App\Handler;
 
 use App\Services\AuthSoapService;
 use SoapServer;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,7 +24,7 @@ class SoapServerHandler implements RequestHandlerInterface
     private $router;
 
     /**
-     * @var ContainerBagInterface
+     * @var ParameterBagInterface
      */
     private $params;
 
@@ -33,9 +33,9 @@ class SoapServerHandler implements RequestHandlerInterface
      *
      * @param AuthSoapService $service
      * @param UrlGeneratorInterface $router
-     * @param ContainerBagInterface $params
+     * @param ParameterBagInterface $params
      */
-    public function __construct(AuthSoapService $service, UrlGeneratorInterface $router, ContainerBagInterface $params)
+    public function __construct(AuthSoapService $service, UrlGeneratorInterface $router, ParameterBagInterface $params)
     {
         $this->service = $service;
         $this->router = $router;

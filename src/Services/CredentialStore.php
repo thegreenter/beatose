@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Entity\SoapCredential;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CredentialStore
 {
     /**
-     * @var ContainerBagInterface
+     * @var ParameterBagInterface
      */
     private $params;
 
     /**
      * CredentialStore constructor.
-     * @param ContainerBagInterface $params
+     * @param ParameterBagInterface $params
      */
-    public function __construct(ContainerBagInterface $params)
+    public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -22,7 +22,7 @@ class WsdlHandler implements RequestHandlerInterface
     private $router;
 
     /**
-     * @var ContainerBagInterface
+     * @var ParameterBagInterface
      */
     private $params;
 
@@ -31,9 +31,9 @@ class WsdlHandler implements RequestHandlerInterface
      *
      * @param RequestHandlerInterface $next
      * @param UrlGeneratorInterface $router
-     * @param ContainerBagInterface $params
+     * @param ParameterBagInterface $params
      */
-    public function __construct(RequestHandlerInterface $next, UrlGeneratorInterface $router, ContainerBagInterface $params)
+    public function __construct(RequestHandlerInterface $next, UrlGeneratorInterface $router, ParameterBagInterface $params)
     {
         $this->next = $next;
         $this->router = $router;
