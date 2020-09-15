@@ -60,13 +60,8 @@ class BillService implements BillServiceInterface
     {
         $dateReceived = new DateTime();
 
-        $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
-        if ($result->getError() !== null) {
-            throw $this->exceptionCreator->fromValidation($result->getError());
-        }
-
         $doc = new DOMDocument();
-        $doc->loadXML($result->getContent());
+        $doc->loadXML($request->contentFile);
 
         $error = $this->xmlValidator->validate($request->fileName, $doc);
         if ($error !== null && (int)$error->getCode() < 2000) {
@@ -86,14 +81,8 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
-
-        $result = $this->zipReader->decompress($request->contentFile, $request->fileName);
-        if ($result->getError() !== null) {
-            throw $this->exceptionCreator->fromValidation($result->getError());
-        }
-
         $doc = new DOMDocument();
-        $doc->loadXML($result->getContent());
+        $doc->loadXML($request->contentFile);
 
         $error = $this->xmlValidator->validate($request->fileName, $doc);
         if ($error !== null && (int)$error->getCode() < 2000) {
