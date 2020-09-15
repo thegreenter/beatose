@@ -5,11 +5,15 @@ Una implementación de SUNAT Soap Server para recepcionar comprobantes electrón
 
 Propósito
 - **Mock Server**, para realizar pruebas con diferentes respuestas que 
-actualmente el servidor BETA de SUNAT no ofrece.
+actualmente el servicio de SUNAT no ofrece.
+- Alternativa al servicio BETA de SUNAT.
 
-**Live**
+LIVE (Pruebas)
 
-https://beatose.herokuapp.com/ol-ti-itcpe/billService?wsdl
+|      :rocket: |                                      |
+|--------------:|--------------------------------------|
+|URL            | https://beatose.herokuapp.com/       |    
+
 
 ## Build
 Ejecutar
@@ -20,11 +24,11 @@ php -S 127.0.0.1:8000 -t public
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
 ## Métodos de Servicio
-- `sendBill`
-- `sendSummary`
-- `sendPack`
-- `getStatus`
-- `getStatusCdr`
+- `sendBill` :white_check_mark:
+- `sendSummary` :white_check_mark:
+- `sendPack` :hourglass:
+- `getStatus` :hourglass:
+- `getStatusCdr` :hourglass:
 
 **Credenciales**
 
