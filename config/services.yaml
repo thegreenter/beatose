@@ -53,6 +53,13 @@ services:
             - '@App\Validator\XmlSignValidator'
             - '@App\Validator\CpeXslValidator'
 
+    App\Services\Cdr\ZipCdrWriter:
+        decorates: App\Services\Cdr\XmlCdrWriter
+
+    App\Services\Cdr\AppCdrCreatorInterface: '@App\Services\Cdr\XmlAppCdrCreator'
+    App\Services\Cdr\CdrWriterInterface: '@App\Services\Cdr\ZipCdrWriter'
+    App\Services\Cdr\CdrOutputInterface: '@App\Services\Cdr\CdrBridge'
+
     Greenter\XMLSecLibs\Sunat\SignedXml:
         factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
         arguments: ['%app.sign_cert%', '%app.sign_pass%']
