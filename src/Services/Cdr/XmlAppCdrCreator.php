@@ -6,36 +6,46 @@ namespace App\Services\Cdr;
 
 use App\Entity\ApplicationResponse;
 use App\Entity\CpeCdrResult;
+use App\Services\Xml\XmlParserInterface;
 use DateTime;
 use DOMDocument;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
 {
     /**
+     * @var string
+     */
+    private $oseRuc;
+
+    /**
      * @var FilenameResolverInterface
      */
     private $filenameResolver;
 
     /**
-     * @var string
+     * @var XmlParserInterface
      */
-    private $oseRuc;
+    private $xmlParser;
 
     /**
      * XmlAppCdrCreator constructor.
      *
      * @param string $oseRuc
      * @param FilenameResolverInterface $filenameResolver
+     * @param XmlParserInterface $xmlParser
      */
-    public function __construct(string $oseRuc, FilenameResolverInterface $filenameResolver)
+    public function __construct(string $oseRuc, FilenameResolverInterface $filenameResolver, XmlParserInterface $xmlParser)
     {
         $this->oseRuc = $oseRuc;
         $this->filenameResolver = $filenameResolver;
+        $this->xmlParser = $xmlParser;
     }
 
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse
     {
         $docName = $this->filenameResolver->getFilename($document);
+        $minDoc = $this->xmlParser->parse($document);
+
         return (new ApplicationResponse())
             ->setId($this->createId())
             ->setFechaRecepcion($result->getDateReceived())
@@ -43,8 +53,8 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
             ->setFechaGeneracion(new DateTime())
             ->setRucEmisorCdr($this->oseRuc)
             ->setRucEmisorCpe(substr($docName, 0, 11))
-            ->setTipoDocReceptorCpe('6')
-            ->setNroDocReceptorCpe('20000000002')
+            ->setTipoDocReceptorCpe($minDoc->getRecipientTypeDoc())
+            ->setNroDocReceptorCpe($minDoc->getRecipient())
             ->setCpeId(substr($docName, 15, strlen($docName) - 15))
             ->setCodigoRespuesta($this->getDescription((int)$result->getCodeResult()))
             ->setNotasAsociadas($result->getNotes())
