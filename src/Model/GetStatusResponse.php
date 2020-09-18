@@ -7,7 +7,12 @@ namespace App\Model;
 class GetStatusResponse
 {
     /**
-     * @var StatusResponse
+     * @var StatusResponse|null
      */
-    public $status;
+    public ?StatusResponse $status;
+
+    public function __construct()
+    {
+        $this->status = new StatusResponse();
+    }
 }
