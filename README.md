@@ -20,6 +20,11 @@ LIVE (Pruebas)
 
 
 ## Build
+Crear base de datos de prueba en la ruta `./var/data.db`.
+```
+php composer/DoctrineMigrations.php
+```
+
 Ejecutar (require `PHP +7.4`)
 ```bash
 php -S 127.0.0.1:8000 -t public
