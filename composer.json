@@ -31,7 +31,8 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.42",
-        "symfony/maker-bundle": "^1.21"
+        "symfony/maker-bundle": "^1.21",
+        "symfony/phpunit-bridge": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
