@@ -14,7 +14,10 @@ class XmlSignValidator implements XmlValidatorInterface
     public function validate(string $filename, DOMDocument $document): ?ValidationError
     {
         $signValidator = new SignedXml();
+        // Avoid sign node remove.
+        $documentToVerify = new DOMDocument();
+        $documentToVerify->loadXML($document->saveXML());
 
-        return $signValidator->verify($document) ? null : new ValidationError(ErrorCodeList::XML_ALTERADO);
+        return $signValidator->verify($documentToVerify) ? null : new ValidationError(ErrorCodeList::XML_ALTERADO);
     }
 }
