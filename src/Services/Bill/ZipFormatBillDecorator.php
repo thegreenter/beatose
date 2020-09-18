@@ -16,7 +16,6 @@ use App\Model\SendSummaryRequest;
 use App\Model\SendSummaryResponse;
 use App\Services\Soap\ExceptionCreator;
 use App\Services\Zip\XmlZipInterface;
-use Greenter\Ws\Reader\FilenameExtractorInterface;
 
 class ZipFormatBillDecorator implements BillServiceInterface
 {
@@ -24,23 +23,18 @@ class ZipFormatBillDecorator implements BillServiceInterface
 
     private XmlZipInterface $zipper;
 
-    private FilenameExtractorInterface $filenameResolver;
-
     private ExceptionCreator $exceptionCreator;
 
     /**
      * ZipFormatBillDecorator constructor.
-     *
      * @param BillServiceInterface $service
      * @param XmlZipInterface $zipper
-     * @param FilenameExtractorInterface $filenameResolver
      * @param ExceptionCreator $exceptionCreator
      */
-    public function __construct(BillServiceInterface $service, XmlZipInterface $zipper, FilenameExtractorInterface $filenameResolver, ExceptionCreator $exceptionCreator)
+    public function __construct(BillServiceInterface $service, XmlZipInterface $zipper, ExceptionCreator $exceptionCreator)
     {
         $this->service = $service;
         $this->zipper = $zipper;
-        $this->filenameResolver = $filenameResolver;
         $this->exceptionCreator = $exceptionCreator;
     }
 
@@ -88,7 +82,7 @@ class ZipFormatBillDecorator implements BillServiceInterface
 
         $xmlContent = $response->status->content;
         if ($xmlContent !== null) {
-            $name = $this->filenameResolver->getFilename($xmlContent);
+            $name = $request->ticket;
             $response->status->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent)->getContent();
         }
 
@@ -113,7 +107,12 @@ class ZipFormatBillDecorator implements BillServiceInterface
         $response = $this->service->getStatusCdr($request);
         $xmlContent = $response->statusCdr->content;
         if ($xmlContent !== null) {
-            $name = $this->filenameResolver->getFilename($xmlContent);
+            $name = implode('-', [
+                $request->rucComprobante,
+                $request->tipoComprobante,
+                $request->serieComprobante,
+                $request->numeroComprobante,
+            ]);
             $response->statusCdr->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent)->getContent();
         }
 
