@@ -36,8 +36,8 @@ La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-i
 - `sendBill` :white_check_mark:
 - `sendSummary` :white_check_mark:
 - `sendPack` :hourglass:
-- `getStatus` :hourglass:
-- `getStatusCdr` :hourglass:
+- `getStatus` :white_check_mark:
+- `getStatusCdr` :white_check_mark:
 
 **Credenciales**
 
