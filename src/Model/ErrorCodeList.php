@@ -7,6 +7,7 @@ namespace App\Model;
 final class ErrorCodeList
 {
     public const INVALID_USER = '0102';
+    public const TICKET_NOTFOUND = '0127';
     public const ZIP_INVALID_NAME = '0151';
     public const ZIP_EMPTY = '0155';
     public const ZIP_CORRUPTO = '0156';
