@@ -54,6 +54,9 @@ class BillService implements BillServiceInterface
         $this->fileStore = $fileStore;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sendBill(SendBillRequest $request): SendBillResponse
     {
         $dateReceived = new DateTime();
@@ -79,6 +82,9 @@ class BillService implements BillServiceInterface
         return $response;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
         $dateReceived = new DateTime();
@@ -105,6 +111,9 @@ class BillService implements BillServiceInterface
         return $response;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getStatus(GetStatusRequest $request): GetStatusResponse
     {
         $ticket = $request->ticket;
@@ -121,11 +130,17 @@ class BillService implements BillServiceInterface
         return $response;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sendPack(SendPackRequest $request): SendPackResponse
     {
         throw $this->exceptionCreator->fromCode(ErrorCodeList::XML_CANNOT_PROCESS);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
     {
         $name = implode('-', [
