@@ -135,8 +135,8 @@ class BillService implements BillServiceInterface
             throw $this->exceptionCreator->fromCode(ErrorCodeList::TICKET_NOTFOUND);
         }
         $obj = new GetStatusCdrResponse();
-        $obj->statusCdr->statusCode = $cpe->getStateCode();
-        $obj->statusCdr->statusMessage = $cpe->getStateCode() === '0' ? 'ACEPTADO' : 'RECHAZADO';
+        $obj->statusCdr->statusCode = '0';
+        $obj->statusCdr->statusMessage = 'La constancia existe';
         $obj->statusCdr->content = file_get_contents('R-'.$cpe->getName().'.xml');
 
         return $obj;
