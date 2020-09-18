@@ -6,6 +6,7 @@ namespace App\Services\Cdr;
 
 use App\Entity\CpeDocument;
 use App\Model\CpeCdrResult;
+use App\Repository\CpeDocumentRepository;
 use App\Services\File\FileStoreInterface;
 use App\Services\Xml\HashExtract;
 use DateTime;
@@ -20,7 +21,9 @@ class CdrBridge implements CdrOutputInterface
 
     private HashExtract $hashExtractor;
 
-    private EntityManagerInterface $repository;
+    private EntityManagerInterface $entityManager;
+
+    private CpeDocumentRepository $repository;
 
     private FileStoreInterface $fileStore;
 
@@ -29,14 +32,16 @@ class CdrBridge implements CdrOutputInterface
      * @param AppCdrCreatorInterface $appCdrCreator
      * @param CdrWriterInterface $cdrWriter
      * @param HashExtract $hashExtractor
-     * @param EntityManagerInterface $repository
+     * @param EntityManagerInterface $entityManager
+     * @param CpeDocumentRepository $repository
      * @param FileStoreInterface $fileStore
      */
-    public function __construct(AppCdrCreatorInterface $appCdrCreator, CdrWriterInterface $cdrWriter, HashExtract $hashExtractor, EntityManagerInterface $repository, FileStoreInterface $fileStore)
+    public function __construct(AppCdrCreatorInterface $appCdrCreator, CdrWriterInterface $cdrWriter, HashExtract $hashExtractor, EntityManagerInterface $entityManager, CpeDocumentRepository $repository, FileStoreInterface $fileStore)
     {
         $this->appCdrCreator = $appCdrCreator;
         $this->cdrWriter = $cdrWriter;
         $this->hashExtractor = $hashExtractor;
+        $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->fileStore = $fileStore;
     }
@@ -46,8 +51,7 @@ class CdrBridge implements CdrOutputInterface
         $appCdr = $this->appCdrCreator->create($document, $result);
         $cdr = $this->cdrWriter->write($appCdr);
 
-        $cpe = $this->repository->getRepository(CpeDocument::class)
-                            ->findOneByName($appCdr->getFilename());
+        $cpe = $this->repository->findOneByName($appCdr->getFilename());
 
         if ($cpe === null) {
             $cpe = new CpeDocument();
@@ -65,8 +69,8 @@ class CdrBridge implements CdrOutputInterface
         $this->fileStore->save($cpe->getName().'.xml', $document->saveXML());
         $this->fileStore->save('R-'.$cpe->getName().'.xml', $cdr);
 
-        $this->repository->persist($cpe);
-        $this->repository->flush();
+        $this->entityManager->persist($cpe);
+        $this->entityManager->flush();
 
         return $cdr;
     }
