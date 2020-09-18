@@ -73,10 +73,10 @@ class BillService implements BillServiceInterface
             ->setTicket(null)
         ;
 
-        $obj = new SendBillResponse();
-        $obj->applicationResponse = $this->cdrOut->output($doc, $cdrResult);
+        $response = new SendBillResponse();
+        $response->applicationResponse = $this->cdrOut->output($doc, $cdrResult);
 
-        return $obj;
+        return $response;
     }
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
@@ -99,10 +99,10 @@ class BillService implements BillServiceInterface
         ;
         $this->cdrOut->output($doc, $cdrResult);
 
-        $obj = new SendSummaryResponse();
-        $obj->ticket = $ticket;
+        $response = new SendSummaryResponse();
+        $response->ticket = $ticket;
 
-        return $obj;
+        return $response;
     }
 
     public function getStatus(GetStatusRequest $request): GetStatusResponse
@@ -114,11 +114,11 @@ class BillService implements BillServiceInterface
             throw $this->exceptionCreator->fromCode(ErrorCodeList::TICKET_NOTFOUND);
         }
 
-        $obj = new GetStatusResponse();
-        $obj->status->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
-        $obj->status->statusCode = '0';
+        $response = new GetStatusResponse();
+        $response->status->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
+        $response->status->statusCode = '0';
 
-        return $obj;
+        return $response;
     }
 
     public function sendPack(SendPackRequest $request): SendPackResponse
@@ -139,11 +139,11 @@ class BillService implements BillServiceInterface
         if ($cpe === null) {
             throw $this->exceptionCreator->fromCode(ErrorCodeList::TICKET_NOTFOUND);
         }
-        $obj = new GetStatusCdrResponse();
-        $obj->statusCdr->statusCode = '0';
-        $obj->statusCdr->statusMessage = 'La constancia existe';
-        $obj->statusCdr->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
+        $response = new GetStatusCdrResponse();
+        $response->statusCdr->statusCode = '0';
+        $response->statusCdr->statusMessage = 'La constancia existe';
+        $response->statusCdr->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
 
-        return $obj;
+        return $response;
     }
 }
