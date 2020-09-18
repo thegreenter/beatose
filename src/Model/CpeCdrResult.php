@@ -8,13 +8,13 @@ use DateTime;
 
 class CpeCdrResult
 {
-    private ?DateTime $dateReceived;
+    private ?DateTime $dateReceived = null;
 
-    private ?string $codeResult;
+    private ?string $codeResult = null;
 
-    private ?array $notes;
+    private ?array $notes = null;
 
-    private ?string $ticket;
+    private ?string $ticket = null;
 
     /**
      * @return DateTime|null

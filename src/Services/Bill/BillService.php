@@ -73,7 +73,6 @@ class BillService implements BillServiceInterface
             ->setDateReceived($dateReceived)
             ->setCodeResult($error !== null ? $error->getCode() : '0')
             ->setNotes($error !== null ? [$error->getCode().'-'.$error->getDetail()] : [])
-            ->setTicket(null)
         ;
 
         $response = new SendBillResponse();
