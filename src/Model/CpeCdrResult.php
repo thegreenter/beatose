@@ -14,6 +14,8 @@ class CpeCdrResult
 
     private ?array $notes;
 
+    private ?string $ticket;
+
     /**
      * @return DateTime|null
      */
@@ -65,6 +67,24 @@ class CpeCdrResult
     public function setNotes(?array $notes): CpeCdrResult
     {
         $this->notes = $notes;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTicket(): ?string
+    {
+        return $this->ticket;
+    }
+
+    /**
+     * @param string|null $ticket
+     * @return CpeCdrResult
+     */
+    public function setTicket(?string $ticket): CpeCdrResult
+    {
+        $this->ticket = $ticket;
         return $this;
     }
 }
