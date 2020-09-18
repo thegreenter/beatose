@@ -26,18 +26,19 @@ class CdrBridge implements CdrOutputInterface
 
     /**
      * CdrBridge constructor.
-     *
      * @param AppCdrCreatorInterface $appCdrCreator
      * @param CdrWriterInterface $cdrWriter
      * @param HashExtract $hashExtractor
      * @param EntityManagerInterface $repository
+     * @param FileStoreInterface $fileStore
      */
-    public function __construct(AppCdrCreatorInterface $appCdrCreator, CdrWriterInterface $cdrWriter, HashExtract $hashExtractor, EntityManagerInterface $repository)
+    public function __construct(AppCdrCreatorInterface $appCdrCreator, CdrWriterInterface $cdrWriter, HashExtract $hashExtractor, EntityManagerInterface $repository, FileStoreInterface $fileStore)
     {
         $this->appCdrCreator = $appCdrCreator;
         $this->cdrWriter = $cdrWriter;
         $this->hashExtractor = $hashExtractor;
         $this->repository = $repository;
+        $this->fileStore = $fileStore;
     }
 
     public function output(DOMDocument $document, CpeCdrResult $result): ?string
