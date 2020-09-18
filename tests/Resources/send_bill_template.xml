@@ -1,0 +1,17 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://service.sunat.gob.pe" xmlns:ns2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <SOAP-ENV:Header>
+        <ns2:Security>
+            <ns2:UsernameToken>
+                <ns2:Username>%user%</ns2:Username>
+                <o:Password xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">%pass%</o:Password>
+            </ns2:UsernameToken>
+        </ns2:Security>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <ns1:sendBill>
+            <fileName>%filename%</fileName>
+            <contentFile>%content%</contentFile>
+            <partyType/>
+        </ns1:sendBill>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
