@@ -17,7 +17,8 @@ LIVE (Pruebas)
 |      :rocket: |                                      |
 |--------------:|--------------------------------------|
 |URL            | https://beatose.herokuapp.com/       |    
-
+|User           | `20123456789MODDATOS`                |
+|Password       | `moddatos`                           |
 
 ## Build
 Requerimientos
@@ -38,14 +39,11 @@ php -S 127.0.0.1:8000 -t public
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
 ## Métodos de Servicio
+
 - `sendBill` :white_check_mark:
 - `sendSummary` :white_check_mark:
 - `sendPack` :hourglass:
 - `getStatus` :white_check_mark:
 - `getStatusCdr` :white_check_mark:
 
-**Credenciales**
-
-Puedes cambiar las credenciales en el archivo `.env`, por defecto son:
-- Usuario: `20123456789MODDATOS`
-- Contraseña: `moddatos`
+Puedes cambiar las credenciales en el archivo `.env`
