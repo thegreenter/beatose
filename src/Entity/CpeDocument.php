@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\CpeDocumentRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,14 +21,9 @@ class CpeDocument
     private ?int $id;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, unique=true)
      */
     private ?string $name;
-
-    /**
-     * @ORM\Column(type="string", length=11)
-     */
-    private ?string $issuer;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
@@ -49,6 +45,11 @@ class CpeDocument
      */
     private ?string $ticket;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private ?DateTime $createDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,18 +63,6 @@ class CpeDocument
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getIssuer(): ?string
-    {
-        return $this->issuer;
-    }
-
-    public function setIssuer(string $issuer): self
-    {
-        $this->issuer = $issuer;
 
         return $this;
     }
@@ -123,6 +112,17 @@ class CpeDocument
     {
         $this->ticket = $ticket;
 
+        return $this;
+    }
+
+    public function getCreateDate(): ?DateTime
+    {
+        return $this->createDate;
+    }
+
+    public function setCreateDate(?DateTime $createDate): CpeDocument
+    {
+        $this->createDate = $createDate;
         return $this;
     }
 }
