@@ -1,5 +1,6 @@
 # ![beatOSE](https://raw.githubusercontent.com/thegreenter/beatose/master/public/beat-ose.png) beatOSE
 [![Heroku](https://heroku-badge.herokuapp.com/?app=beatose)](https://beatose.herokuapp.com/)
+![PHP Composer](https://github.com/thegreenter/beatose/workflows/PHP%20Composer/badge.svg)
 
 Una implementación de SUNAT Soap Server para recepcionar y validar comprobantes electrónicos.
 
@@ -38,12 +39,19 @@ php -S 127.0.0.1:8000 -t public
 
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
+Las **credenciales SOAP** pueden ser modificadas en el archivo `.env`:
+
+```shell script
+SOAP_USER=20000001XXXXX
+SOAP_PASS=xxxx
+```
+
 ## Métodos de Servicio
 
-- `sendBill` :white_check_mark:
-- `sendSummary` :white_check_mark:
-- `sendPack` :hourglass:
-- `getStatus` :white_check_mark:
-- `getStatusCdr` :white_check_mark:
-
-Puedes cambiar las credenciales en el archivo `.env`
+| SOAP Method    | Status            |
+|----------------|-------------------|
+|`sendBill`      |:white_check_mark: |
+|`sendSummary`   |:white_check_mark: |
+|`sendPack`      |:hourglass:        |
+|`getStatus`     |:white_check_mark: |
+|`getStatusCdr`  |:white_check_mark: |
