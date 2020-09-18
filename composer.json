@@ -66,7 +66,8 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "@php composer/XsltDownloader.php"
+            "@php composer/XsltDownloader.php",
+            "@php composer/DoctrineMigrations.php"
         ],
         "post-update-cmd": [
             "@auto-scripts"
