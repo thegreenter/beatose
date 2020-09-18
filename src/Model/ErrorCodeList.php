@@ -15,6 +15,7 @@ final class ErrorCodeList
     public const ZIP_ERROR_UNZIP = '0250';
     public const XML_NO_RAIZ = '0300';
     public const XML_NO_SCHEMA_FILE = '0304';
+    public const XML_CANNOT_PROCESS = '0305';
     public const XML_NO_PARSE = '0306';
     public const XML_ALTERADO = '2334';
 }

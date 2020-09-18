@@ -23,7 +23,6 @@ use App\Model\{CpeCdrResult,
 };
 use DateTime;
 use DOMDocument;
-use SoapFault;
 
 class BillService implements BillServiceInterface
 {
@@ -119,7 +118,7 @@ class BillService implements BillServiceInterface
 
     public function sendPack(SendPackRequest $request): SendPackResponse
     {
-        throw new SoapFault('0000', 'NO IMPLEMENTADO');
+        throw $this->exceptionCreator->fromCode(ErrorCodeList::XML_CANNOT_PROCESS);
     }
 
     public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
