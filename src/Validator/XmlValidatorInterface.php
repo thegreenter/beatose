@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Entity\ValidationError;
+use App\Model\ValidationError;
 use DOMDocument;
 
 interface XmlValidatorInterface

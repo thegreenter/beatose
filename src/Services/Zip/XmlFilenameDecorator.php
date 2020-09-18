@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Zip;
 
-use App\Entity\ValidationError;
-use App\Entity\ValueResult;
+use App\Model\ValidationError;
+use App\Model\ValueResult;
 
 class XmlFilenameDecorator implements XmlZipInterface
 {

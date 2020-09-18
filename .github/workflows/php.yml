@@ -31,4 +31,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHPStan Lint
-      run: vendor/bin/phpstan analyse
+      run: composer run-script lint:ci
+
+    - name: Unit Tests
+      run: php bin/phpunit

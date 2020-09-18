@@ -11,16 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BillServiceController extends AbstractController
 {
-    /**
-     * @var RequestHandlerInterface
-     */
-    private $handler;
+    private RequestHandlerInterface $handler;
 
-    /**
-     * BillServiceController constructor.
-     *
-     * @param RequestHandlerInterface $handler
-     */
     public function __construct(RequestHandlerInterface $handler)
     {
         $this->handler = $handler;

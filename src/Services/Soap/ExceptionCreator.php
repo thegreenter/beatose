@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Soap;
 
-use App\Entity\ValidationError;
+use App\Model\ValidationError;
 use Greenter\Validator\ErrorCodeProviderInterface;
 use SoapFault;
 
@@ -32,6 +32,14 @@ class ExceptionCreator
             $this->codeResolver->getValue($error->getCode()),
             '',
             $error->getDetail(),
+        );
+    }
+
+    public function fromCode(string $code): SoapFault
+    {
+        return new SoapFault(
+            $code,
+            $this->codeResolver->getValue($code),
         );
     }
 }

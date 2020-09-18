@@ -4,47 +4,44 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\GetStatusCdrRequest;
-use App\Entity\GetStatusRequest;
-use App\Entity\SendBillRequest;
-use App\Entity\SendPackRequest;
-use App\Entity\SendSummaryRequest;
-use SoapFault;
+use App\Services\Bill\BillServiceInterface;
+use App\Services\Util\Mapper;
+use App\Model\{
+    ErrorCodeList,
+    GetStatusCdrRequest,
+    GetStatusRequest,
+    SendBillRequest,
+    SendPackRequest,
+    SendSummaryRequest,
+    ValidationError,
+};
+use App\Services\Soap\ExceptionCreator;
 
 class AuthSoapService
 {
-    /**
-     * @var BillServiceInterface
-     */
-    private $billService;
+    private BillServiceInterface $billService;
+
+    private Mapper $mapper;
+
+    private CredentialStore $credentialStore;
+
+    private ExceptionCreator $exceptionCretor;
+
+    private bool $isAuthenticated = false;
 
     /**
-     * @var Mapper
-     */
-    private $mapper;
-
-    /**
-     * @var CredentialStore
-     */
-    private $credentialStore;
-
-    /**
-     * @var bool
-     */
-    private $isAuthenticated = false;
-
-    /**
-     * SoapService constructor
-     *
+     * AuthSoapService constructor.
      * @param BillServiceInterface $billService
      * @param Mapper $mapper
      * @param CredentialStore $credentialStore
+     * @param ExceptionCreator $exceptionCretor
      */
-    public function __construct(BillServiceInterface $billService, Mapper $mapper, CredentialStore $credentialStore)
+    public function __construct(BillServiceInterface $billService, Mapper $mapper, CredentialStore $credentialStore, ExceptionCreator $exceptionCretor)
     {
         $this->billService = $billService;
         $this->mapper = $mapper;
         $this->credentialStore = $credentialStore;
+        $this->exceptionCretor = $exceptionCretor;
     }
 
     /**
@@ -107,7 +104,7 @@ class AuthSoapService
     private function ensureAuthenticated()
     {
         if (!$this->isAuthenticated) {
-            throw new SoapFault("0102", "Usuario o contraseña incorrectos");
+            throw $this->exceptionCretor->fromValidation(new ValidationError(ErrorCodeList::INVALID_USER));
         }
     }
 }

@@ -1,16 +1,18 @@
 # This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
+# File in the packages/ subdirectory configure your dependencies.
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     env(CERT_FILE): '%kernel.project_dir%/keys/cert.pfx'
+    app.ose_ruc: '20000000001'
     app.soap_user: '%env(SOAP_USER)%'
     app.soap_pass: '%env(SOAP_PASS)%'
     app.soap_wsdl: '%kernel.project_dir%/public/ol-ti-itcpe/billService.wsdl'
     app.sign_cert: '%env(file:CERT_FILE)%'
     app.sign_pass: '%env(SIGN_PASS)%'
-    app.ose_ruc: '20000000001'
+    app.xsl_basepath: '%kernel.project_dir%/var/xslt/sunat_archivos/sfs/VALI/commons/xsl/validation'
+    app.upload_dir: '%kernel.project_dir%/var/cpe_files'
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +28,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Model/'
             - '../src/Tests/'
 
     # controllers are imported separately to make sure services can be injected
@@ -37,15 +40,20 @@ services:
     App\Handler\WsdlHandler:
         decorates: App\Handler\SoapServerHandler
 
-    App\Handler\RequestHandlerInterface: '@App\Handler\WsdlHandler'
+    App\Handler\RequestHandlerInterface: '@App\Handler\SoapServerHandler'
 
-    App\Services\BillServiceInterface:
-        class: App\Services\BillService
+    App\Services\Bill\BillService:
+        stack:
+            - App\Services\Bill\AllowTypesBillDecorator: ~
+            - App\Services\Bill\ZipFormatBillDecorator: ~
+            - App\Services\Bill\BillService: ~
+
+    App\Services\Bill\BillServiceInterface: '@App\Services\Bill\BillService'
 
     App\Services\Zip\XmlFilenameDecorator:
         decorates: App\Services\Zip\XmlZipFly
 
-    App\Services\Zip\XmlZipInterface: '@App\Services\Zip\XmlFilenameDecorator'
+    App\Services\Zip\XmlZipInterface: '@App\Services\Zip\XmlZipFly'
 
     App\Validator\XmlValidatorInterface:
         class: App\Validator\MultiValidator
@@ -55,16 +63,22 @@ services:
                 - '@App\Validator\XmlSignValidator'
                 - '@App\Validator\CpeXslValidator'
 
-    App\Services\Cdr\ZipCdrWriter:
-        decorates: App\Services\Cdr\XmlCdrWriter
+#    App\Services\Cdr\ZipCdrWriter:
+#        decorates: App\Services\Cdr\XmlCdrWriter
 
     App\Services\Cdr\XmlAppCdrCreator:
         arguments:
             - '%app.ose_ruc%'
 
+    App\Services\File\SystemFileStore:
+        arguments:
+            - '%app.upload_dir%'
+
     App\Services\Cdr\AppCdrCreatorInterface: '@App\Services\Cdr\XmlAppCdrCreator'
-    App\Services\Cdr\CdrWriterInterface: '@App\Services\Cdr\ZipCdrWriter'
+    App\Services\Cdr\CdrWriterInterface: '@App\Services\Cdr\XmlCdrWriter'
     App\Services\Cdr\CdrOutputInterface: '@App\Services\Cdr\CdrBridge'
+    App\Services\Xml\XslDocResolverInterface: '@App\Services\Xml\FileSystemXslDocResolver'
+    App\Services\File\FileStoreInterface: '@App\Services\File\SystemFileStore'
 
     Greenter\XMLSecLibs\Sunat\SignedXml:
         factory: ['App\Factory\SignedXmlFactory', 'createSignedXml']
@@ -84,3 +98,16 @@ services:
     Greenter\Ws\Reader\FilenameExtractorInterface:
         class: Greenter\Ws\Reader\XmlFilenameExtractor
 
+    Greenter\Validator\Resolver\TypeResolverInterface:
+        class: Greenter\Validator\Resolver\XmlTypeResolver
+
+    Greenter\Validator\Resolver\RuleResolverInterface:
+        class: Greenter\Validator\Resolver\XslPathResolver
+        arguments:
+            $basePath: '%app.xsl_basepath%'
+
+
+    Greenter\Validator\Parser\ResultParserInterface:
+        class: Greenter\Validator\Parser\ErrorResultParser
+
+    Greenter\Validator\Xml\XslValidator: ~

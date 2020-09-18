@@ -11,20 +11,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class WsdlHandler implements RequestHandlerInterface
 {
-    /**
-     * @var RequestHandlerInterface
-     */
-    private $next;
+    private RequestHandlerInterface $next;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
+    private UrlGeneratorInterface $router;
 
-    /**
-     * @var ParameterBagInterface
-     */
-    private $params;
+    private ParameterBagInterface $params;
 
     /**
      * WsdlHandler constructor.
