@@ -34,4 +34,12 @@ class ExceptionCreator
             $error->getDetail(),
         );
     }
+
+    public function fromCode(string $code): SoapFault
+    {
+        return new SoapFault(
+            $code,
+            $this->codeResolver->getValue($code),
+        );
+    }
 }
