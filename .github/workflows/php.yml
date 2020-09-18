@@ -32,3 +32,6 @@ jobs:
 
     - name: PHPStan Lint
       run: composer run-script lint:ci
+
+    - name: Unit Tests
+      run: php bin/phpunit
