@@ -1,5 +1,5 @@
 # This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
+# File in the packages/ subdirectory configure your dependencies.
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -12,6 +12,7 @@ parameters:
     app.sign_cert: '%env(file:CERT_FILE)%'
     app.sign_pass: '%env(SIGN_PASS)%'
     app.xsl_basepath: '%kernel.project_dir%/var/xslt/sunat_archivos/sfs/VALI/commons/xsl/validation'
+    app.upload_dir: '%kernel.project_dir%/cpe_files'
 
 services:
     # default configuration for services in *this* file
