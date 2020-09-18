@@ -6,6 +6,7 @@ namespace App\Services\Bill;
 
 use App\Repository\CpeDocumentRepository;
 use App\Services\Cdr\CdrOutputInterface;
+use App\Services\File\FileStoreInterface;
 use App\Services\Soap\ExceptionCreator;
 use App\Validator\XmlValidatorInterface;
 use App\Model\{CpeCdrResult,
@@ -34,19 +35,23 @@ class BillService implements BillServiceInterface
 
     private CpeDocumentRepository $repository;
 
+    private FileStoreInterface $fileStore;
+
     /**
      * BillService constructor.
      * @param XmlValidatorInterface $xmlValidator
      * @param ExceptionCreator $exceptionCreator
      * @param CdrOutputInterface $cdrOut
      * @param CpeDocumentRepository $repository
+     * @param FileStoreInterface $fileStore
      */
-    public function __construct(XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut, CpeDocumentRepository $repository)
+    public function __construct(XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut, CpeDocumentRepository $repository, FileStoreInterface $fileStore)
     {
         $this->xmlValidator = $xmlValidator;
         $this->exceptionCreator = $exceptionCreator;
         $this->cdrOut = $cdrOut;
         $this->repository = $repository;
+        $this->fileStore = $fileStore;
     }
 
     public function sendBill(SendBillRequest $request): SendBillResponse
@@ -110,7 +115,7 @@ class BillService implements BillServiceInterface
         }
 
         $obj = new GetStatusResponse();
-        $obj->status->content = file_get_contents('R-'.$cpe->getName().'.xml');
+        $obj->status->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
         $obj->status->statusCode = '0';
 
         return $obj;
@@ -137,7 +142,7 @@ class BillService implements BillServiceInterface
         $obj = new GetStatusCdrResponse();
         $obj->statusCdr->statusCode = '0';
         $obj->statusCdr->statusMessage = 'La constancia existe';
-        $obj->statusCdr->content = file_get_contents('R-'.$cpe->getName().'.xml');
+        $obj->statusCdr->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
 
         return $obj;
     }
