@@ -12,7 +12,7 @@ parameters:
     app.sign_cert: '%env(file:CERT_FILE)%'
     app.sign_pass: '%env(SIGN_PASS)%'
     app.xsl_basepath: '%kernel.project_dir%/var/xslt/sunat_archivos/sfs/VALI/commons/xsl/validation'
-    app.upload_dir: '%kernel.project_dir%/cpe_files'
+    app.upload_dir: '%kernel.project_dir%/var/cpe_files'
 
 services:
     # default configuration for services in *this* file
