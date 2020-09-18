@@ -23,6 +23,10 @@ class DomXmlParser implements XmlParserInterface
                         $root);
 
         $info =  new MinimalDocInfo();
+        if (($idNode = $this->getNode($xpath, 'cbc:ID')) !== null) {
+            $info->setId($idNode->nodeValue);
+        }
+
         if ($recipientNode !== null) {
             $info
                 ->setRecipientTypeDoc($recipientNode->getAttribute('schemeID'))
@@ -38,7 +42,7 @@ class DomXmlParser implements XmlParserInterface
         return new DOMXPath($doc);
     }
 
-    public function getNode(DOMXPath $xpath, $query, DOMNode $context = null): ?DOMElement
+    private function getNode(DOMXPath $xpath, $query, DOMNode $context = null): ?DOMElement
     {
         $nodes = $xpath->query($query, $context);
         if ($nodes->length == 0) {

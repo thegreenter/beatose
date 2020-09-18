@@ -47,7 +47,7 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
             ->setRucEmisorCpe(substr($docName, 0, 11))
             ->setTipoDocReceptorCpe($minDoc->getRecipientTypeDoc())
             ->setNroDocReceptorCpe($minDoc->getRecipient())
-            ->setCpeId(substr($docName, 15, strlen($docName) - 15))
+            ->setCpeId($minDoc->getId())
             ->setCodigoRespuesta($this->isObsCode($numCode) ? '0' : $result->getCodeResult())
             ->setDescripcionRespuesta($this->getDescription($numCode))
             ->setNotasAsociadas($result->getNotes())
