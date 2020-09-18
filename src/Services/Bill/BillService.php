@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Bill;
 
+use App\Repository\CpeDocumentRepository;
 use App\Services\Cdr\CdrOutputInterface;
 use App\Services\Soap\ExceptionCreator;
-use App\Services\Zip\XmlZipInterface;
 use App\Validator\XmlValidatorInterface;
-use App\Model\{
-    CpeCdrResult,
+use App\Model\{CpeCdrResult,
+    ErrorCodeList,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
     GetStatusRequest,
@@ -20,40 +20,34 @@ use App\Model\{
     SendPackResponse,
     SendSummaryRequest,
     SendSummaryResponse,
-    StatusResponse,
 };
 use DateTime;
 use DOMDocument;
-use Psr\Log\LoggerInterface;
 use SoapFault;
 
 class BillService implements BillServiceInterface
 {
-    private LoggerInterface $logger;
-
-    private XmlZipInterface $zipReader;
-
     private XmlValidatorInterface $xmlValidator;
 
     private ExceptionCreator $exceptionCreator;
 
     private CdrOutputInterface $cdrOut;
 
+    private CpeDocumentRepository $repository;
+
     /**
      * BillService constructor.
-     * @param LoggerInterface $logger
-     * @param XmlZipInterface $zipReader
      * @param XmlValidatorInterface $xmlValidator
      * @param ExceptionCreator $exceptionCreator
      * @param CdrOutputInterface $cdrOut
+     * @param CpeDocumentRepository $repository
      */
-    public function __construct(LoggerInterface $logger, XmlZipInterface $zipReader, XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut)
+    public function __construct(XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut, CpeDocumentRepository $repository)
     {
-        $this->logger = $logger;
-        $this->zipReader = $zipReader;
         $this->xmlValidator = $xmlValidator;
         $this->exceptionCreator = $exceptionCreator;
         $this->cdrOut = $cdrOut;
+        $this->repository = $repository;
     }
 
     public function sendBill(SendBillRequest $request): SendBillResponse
@@ -71,7 +65,9 @@ class BillService implements BillServiceInterface
         $cdrResult = (new CpeCdrResult())
             ->setDateReceived($dateReceived)
             ->setCodeResult($error !== null ? $error->getCode() : '0')
-            ->setNotes($error !== null ? [$error->getCode().'-'.$error->getDetail()] : []);
+            ->setNotes($error !== null ? [$error->getCode().'-'.$error->getDetail()] : [])
+            ->setTicket(null)
+        ;
 
         $obj = new SendBillResponse();
         $obj->applicationResponse = $this->cdrOut->output($doc, $cdrResult);
@@ -81,6 +77,7 @@ class BillService implements BillServiceInterface
 
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
+        $dateReceived = new DateTime();
         $doc = new DOMDocument();
         $doc->loadXML($request->contentFile);
 
@@ -89,8 +86,17 @@ class BillService implements BillServiceInterface
             throw $this->exceptionCreator->fromValidation($error);
         }
 
+        $ticket = (string)(int)(microtime(true) * 1000);
+        $cdrResult = (new CpeCdrResult())
+            ->setDateReceived($dateReceived)
+            ->setCodeResult($error !== null ? $error->getCode() : '0')
+            ->setNotes($error !== null ? [$error->getCode().'-'.$error->getDetail()] : [])
+            ->setTicket($ticket)
+        ;
+        $this->cdrOut->output($doc, $cdrResult);
+
         $obj = new SendSummaryResponse();
-        $obj->ticket = (string)(int)(microtime(true) * 1000);
+        $obj->ticket = $ticket;
 
         return $obj;
     }
@@ -98,12 +104,15 @@ class BillService implements BillServiceInterface
     public function getStatus(GetStatusRequest $request): GetStatusResponse
     {
         $ticket = $request->ticket;
-        $this->logger->info('Ticket '.$ticket);
+        $cpe = $this->repository->findOneByTicket($ticket);
+
+        if ($cpe === null) {
+            throw $this->exceptionCreator->fromCode(ErrorCodeList::TICKET_NOTFOUND);
+        }
 
         $obj = new GetStatusResponse();
-        $obj->status = new StatusResponse();
-        $obj->status->content = 'xxxxxx';
-        $obj->status->statusCode = $ticket;
+        $obj->status->content = file_get_contents('R-'.$cpe->getName().'.xml');
+        $obj->status->statusCode = '0';
 
         return $obj;
     }
@@ -115,6 +124,22 @@ class BillService implements BillServiceInterface
 
     public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
     {
-        throw new SoapFault('0000', 'NO IMPLEMENTADO');
+        $name = implode('-', [
+            $request->rucComprobante,
+            $request->tipoComprobante,
+            $request->serieComprobante,
+            $request->numeroComprobante,
+        ]);
+        $cpe = $this->repository->findOneByName($name);
+
+        if ($cpe === null) {
+            throw $this->exceptionCreator->fromCode(ErrorCodeList::TICKET_NOTFOUND);
+        }
+        $obj = new GetStatusCdrResponse();
+        $obj->statusCdr->statusCode = $cpe->getStateCode();
+        $obj->statusCdr->statusMessage = $cpe->getStateCode() === '0' ? 'ACEPTADO' : 'RECHAZADO';
+        $obj->statusCdr->content = file_get_contents('R-'.$cpe->getName().'.xml');
+
+        return $obj;
     }
 }
