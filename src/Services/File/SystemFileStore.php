@@ -33,6 +33,10 @@ class SystemFileStore implements FileStoreInterface
      */
     public function save(string $filename, ?string $content): void
     {
+        if (!is_dir($this->uploadDir)) {
+            mkdir($this->uploadDir, 0777, true);
+        }
+
         $fullPath = $this->uploadDir.DIRECTORY_SEPARATOR.$filename;
         file_put_contents($fullPath, $content);
     }
