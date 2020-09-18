@@ -6,6 +6,7 @@ namespace App\Services\Cdr;
 
 use App\Entity\CpeDocument;
 use App\Model\CpeCdrResult;
+use App\Services\File\FileStoreInterface;
 use App\Services\Xml\HashExtract;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,8 @@ class CdrBridge implements CdrOutputInterface
     private HashExtract $hashExtractor;
 
     private EntityManagerInterface $repository;
+
+    private FileStoreInterface $fileStore;
 
     /**
      * CdrBridge constructor.
@@ -58,8 +61,8 @@ class CdrBridge implements CdrOutputInterface
             ->setTicket($result->getTicket())
         ;
 
-        $document->save($cpe->getName().'.xml');
-        file_put_contents('R-'.$cpe->getName().'.xml', $cdr);
+        $this->fileStore->save($cpe->getName().'.xml', $document->saveXML());
+        $this->fileStore->save('R-'.$cpe->getName().'.xml', $cdr);
 
         $this->repository->persist($cpe);
         $this->repository->flush();
