@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Model\ValidationError;
 use DOMDocument;
 
 class MultiValidator implements XmlValidatorInterface
@@ -12,7 +11,7 @@ class MultiValidator implements XmlValidatorInterface
     /**
      * @var XmlValidatorInterface[]
      */
-    private $validators;
+    private array $validators;
 
     /**
      * MultiValidator constructor.
@@ -25,19 +24,17 @@ class MultiValidator implements XmlValidatorInterface
     }
 
     /**
-     * @param string $filename
-     * @param DOMDocument $document
-     * @return ValidationError|null
+     * @inheritDoc
      */
-    public function validate(string $filename, DOMDocument $document): ?ValidationError
+    public function validate(string $filename, DOMDocument $document): array
     {
         foreach ($this->validators as $validator) {
-            $error = $validator->validate($filename, $document);
-            if ($error !== null) {
-                return $error;
+            $errors = $validator->validate($filename, $document);
+            if (count($errors) > 0) {
+                return $errors;
             }
         }
 
-        return null;
+        return [];
     }
 }
