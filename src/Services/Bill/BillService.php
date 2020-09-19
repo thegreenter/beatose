@@ -90,16 +90,16 @@ class BillService implements BillServiceInterface
         $doc = new DOMDocument();
         $doc->loadXML($request->contentFile);
 
-        $error = $this->xmlValidator->validate($request->fileName, $doc);
-        if ($error !== null && (int)$error->getCode() < 2000) {
-            throw $this->exceptionCreator->fromValidation($error);
+        $errors = $this->xmlValidator->validate($request->fileName, $doc);
+        if (count($errors) > 0 && $errors[0]->getCode() < 2000) {
+            throw $this->exceptionCreator->fromValidation($errors[0]);
         }
 
         $ticket = (string)(int)(microtime(true) * 1000);
         $cdrResult = (new CpeCdrResult())
             ->setDateReceived($dateReceived)
-            ->setCodeResult($error !== null ? $error->getCode() : '0')
-            ->setNotes($error !== null ? [$error->getCode().'-'.$error->getDetail()] : [])
+            ->setCodeResult(count($errors) > 0 ? $errors[0]->getCode() : '0')
+            ->setErrorList($errors)
             ->setTicket($ticket)
         ;
         $this->cdrOut->output($doc, $cdrResult);
