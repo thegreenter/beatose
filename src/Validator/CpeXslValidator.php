@@ -46,6 +46,6 @@ class CpeXslValidator implements XmlValidatorInterface
 
     private function getErrorMessage(CpeError $error): string
     {
-        return $error->getMessage().' (Nodo: '.$error->getNodePath().'='.$error->getNodeValue().').';
+        return $error->getMessage().' (nodo: "'.$error->getNodePath().'", valor:"'.$error->getNodeValue().'")';
     }
 }
