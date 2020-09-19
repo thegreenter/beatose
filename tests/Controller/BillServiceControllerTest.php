@@ -16,6 +16,7 @@ class BillServiceControllerTest extends WebTestCase
     public function testGetWsdl()
     {
         $client = static::createClient();
+        $client->catchExceptions(false);
 
         $client->request('GET', '/ol-ti-itcpe/billService?wsdl');
 
@@ -37,6 +38,7 @@ class BillServiceControllerTest extends WebTestCase
         ]);
 
         $client = static::createClient();
+        $client->catchExceptions(false);
 
         $client->request(
             'POST',
@@ -65,6 +67,7 @@ class BillServiceControllerTest extends WebTestCase
         ]);
 
         $client = static::createClient();
+        $client->catchExceptions(false);
 
         $client->request(
             'POST',
