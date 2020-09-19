@@ -6,9 +6,11 @@ namespace App\Services\Cdr;
 
 use App\Model\ApplicationResponse;
 use App\Model\CpeCdrResult;
+use App\Model\ValidationError;
 use App\Services\Xml\XmlParserInterface;
 use DateTime;
 use DOMDocument;
+use Greenter\Validator\ErrorCodeProviderInterface;
 use Greenter\Ws\Reader\FilenameExtractorInterface;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
@@ -19,18 +21,21 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
 
     private XmlParserInterface $xmlParser;
 
+    private ErrorCodeProviderInterface $errorCodes;
+
     /**
      * XmlAppCdrCreator constructor.
-     *
      * @param string|null $oseRuc
      * @param FilenameExtractorInterface $filenameResolver
      * @param XmlParserInterface $xmlParser
+     * @param ErrorCodeProviderInterface $errorCodes
      */
-    public function __construct(?string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser)
+    public function __construct(?string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser, ErrorCodeProviderInterface $errorCodes)
     {
         $this->oseRuc = $oseRuc;
         $this->filenameResolver = $filenameResolver;
         $this->xmlParser = $xmlParser;
+        $this->errorCodes = $errorCodes;
     }
 
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse
@@ -50,7 +55,7 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
             ->setCpeId($minDoc->getId())
             ->setCodigoRespuesta($this->isObsCode($numCode) ? '0' : $result->getCodeResult())
             ->setDescripcionRespuesta($this->getDescription($numCode))
-            ->setNotasAsociadas($result->getNotes())
+            ->setNotasAsociadas($this->getNotes($result->getErrorList()))
             ->setFilename($docName)
         ;
     }
@@ -58,6 +63,26 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
     private function createId(): string
     {
         return (string)(int)(microtime(true) * 1000);
+    }
+
+    /**
+     * @param ValidationError[] $errorList
+     * @return string[]
+     */
+    private function getNotes(?array $errorList): array
+    {
+        if ($errorList === null || count($errorList) === 0) {
+            return [];
+        }
+
+        return array_map(fn($error) =>
+            implode(' - ', [
+                $error->getCode(),
+                $this->errorCodes->getValue($error->getCode()),
+                $error->getDetail(),
+            ]),
+            $errorList,
+        );
     }
 
     private function getDescription(int $code): string
