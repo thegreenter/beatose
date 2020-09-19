@@ -16,12 +16,12 @@ class XmlSchemaValidator implements XmlValidatorInterface
     /**
      * @var SchemaValidatorInterface
      */
-    private $schema;
+    private SchemaValidatorInterface $schema;
 
     /**
      * @var PathResolverInterface
      */
-    private $pathResolver;
+    private PathResolverInterface $pathResolver;
 
     /**
      * XmlSchemaValidator constructor.
@@ -34,22 +34,22 @@ class XmlSchemaValidator implements XmlValidatorInterface
         $this->pathResolver = $pathResolver;
     }
 
-    public function validate(string $filename, DOMDocument $document): ?ValidationError
+    public function validate(string $filename, DOMDocument $document): array
     {
         if (empty($document->documentElement)) {
-            return new ValidationError(ErrorCodeList::XML_NO_RAIZ);
+            return [new ValidationError(ErrorCodeList::XML_NO_RAIZ)];
         }
 
         $schemaPath = $this->pathResolver->getPath($document);
         if ($this->schema->validate($document, $schemaPath)) {
-            return null;
+            return [];
         }
 
         if (empty($path) || !file_exists($path)) {
             new ValidationError(ErrorCodeList::XML_NO_SCHEMA_FILE);
         }
 
-        return new ValidationError(ErrorCodeList::XML_NO_PARSE, $this->getErrorMessage($this->schema->getErrors()));
+        return [new ValidationError(ErrorCodeList::XML_NO_PARSE, $this->getErrorMessage($this->schema->getErrors()))];
     }
 
     /**

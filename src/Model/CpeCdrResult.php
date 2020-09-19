@@ -12,7 +12,10 @@ class CpeCdrResult
 
     private ?string $codeResult = null;
 
-    private ?array $notes = null;
+    /**
+     * @var ValidationError[]|null
+     */
+    private ?array $errorList = null;
 
     private ?string $ticket = null;
 
@@ -53,20 +56,20 @@ class CpeCdrResult
     }
 
     /**
-     * @return array|null
+     * @return ValidationError[]|null
      */
-    public function getNotes(): ?array
+    public function getErrorList(): ?array
     {
-        return $this->notes;
+        return $this->errorList;
     }
 
     /**
-     * @param array|null $notes
+     * @param ValidationError[]|null $errorList
      * @return CpeCdrResult
      */
-    public function setNotes(?array $notes): CpeCdrResult
+    public function setErrorList(?array $errorList): CpeCdrResult
     {
-        $this->notes = $notes;
+        $this->errorList = $errorList;
         return $this;
     }
 

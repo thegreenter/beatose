@@ -28,26 +28,24 @@ class CpeXslValidator implements XmlValidatorInterface
         $this->xslDocResolver = $xslDocResolver;
     }
 
-    public function validate(string $filename, DOMDocument $document): ?ValidationError
+    public function validate(string $filename, DOMDocument $document): array
     {
         $xslDoc = $this->xslDocResolver->fromDoc($document);
         if ($xslDoc === null) {
-            return null;
+            return [];
         }
 
         $this->validator->setXsl($xslDoc);
         $result = $this->validator->validate($filename, $document);
         if (count($result) === 0) {
-            return null;
+            return [];
         }
 
-        $mapErrors = array_map(fn($error) => new ValidationError($error->getCode(), $this->getErrorMessage($error)), $result);
-
-        return $mapErrors[0];
+        return array_map(fn($error) => new ValidationError($error->getCode(), $this->getErrorMessage($error)), $result);
     }
 
     private function getErrorMessage(CpeError $error): string
     {
-        return $error->getMessage().' (Nodo: '.$error->getNodePath().'='.$error->getNodeValue().').';
+        return $error->getMessage().' (nodo: "'.$error->getNodePath().'", valor:"'.$error->getNodeValue().'")';
     }
 }
