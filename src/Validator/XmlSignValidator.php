@@ -11,13 +11,13 @@ use Greenter\XMLSecLibs\Sunat\SignedXml;
 
 class XmlSignValidator implements XmlValidatorInterface
 {
-    public function validate(string $filename, DOMDocument $document): ?ValidationError
+    public function validate(string $filename, DOMDocument $document): array
     {
         $signValidator = new SignedXml();
         // Avoid sign node remove.
         $documentToVerify = new DOMDocument();
         $documentToVerify->loadXML($document->saveXML());
 
-        return $signValidator->verify($documentToVerify) ? null : new ValidationError(ErrorCodeList::XML_ALTERADO);
+        return $signValidator->verify($documentToVerify) ? [] : [new ValidationError(ErrorCodeList::XML_ALTERADO)];
     }
 }
