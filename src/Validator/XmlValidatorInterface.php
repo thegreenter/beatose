@@ -7,5 +7,13 @@ use DOMDocument;
 
 interface XmlValidatorInterface
 {
-    public function validate(string $filename, DOMDocument $document): ?ValidationError;
+    /**
+     * Validate Document.
+     *
+     * @param string $filename
+     * @param DOMDocument $document
+     *
+     * @return ValidationError[]
+     */
+    public function validate(string $filename, DOMDocument $document): array;
 }
