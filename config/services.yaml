@@ -106,8 +106,8 @@ services:
         arguments:
             $basePath: '%app.xsl_basepath%'
 
-
     Greenter\Validator\Parser\ResultParserInterface:
         class: Greenter\Validator\Parser\ErrorResultParser
 
-    Greenter\Validator\Xml\XslValidator: ~
+    Greenter\Validator\Xml\XslValidatorInterface:
+        class: Greenter\Validator\Xml\XslValidator
