@@ -8,21 +8,20 @@ use App\Model\ValidationError;
 use App\Services\Xml\XslDocResolverInterface;
 use DOMDocument;
 use Greenter\Validator\Entity\CpeError;
-use Greenter\Validator\Xml\XslValidator;
+use Greenter\Validator\Xml\XslValidatorInterface;
 
 class CpeXslValidator implements XmlValidatorInterface
 {
-    private XslValidator $validator;
+    private XslValidatorInterface $validator;
 
     private XslDocResolverInterface $xslDocResolver;
 
     /**
      * CpeXslValidator constructor.
-     *
-     * @param XslValidator $validator
+     * @param XslValidatorInterface $validator
      * @param XslDocResolverInterface $xslDocResolver
      */
-    public function __construct(XslValidator $validator, XslDocResolverInterface $xslDocResolver)
+    public function __construct(XslValidatorInterface $validator, XslDocResolverInterface $xslDocResolver)
     {
         $this->validator = $validator;
         $this->xslDocResolver = $xslDocResolver;
