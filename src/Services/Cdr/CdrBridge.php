@@ -66,12 +66,18 @@ class CdrBridge implements CdrOutputInterface
             ->setTicket($result->getTicket())
         ;
 
-        $this->fileStore->save($cpe->getName().'.xml', $document->saveXML());
-        $this->fileStore->save('R-'.$cpe->getName().'.xml', $cdr);
+
+        $this->fileStore->save($this->getHexHash($cpe->getHashCpe()).'.xml', $document->saveXML());
+        $this->fileStore->save($this->getHexHash($cpe->getHashCdr()).'.xml', $cdr);
 
         $this->entityManager->persist($cpe);
         $this->entityManager->flush();
 
         return $cdr;
+    }
+
+    private function getHexHash(?string $hash)
+    {
+        return bin2hex(base64_decode($hash));
     }
 }

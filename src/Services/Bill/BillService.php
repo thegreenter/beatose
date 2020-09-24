@@ -123,7 +123,7 @@ class BillService implements BillServiceInterface
         }
 
         $response = new GetStatusResponse();
-        $response->status->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
+        $response->status->content = $this->fileStore->get(bin2hex(base64_decode($cpe->getHashCdr())).'.xml');
         $response->status->statusCode = '0';
 
         return $response;
@@ -156,7 +156,7 @@ class BillService implements BillServiceInterface
         $response = new GetStatusCdrResponse();
         $response->statusCdr->statusCode = '0';
         $response->statusCdr->statusMessage = 'La constancia existe';
-        $response->statusCdr->content = $this->fileStore->get('R-'.$cpe->getName().'.xml');
+        $response->statusCdr->content = $this->fileStore->get(bin2hex(base64_decode($cpe->getHashCdr())).'.xml');
 
         return $response;
     }
