@@ -101,7 +101,7 @@ class AuthSoapService
         return $this->billService->getStatusCdr($requestType);
     }
 
-    private function ensureAuthenticated()
+    private function ensureAuthenticated(): void
     {
         if (!$this->isAuthenticated) {
             throw $this->exceptionCretor->fromValidation(new ValidationError(ErrorCodeList::INVALID_USER));

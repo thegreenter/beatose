@@ -76,7 +76,7 @@ class CdrBridge implements CdrOutputInterface
         return $cdr;
     }
 
-    private function getHexHash(?string $hash)
+    private function getHexHash(?string $hash): string
     {
         return bin2hex(base64_decode($hash));
     }

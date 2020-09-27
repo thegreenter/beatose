@@ -8,6 +8,11 @@ class FilenameValidator
 {
     private const TYPE_CODE_INDEX = 1;
 
+    /**
+     * @param string|null $filename
+     * @param string[] $allowTypes
+     * @return bool
+     */
     public function isAllow(?string $filename, array $allowTypes): bool
     {
         $parts = explode('-', $filename);
