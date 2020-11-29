@@ -20,9 +20,9 @@ class ValueResult
 
     /**
      * @param ValidationError|null $error
-     * @return ValueResult
+     * @return static
      */
-    public function setError(?ValidationError $error): self
+    public function setError(?ValidationError $error): static
     {
         $this->error = $error;
         return $this;
@@ -38,9 +38,9 @@ class ValueResult
 
     /**
      * @param string|null $content
-     * @return ValueResult
+     * @return static
      */
-    public function setContent(?string $content): self
+    public function setContent(?string $content): static
     {
         $this->content = $content;
         return $this;

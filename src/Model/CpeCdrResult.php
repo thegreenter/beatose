@@ -29,9 +29,9 @@ class CpeCdrResult
 
     /**
      * @param DateTime|null $dateReceived
-     * @return CpeCdrResult
+     * @return static
      */
-    public function setDateReceived(?DateTime $dateReceived): CpeCdrResult
+    public function setDateReceived(?DateTime $dateReceived): static
     {
         $this->dateReceived = $dateReceived;
         return $this;
@@ -47,9 +47,9 @@ class CpeCdrResult
 
     /**
      * @param string|null $codeResult
-     * @return CpeCdrResult
+     * @return static
      */
-    public function setCodeResult(?string $codeResult): CpeCdrResult
+    public function setCodeResult(?string $codeResult): static
     {
         $this->codeResult = $codeResult;
         return $this;
@@ -65,9 +65,9 @@ class CpeCdrResult
 
     /**
      * @param ValidationError[]|null $errorList
-     * @return CpeCdrResult
+     * @return static
      */
-    public function setErrorList(?array $errorList): CpeCdrResult
+    public function setErrorList(?array $errorList): static
     {
         $this->errorList = $errorList;
         return $this;
@@ -83,9 +83,9 @@ class CpeCdrResult
 
     /**
      * @param string|null $ticket
-     * @return CpeCdrResult
+     * @return static
      */
-    public function setTicket(?string $ticket): CpeCdrResult
+    public function setTicket(?string $ticket): static
     {
         $this->ticket = $ticket;
         return $this;

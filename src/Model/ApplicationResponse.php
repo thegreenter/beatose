@@ -38,9 +38,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $id
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setId(?string $id): ApplicationResponse
+    public function setId(?string $id): static
     {
         $this->id = $id;
         return $this;
@@ -56,9 +56,9 @@ class ApplicationResponse
 
     /**
      * @param DateTimeInterface|null $fechaRecepcion
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setFechaRecepcion(?DateTimeInterface $fechaRecepcion): ApplicationResponse
+    public function setFechaRecepcion(?DateTimeInterface $fechaRecepcion): static
     {
         $this->fechaRecepcion = $fechaRecepcion;
         return $this;
@@ -74,9 +74,9 @@ class ApplicationResponse
 
     /**
      * @param DateTimeInterface|null $fechaGeneracion
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setFechaGeneracion(?DateTimeInterface $fechaGeneracion): ApplicationResponse
+    public function setFechaGeneracion(?DateTimeInterface $fechaGeneracion): static
     {
         $this->fechaGeneracion = $fechaGeneracion;
         return $this;
@@ -92,9 +92,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $rucEmisorCdr
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setRucEmisorCdr(?string $rucEmisorCdr): ApplicationResponse
+    public function setRucEmisorCdr(?string $rucEmisorCdr): static
     {
         $this->rucEmisorCdr = $rucEmisorCdr;
         return $this;
@@ -110,9 +110,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $rucEmisorCpe
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setRucEmisorCpe(?string $rucEmisorCpe): ApplicationResponse
+    public function setRucEmisorCpe(?string $rucEmisorCpe): static
     {
         $this->rucEmisorCpe = $rucEmisorCpe;
         return $this;
@@ -128,9 +128,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $tipoDocReceptorCpe
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setTipoDocReceptorCpe(?string $tipoDocReceptorCpe): ApplicationResponse
+    public function setTipoDocReceptorCpe(?string $tipoDocReceptorCpe): static
     {
         $this->tipoDocReceptorCpe = $tipoDocReceptorCpe;
         return $this;
@@ -146,9 +146,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $nroDocReceptorCpe
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setNroDocReceptorCpe(?string $nroDocReceptorCpe): ApplicationResponse
+    public function setNroDocReceptorCpe(?string $nroDocReceptorCpe): static
     {
         $this->nroDocReceptorCpe = $nroDocReceptorCpe;
         return $this;
@@ -164,9 +164,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $CpeId
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setCpeId(?string $CpeId): ApplicationResponse
+    public function setCpeId(?string $CpeId): static
     {
         $this->CpeId = $CpeId;
         return $this;
@@ -182,9 +182,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $codigoRespuesta
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setCodigoRespuesta(?string $codigoRespuesta): ApplicationResponse
+    public function setCodigoRespuesta(?string $codigoRespuesta): static
     {
         $this->codigoRespuesta = $codigoRespuesta;
         return $this;
@@ -200,9 +200,9 @@ class ApplicationResponse
 
     /**
      * @param string|null $descripcionRespuesta
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setDescripcionRespuesta(?string $descripcionRespuesta): ApplicationResponse
+    public function setDescripcionRespuesta(?string $descripcionRespuesta): static
     {
         $this->descripcionRespuesta = $descripcionRespuesta;
         return $this;
@@ -218,9 +218,9 @@ class ApplicationResponse
 
     /**
      * @param string[]|null $notasAsociadas
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setNotasAsociadas(?array $notasAsociadas): ApplicationResponse
+    public function setNotasAsociadas(?array $notasAsociadas): static
     {
         $this->notasAsociadas = $notasAsociadas;
         return $this;
@@ -241,9 +241,9 @@ class ApplicationResponse
      *
      * @param string|null $filename
      *
-     * @return ApplicationResponse
+     * @return static
      */
-    public function setFilename(?string $filename): ApplicationResponse
+    public function setFilename(?string $filename): static
     {
         $this->filename = $filename;
         return $this;

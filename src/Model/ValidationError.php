@@ -16,18 +16,18 @@ class ValidationError
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
     /**
-     * @param string|null $code
-     * @return ValidationError
+     * @param string $code
+     * @return static
      */
-    public function setCode(?string $code): self
+    public function setCode(string $code): static
     {
         $this->code = $code;
         return $this;
@@ -43,9 +43,9 @@ class ValidationError
 
     /**
      * @param string|null $detail
-     * @return ValidationError
+     * @return static
      */
-    public function setDetail(?string $detail): self
+    public function setDetail(?string $detail): static
     {
         $this->detail = $detail;
         return $this;
