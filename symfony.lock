@@ -121,7 +121,7 @@
         "version": "2.10.0"
     },
     "php": {
-        "version": "7.4"
+        "version": "8.0"
     },
     "phpstan/phpstan": {
         "version": "0.12.58"
