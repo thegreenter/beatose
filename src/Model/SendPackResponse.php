@@ -6,8 +6,5 @@ namespace App\Model;
 
 class SendPackResponse
 {
-    /**
-     * @var string
-     */
-    public $ticket;
+    public ?string $ticket;
 }

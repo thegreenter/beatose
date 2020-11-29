@@ -6,8 +6,5 @@ namespace App\Model;
 
 class SendSummaryResponse
 {
-    /**
-     * @var string
-     */
-    public $ticket;
+    public ?string $ticket;
 }

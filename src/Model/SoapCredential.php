@@ -6,14 +6,8 @@ namespace App\Model;
 
 class SoapCredential
 {
-    /**
-     * @var string|null
-     */
-    private $user;
-    /**
-     * @var string|null
-     */
-    private $password;
+    private ?string $user = null;
+    private ?string $password = null;
 
     /**
      * @return string|null

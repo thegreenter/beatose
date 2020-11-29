@@ -9,15 +9,9 @@ use App\Services\Zip\XmlZipInterface;
 
 class ZipCdrWriter implements CdrWriterInterface
 {
-    /**
-     * @var XmlZipInterface
-     */
-    private $compressor;
+    private XmlZipInterface $compressor;
 
-    /**
-     * @var CdrWriterInterface
-     */
-    private $xmlCdrWriter;
+    private CdrWriterInterface $xmlCdrWriter;
 
     /**
      * ZipCdrWriter constructor.
@@ -39,7 +33,7 @@ class ZipCdrWriter implements CdrWriterInterface
     public function write(ApplicationResponse $applicationResponse): ?string
     {
         $xmlSigned = $this->xmlCdrWriter->write($applicationResponse);
-        $zipFilename = 'R-'.$applicationResponse->getFilename().'.zip';
+        $zipFilename = 'R-' . $applicationResponse->getFilename() . '.zip';
 
         return $this->compressor->compress($zipFilename, $xmlSigned)->getContent();
     }

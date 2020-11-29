@@ -10,15 +10,9 @@ use Twig\Environment;
 
 class XmlCdrWriter implements CdrWriterInterface
 {
-    /**
-     * @var SignedXml
-     */
-    private $signer;
+    private SignedXml $signer;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Environment $twig;
 
     /**
      * XmlCdrWriter constructor.

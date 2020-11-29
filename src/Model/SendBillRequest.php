@@ -6,13 +6,7 @@ namespace App\Model;
 
 class SendBillRequest
 {
-    /**
-     * @var string
-     */
-    public $fileName;
+    public ?string $fileName;
 
-    /**
-     * @var string
-     */
-    public $contentFile;
+    public ?string $contentFile;
 }

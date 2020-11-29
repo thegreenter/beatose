@@ -6,8 +6,5 @@ namespace App\Model;
 
 class SendBillResponse
 {
-    /**
-     * @var string
-     */
-    public $applicationResponse;
+    public ?string $applicationResponse;
 }

@@ -6,8 +6,5 @@ namespace App\Model;
 
 class GetStatusRequest
 {
-    /**
-     * @var string
-     */
-    public $ticket;
+    public ?string $ticket;
 }

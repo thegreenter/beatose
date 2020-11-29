@@ -63,8 +63,7 @@ class CdrBridge implements CdrOutputInterface
             ->setHashCpe($this->hashExtractor->fromDoc($document))
             ->setHashCdr($this->hashExtractor->fromXml($cdr))
             ->setCreateDate(new DateTime())
-            ->setTicket($result->getTicket())
-        ;
+            ->setTicket($result->getTicket());
 
 
         $this->fileStore->save($this->getHexHash($cpe->getHashCpe()).'.xml', $document->saveXML());

@@ -6,16 +6,7 @@ namespace App\Model;
 
 class StatusCdrResponse
 {
-    /**
-     * @var string
-     */
-    public $content;
-    /**
-     * @var string
-     */
-    public $statusCode;
-    /**
-     * @var string
-     */
-    public $statusMessage;
+    public ?string $content;
+    public ?string $statusCode;
+    public ?string $statusMessage;
 }

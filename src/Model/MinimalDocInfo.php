@@ -6,30 +6,12 @@ namespace App\Model;
 
 class MinimalDocInfo
 {
-    /**
-     * @var string|null
-     */
-    private $typeDoc;
-    /**
-     * @var string|null
-     */
-    private $id;
-    /**
-     * @var string|null
-     */
-    private $issuer;
-    /**
-     * @var string|null
-     */
-    private $issuerTypeDoc;
-    /**
-     * @var string|null
-     */
-    private $recipient;
-    /**
-     * @var string|null
-     */
-    private $recipientTypeDoc;
+    private ?string $typeDoc = null;
+    private ?string $id = null;
+    private ?string $issuer = null;
+    private ?string $issuerTypeDoc = null;
+    private ?string $recipient = null;
+    private ?string $recipientTypeDoc = null;
 
     /**
      * @return string|null

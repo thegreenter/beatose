@@ -13,20 +13,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SoapServerHandler implements RequestHandlerInterface
 {
-    /**
-     * @var AuthSoapService
-     */
-    private $service;
+    private AuthSoapService $service;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
+    private UrlGeneratorInterface $router;
 
-    /**
-     * @var ParameterBagInterface
-     */
-    private $params;
+    private ParameterBagInterface $params;
 
     /**
      * SoapServerHandler constructor.

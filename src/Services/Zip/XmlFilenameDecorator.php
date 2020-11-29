@@ -9,10 +9,7 @@ use App\Model\ValueResult;
 
 class XmlFilenameDecorator implements XmlZipInterface
 {
-    /**
-     * @var XmlZipInterface
-     */
-    private $xmlZip;
+    private XmlZipInterface $xmlZip;
 
     /**
      * XmlFilenameDecorator constructor.

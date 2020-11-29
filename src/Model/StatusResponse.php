@@ -6,12 +6,6 @@ namespace App\Model;
 
 class StatusResponse
 {
-    /**
-     * @var string
-     */
-    public $content;
-    /**
-     * @var string
-     */
-    public $statusCode;
+    public ?string $content;
+    public ?string $statusCode;
 }

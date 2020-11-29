@@ -6,15 +6,9 @@ namespace App\Model;
 
 class ValueResult
 {
-    /**
-     * @var ValidationError|null
-     */
-    private $error;
+    private ?ValidationError $error = null;
 
-    /**
-     * @var string|null
-     */
-    private $content;
+    private ?string $content = null;
 
     /**
      * @return ValidationError|null

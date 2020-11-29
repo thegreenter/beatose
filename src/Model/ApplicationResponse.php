@@ -8,60 +8,28 @@ use DateTimeInterface;
 
 class ApplicationResponse
 {
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var DateTimeInterface
-     */
-    private $fechaRecepcion;
-    /**
-     * @var DateTimeInterface
-     */
-    private $fechaGeneracion;
-    /**
-     * @var string
-     */
-    private $rucEmisorCdr;
-    /**
-     * @var string
-     */
-    private $rucEmisorCpe;
-    /**
-     * @var string
-     */
-    private $tipoDocReceptorCpe;
-    /**
-     * @var string
-     */
-    private $nroDocReceptorCpe;
-    /**
-     * @var string
-     */
-    private $CpeId;
-    /**
-     * @var string
-     */
-    private $codigoRespuesta;
-    /**
-     * @var string
-     */
-    private $descripcionRespuesta;
+    private ?string $id = null;
+    private ?DateTimeInterface $fechaRecepcion = null;
+    private ?DateTimeInterface $fechaGeneracion = null;
+    private ?string $rucEmisorCdr = null;
+    private ?string $rucEmisorCpe = null;
+    private ?string $tipoDocReceptorCpe = null;
+    private ?string $nroDocReceptorCpe = null;
+    private ?string $CpeId = null;
+    private ?string $codigoRespuesta = null;
+    private ?string $descripcionRespuesta = null;
     /**
      * @var string[]
      */
-    private $notasAsociadas;
+    private ?array $notasAsociadas = null;
 
     /**
      * Filename without extension.
-     *
-     * @var string
      */
-    private $filename;
+    private ?string $filename = null;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getId(): ?string
     {
@@ -69,7 +37,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      * @return ApplicationResponse
      */
     public function setId(?string $id): ApplicationResponse
@@ -79,7 +47,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getFechaRecepcion(): ?DateTimeInterface
     {
@@ -87,7 +55,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param DateTimeInterface $fechaRecepcion
+     * @param DateTimeInterface|null $fechaRecepcion
      * @return ApplicationResponse
      */
     public function setFechaRecepcion(?DateTimeInterface $fechaRecepcion): ApplicationResponse
@@ -97,7 +65,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getFechaGeneracion(): ?DateTimeInterface
     {
@@ -105,7 +73,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param DateTimeInterface $fechaGeneracion
+     * @param DateTimeInterface|null $fechaGeneracion
      * @return ApplicationResponse
      */
     public function setFechaGeneracion(?DateTimeInterface $fechaGeneracion): ApplicationResponse
@@ -115,7 +83,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRucEmisorCdr(): ?string
     {
@@ -123,7 +91,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $rucEmisorCdr
+     * @param string|null $rucEmisorCdr
      * @return ApplicationResponse
      */
     public function setRucEmisorCdr(?string $rucEmisorCdr): ApplicationResponse
@@ -133,7 +101,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRucEmisorCpe(): ?string
     {
@@ -141,7 +109,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $rucEmisorCpe
+     * @param string|null $rucEmisorCpe
      * @return ApplicationResponse
      */
     public function setRucEmisorCpe(?string $rucEmisorCpe): ApplicationResponse
@@ -151,7 +119,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTipoDocReceptorCpe(): ?string
     {
@@ -159,7 +127,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $tipoDocReceptorCpe
+     * @param string|null $tipoDocReceptorCpe
      * @return ApplicationResponse
      */
     public function setTipoDocReceptorCpe(?string $tipoDocReceptorCpe): ApplicationResponse
@@ -169,7 +137,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getNroDocReceptorCpe(): ?string
     {
@@ -177,7 +145,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $nroDocReceptorCpe
+     * @param string|null $nroDocReceptorCpe
      * @return ApplicationResponse
      */
     public function setNroDocReceptorCpe(?string $nroDocReceptorCpe): ApplicationResponse
@@ -187,7 +155,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCpeId(): ?string
     {
@@ -195,7 +163,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $CpeId
+     * @param string|null $CpeId
      * @return ApplicationResponse
      */
     public function setCpeId(?string $CpeId): ApplicationResponse
@@ -205,7 +173,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCodigoRespuesta(): ?string
     {
@@ -213,7 +181,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $codigoRespuesta
+     * @param string|null $codigoRespuesta
      * @return ApplicationResponse
      */
     public function setCodigoRespuesta(?string $codigoRespuesta): ApplicationResponse
@@ -223,7 +191,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescripcionRespuesta(): ?string
     {
@@ -231,7 +199,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string $descripcionRespuesta
+     * @param string|null $descripcionRespuesta
      * @return ApplicationResponse
      */
     public function setDescripcionRespuesta(?string $descripcionRespuesta): ApplicationResponse
@@ -241,7 +209,7 @@ class ApplicationResponse
     }
 
     /**
-     * @return string[]
+     * @return string[]|null
      */
     public function getNotasAsociadas(): ?array
     {
@@ -249,7 +217,7 @@ class ApplicationResponse
     }
 
     /**
-     * @param string[] $notasAsociadas
+     * @param string[]|null $notasAsociadas
      * @return ApplicationResponse
      */
     public function setNotasAsociadas(?array $notasAsociadas): ApplicationResponse

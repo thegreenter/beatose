@@ -11,10 +11,7 @@ use stdClass;
 
 class ExceptionCreator
 {
-    /**
-     * @var ErrorCodeProviderInterface
-     */
-    private $codeResolver;
+    private ErrorCodeProviderInterface $codeResolver;
 
     /**
      * ExceptionCreator constructor.

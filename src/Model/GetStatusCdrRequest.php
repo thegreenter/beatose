@@ -6,23 +6,11 @@ namespace App\Model;
 
 class GetStatusCdrRequest
 {
-    /**
-     * @var string
-     */
-    public $rucComprobante;
+    public ?string $rucComprobante;
 
-    /**
-     * @var string
-     */
-    public $tipoComprobante;
+    public ?string $tipoComprobante;
 
-    /**
-     * @var string
-     */
-    public $serieComprobante;
+    public ?string $serieComprobante;
 
-    /**
-     * @var int
-     */
-    public $numeroComprobante;
+    public ?int $numeroComprobante;
 }
