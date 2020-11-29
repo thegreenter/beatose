@@ -23,7 +23,7 @@ LIVE (Pruebas)
 ## Build
 Requerimientos
 - `PHP +7.4`
-- PHP extensiones: `soap`, `sqlite`.
+- PHP extensiones: `soap`, `sqlite`, `fileinfo`.
 
 Instalar dependencias `composer install`.      
 Crear base de datos de prueba en la ruta `./var/data.db`, con el siguiente comando:
