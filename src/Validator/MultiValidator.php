@@ -9,18 +9,12 @@ use DOMDocument;
 class MultiValidator implements XmlValidatorInterface
 {
     /**
-     * @var XmlValidatorInterface[]
-     */
-    private array $validators;
-
-    /**
      * MultiValidator constructor.
      *
      * @param XmlValidatorInterface[] $validators
      */
-    public function __construct(array $validators)
+    public function __construct(private array $validators)
     {
-        $this->validators = $validators;
     }
 
     /**

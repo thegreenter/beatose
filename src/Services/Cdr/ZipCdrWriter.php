@@ -9,20 +9,14 @@ use App\Services\Zip\XmlZipInterface;
 
 class ZipCdrWriter implements CdrWriterInterface
 {
-    private XmlZipInterface $compressor;
-
-    private CdrWriterInterface $xmlCdrWriter;
-
     /**
      * ZipCdrWriter constructor.
      *
      * @param XmlZipInterface $compressor
      * @param CdrWriterInterface $xmlCdrWriter
      */
-    public function __construct(XmlZipInterface $compressor, CdrWriterInterface $xmlCdrWriter)
+    public function __construct(private XmlZipInterface $compressor, private CdrWriterInterface $xmlCdrWriter)
     {
-        $this->compressor = $compressor;
-        $this->xmlCdrWriter = $xmlCdrWriter;
     }
 
     /**

@@ -19,14 +19,6 @@ use App\Services\Soap\ExceptionCreator;
 
 class AuthSoapService
 {
-    private BillServiceInterface $billService;
-
-    private Mapper $mapper;
-
-    private CredentialStore $credentialStore;
-
-    private ExceptionCreator $exceptionCretor;
-
     private bool $isAuthenticated = false;
 
     /**
@@ -36,12 +28,8 @@ class AuthSoapService
      * @param CredentialStore $credentialStore
      * @param ExceptionCreator $exceptionCretor
      */
-    public function __construct(BillServiceInterface $billService, Mapper $mapper, CredentialStore $credentialStore, ExceptionCreator $exceptionCretor)
+    public function __construct(private BillServiceInterface $billService, private Mapper $mapper, private CredentialStore $credentialStore, private ExceptionCreator $exceptionCretor)
     {
-        $this->billService = $billService;
-        $this->mapper = $mapper;
-        $this->credentialStore = $credentialStore;
-        $this->exceptionCretor = $exceptionCretor;
     }
 
     /**

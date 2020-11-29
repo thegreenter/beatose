@@ -14,24 +14,12 @@ use Greenter\Ubl\XmlError;
 class XmlSchemaValidator implements XmlValidatorInterface
 {
     /**
-     * @var SchemaValidatorInterface
-     */
-    private SchemaValidatorInterface $schema;
-
-    /**
-     * @var PathResolverInterface
-     */
-    private PathResolverInterface $pathResolver;
-
-    /**
      * XmlSchemaValidator constructor.
      * @param SchemaValidatorInterface $schema
      * @param PathResolverInterface $pathResolver
      */
-    public function __construct(SchemaValidatorInterface $schema, PathResolverInterface $pathResolver)
+    public function __construct(private SchemaValidatorInterface $schema, private PathResolverInterface $pathResolver)
     {
-        $this->schema = $schema;
-        $this->pathResolver = $pathResolver;
     }
 
     public function validate(string $filename, DOMDocument $document): array

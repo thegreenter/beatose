@@ -11,16 +11,13 @@ use stdClass;
 
 class ExceptionCreator
 {
-    private ErrorCodeProviderInterface $codeResolver;
-
     /**
      * ExceptionCreator constructor.
      *
      * @param ErrorCodeProviderInterface $codeResolver
      */
-    public function __construct(ErrorCodeProviderInterface $codeResolver)
+    public function __construct(private ErrorCodeProviderInterface $codeResolver)
     {
-        $this->codeResolver = $codeResolver;
     }
 
     public function fromValidation(ValidationError $error): SoapFault

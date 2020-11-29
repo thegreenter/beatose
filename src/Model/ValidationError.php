@@ -6,19 +6,13 @@ namespace App\Model;
 
 class ValidationError
 {
-    private ?string $code;
-
-    private ?string $detail;
-
     /**
      * ValidationError constructor.
      * @param string $code
      * @param string|null $detail
      */
-    public function __construct(string $code, ?string $detail = null)
+    public function __construct(private string $code, private ?string $detail = null)
     {
-        $this->code = $code;
-        $this->detail = $detail;
     }
 
     /**

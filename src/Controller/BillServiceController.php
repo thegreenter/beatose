@@ -11,11 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BillServiceController extends AbstractController
 {
-    private RequestHandlerInterface $handler;
-
-    public function __construct(RequestHandlerInterface $handler)
+    public function __construct(private RequestHandlerInterface $handler)
     {
-        $this->handler = $handler;
     }
 
     public function index(Request $request): Response

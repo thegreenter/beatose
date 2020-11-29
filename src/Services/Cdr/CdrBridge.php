@@ -15,18 +15,6 @@ use DOMDocument;
 
 class CdrBridge implements CdrOutputInterface
 {
-    private AppCdrCreatorInterface $appCdrCreator;
-
-    private CdrWriterInterface $cdrWriter;
-
-    private HashExtract $hashExtractor;
-
-    private EntityManagerInterface $entityManager;
-
-    private CpeDocumentRepository $repository;
-
-    private FileStoreInterface $fileStore;
-
     /**
      * CdrBridge constructor.
      * @param AppCdrCreatorInterface $appCdrCreator
@@ -36,14 +24,8 @@ class CdrBridge implements CdrOutputInterface
      * @param CpeDocumentRepository $repository
      * @param FileStoreInterface $fileStore
      */
-    public function __construct(AppCdrCreatorInterface $appCdrCreator, CdrWriterInterface $cdrWriter, HashExtract $hashExtractor, EntityManagerInterface $entityManager, CpeDocumentRepository $repository, FileStoreInterface $fileStore)
+    public function __construct(private AppCdrCreatorInterface $appCdrCreator, private CdrWriterInterface $cdrWriter, private HashExtract $hashExtractor, private EntityManagerInterface $entityManager, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore)
     {
-        $this->appCdrCreator = $appCdrCreator;
-        $this->cdrWriter = $cdrWriter;
-        $this->hashExtractor = $hashExtractor;
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
-        $this->fileStore = $fileStore;
     }
 
     public function output(DOMDocument $document, CpeCdrResult $result): ?string

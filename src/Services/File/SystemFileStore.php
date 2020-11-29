@@ -9,23 +9,12 @@ use Psr\Log\LoggerInterface;
 class SystemFileStore implements FileStoreInterface
 {
     /**
-     * Directory to save files.
-     *
-     * @var string
-     */
-    private string $uploadDir;
-
-    private LoggerInterface $logger;
-
-    /**
      * SystemFileStore constructor.
      * @param string $uploadDir
      * @param LoggerInterface $logger
      */
-    public function __construct(string $uploadDir, LoggerInterface $logger)
+    public function __construct(private string $uploadDir, private LoggerInterface $logger)
     {
-        $this->uploadDir = $uploadDir;
-        $this->logger = $logger;
     }
 
     /**

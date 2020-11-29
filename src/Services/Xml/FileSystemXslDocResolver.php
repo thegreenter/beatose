@@ -10,19 +10,14 @@ use Greenter\Validator\Resolver\TypeResolverInterface;
 
 class FileSystemXslDocResolver implements XslDocResolverInterface
 {
-    private TypeResolverInterface $typeResolver;
-    private RuleResolverInterface $ruleResolver;
-
     /**
      * FileSystemXslDocResolver constructor.
      *
      * @param TypeResolverInterface $typeResolver
      * @param RuleResolverInterface $ruleResolver
      */
-    public function __construct(TypeResolverInterface $typeResolver, RuleResolverInterface $ruleResolver)
+    public function __construct(private TypeResolverInterface $typeResolver, private RuleResolverInterface $ruleResolver)
     {
-        $this->typeResolver = $typeResolver;
-        $this->ruleResolver = $ruleResolver;
     }
 
     public function fromDoc(DOMDocument $document): ?DOMDocument

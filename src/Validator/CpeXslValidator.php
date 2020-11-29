@@ -12,19 +12,13 @@ use Greenter\Validator\Xml\XslValidatorInterface;
 
 class CpeXslValidator implements XmlValidatorInterface
 {
-    private XslValidatorInterface $validator;
-
-    private XslDocResolverInterface $xslDocResolver;
-
     /**
      * CpeXslValidator constructor.
      * @param XslValidatorInterface $validator
      * @param XslDocResolverInterface $xslDocResolver
      */
-    public function __construct(XslValidatorInterface $validator, XslDocResolverInterface $xslDocResolver)
+    public function __construct(private XslValidatorInterface $validator, private XslDocResolverInterface $xslDocResolver)
     {
-        $this->validator = $validator;
-        $this->xslDocResolver = $xslDocResolver;
     }
 
     public function validate(string $filename, DOMDocument $document): array

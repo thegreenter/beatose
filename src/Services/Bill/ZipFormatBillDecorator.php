@@ -19,23 +19,14 @@ use App\Services\Zip\XmlZipInterface;
 
 class ZipFormatBillDecorator implements BillServiceInterface
 {
-    private BillServiceInterface $service;
-
-    private XmlZipInterface $zipper;
-
-    private ExceptionCreator $exceptionCreator;
-
     /**
      * ZipFormatBillDecorator constructor.
      * @param BillServiceInterface $service
      * @param XmlZipInterface $zipper
      * @param ExceptionCreator $exceptionCreator
      */
-    public function __construct(BillServiceInterface $service, XmlZipInterface $zipper, ExceptionCreator $exceptionCreator)
+    public function __construct(private BillServiceInterface $service, private XmlZipInterface $zipper, private ExceptionCreator $exceptionCreator)
     {
-        $this->service = $service;
-        $this->zipper = $zipper;
-        $this->exceptionCreator = $exceptionCreator;
     }
 
     /**
