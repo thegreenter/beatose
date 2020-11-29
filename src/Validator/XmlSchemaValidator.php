@@ -41,12 +41,12 @@ class XmlSchemaValidator implements XmlValidatorInterface
         }
 
         $schemaPath = $this->pathResolver->getPath($document);
-        if ($this->schema->validate($document, $schemaPath)) {
-            return [];
+        if (empty($schemaPath) || !file_exists($schemaPath)) {
+            return [new ValidationError(ErrorCodeList::XML_NO_SCHEMA_FILE)];
         }
 
-        if (empty($path) || !file_exists($path)) {
-            new ValidationError(ErrorCodeList::XML_NO_SCHEMA_FILE);
+        if ($this->schema->validate($document, $schemaPath)) {
+            return [];
         }
 
         return [new ValidationError(ErrorCodeList::XML_NO_PARSE, $this->getErrorMessage($this->schema->getErrors()))];
@@ -56,7 +56,7 @@ class XmlSchemaValidator implements XmlValidatorInterface
      * @param XmlError[] $errors
      * @return string
      */
-    private function getErrorMessage($errors)
+    private function getErrorMessage(array $errors): string
     {
         $lines = [];
         foreach ($errors as $error) {
