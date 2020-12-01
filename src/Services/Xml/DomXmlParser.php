@@ -23,16 +23,9 @@ class DomXmlParser implements XmlParserInterface
                         $root);
 
         $info =  new MinimalDocInfo();
-        if (($idNode = $this->getNode($xpath, 'cbc:ID')) !== null) {
-            $info->setId($idNode->nodeValue);
-        }
-
-        if ($recipientNode !== null) {
-            $info
-                ->setRecipientTypeDoc($recipientNode->getAttribute('schemeID'))
-                ->setRecipient($recipientNode->nodeValue)
-            ;
-        }
+        $info->setId($this->getNode($xpath, 'cbc:ID')?->nodeValue)
+            ->setRecipientTypeDoc($recipientNode?->getAttribute('schemeID'))
+            ->setRecipient($recipientNode?->nodeValue);
 
         return $info;
     }
