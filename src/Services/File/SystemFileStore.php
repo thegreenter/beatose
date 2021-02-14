@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Services\File;
 
 use Psr\Log\LoggerInterface;
+use Safe\Exceptions\FilesystemException;
+use function Safe\file_get_contents;
+use function Safe\file_put_contents;
 
 class SystemFileStore implements FileStoreInterface
 {
@@ -52,12 +55,12 @@ class SystemFileStore implements FileStoreInterface
             return null;
         }
 
-        $content = file_get_contents($fullPath);
-        if ($content === false) {
+        try {
+            return file_get_contents($fullPath);
+        } catch (FilesystemException $e) {
             $this->logger->warning('File cannot read: '.$fullPath);
-            return null;
         }
 
-        return $content;
+        return null;
     }
 }
