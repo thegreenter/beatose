@@ -3,4 +3,4 @@ parameters:
     paths:
     - src
     ignoreErrors:
-    - '#Parameter \#4 \$detail of class SoapFault constructor expects string, stdClass\|null given\.#'
+    - '#Parameter \#4 \$details of class SoapFault constructor expects string, stdClass\|null given\.#'
