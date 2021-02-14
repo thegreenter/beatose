@@ -24,6 +24,7 @@ use App\Model\{CpeCdrResult,
 };
 use DateTime;
 use DOMDocument;
+use function Safe\base64_decode;
 
 class BillService implements BillServiceInterface
 {
@@ -112,6 +113,7 @@ class BillService implements BillServiceInterface
 
     /**
      * @inheritDoc
+     * @throws \Safe\Exceptions\UrlException
      */
     public function getStatus(GetStatusRequest $request): GetStatusResponse
     {
@@ -139,6 +141,7 @@ class BillService implements BillServiceInterface
 
     /**
      * @inheritDoc
+     * @throws \Safe\Exceptions\UrlException
      */
     public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
     {
