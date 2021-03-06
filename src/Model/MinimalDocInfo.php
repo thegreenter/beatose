@@ -23,9 +23,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $typeDoc
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setTypeDoc(?string $typeDoc): MinimalDocInfo
+    public function setTypeDoc(?string $typeDoc): static
     {
         $this->typeDoc = $typeDoc;
         return $this;
@@ -41,9 +41,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $id
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setId(?string $id): MinimalDocInfo
+    public function setId(?string $id): static
     {
         $this->id = $id;
         return $this;
@@ -59,9 +59,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $issuer
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setIssuer(?string $issuer): MinimalDocInfo
+    public function setIssuer(?string $issuer): static
     {
         $this->issuer = $issuer;
         return $this;
@@ -77,9 +77,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $issuerTypeDoc
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setIssuerTypeDoc(?string $issuerTypeDoc): MinimalDocInfo
+    public function setIssuerTypeDoc(?string $issuerTypeDoc): static
     {
         $this->issuerTypeDoc = $issuerTypeDoc;
         return $this;
@@ -95,9 +95,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $recipient
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setRecipient(?string $recipient): MinimalDocInfo
+    public function setRecipient(?string $recipient): static
     {
         $this->recipient = $recipient;
         return $this;
@@ -113,9 +113,9 @@ class MinimalDocInfo
 
     /**
      * @param string|null $recipientTypeDoc
-     * @return MinimalDocInfo
+     * @return static
      */
-    public function setRecipientTypeDoc(?string $recipientTypeDoc): MinimalDocInfo
+    public function setRecipientTypeDoc(?string $recipientTypeDoc): static
     {
         $this->recipientTypeDoc = $recipientTypeDoc;
         return $this;

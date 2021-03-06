@@ -19,9 +19,9 @@ class SoapCredential
 
     /**
      * @param string|null $user
-     * @return SoapCredential
+     * @return static
      */
-    public function setUser(?string $user): self
+    public function setUser(?string $user): static
     {
         $this->user = $user;
         return $this;
@@ -37,9 +37,9 @@ class SoapCredential
 
     /**
      * @param string|null $password
-     * @return SoapCredential
+     * @return static
      */
-    public function setPassword(?string $password): self
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
         return $this;

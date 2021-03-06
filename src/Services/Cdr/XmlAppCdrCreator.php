@@ -15,14 +15,6 @@ use Greenter\Ws\Reader\FilenameExtractorInterface;
 
 class XmlAppCdrCreator implements AppCdrCreatorInterface
 {
-    private ?string $oseRuc;
-
-    private FilenameExtractorInterface $filenameResolver;
-
-    private XmlParserInterface $xmlParser;
-
-    private ErrorCodeProviderInterface $errorCodes;
-
     /**
      * XmlAppCdrCreator constructor.
      * @param string|null $oseRuc
@@ -30,12 +22,8 @@ class XmlAppCdrCreator implements AppCdrCreatorInterface
      * @param XmlParserInterface $xmlParser
      * @param ErrorCodeProviderInterface $errorCodes
      */
-    public function __construct(?string $oseRuc, FilenameExtractorInterface $filenameResolver, XmlParserInterface $xmlParser, ErrorCodeProviderInterface $errorCodes)
+    public function __construct(private ?string $oseRuc, private FilenameExtractorInterface $filenameResolver, private XmlParserInterface $xmlParser, private ErrorCodeProviderInterface $errorCodes)
     {
-        $this->oseRuc = $oseRuc;
-        $this->filenameResolver = $filenameResolver;
-        $this->xmlParser = $xmlParser;
-        $this->errorCodes = $errorCodes;
     }
 
     public function create(DOMDocument $document, CpeCdrResult $result): ApplicationResponse

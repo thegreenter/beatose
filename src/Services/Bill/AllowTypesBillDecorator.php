@@ -20,12 +20,6 @@ use Greenter\Validator\Entity\DocumentType;
 
 class AllowTypesBillDecorator implements BillServiceInterface
 {
-    private BillServiceInterface $service;
-
-    private FilenameValidator $typesValidator;
-
-    private ExceptionCreator $exceptionCreator;
-
     /**
      * AllowTypesBillDecorator constructor.
      *
@@ -33,11 +27,8 @@ class AllowTypesBillDecorator implements BillServiceInterface
      * @param FilenameValidator $typesValidator
      * @param ExceptionCreator $exceptionCreator
      */
-    public function __construct(BillServiceInterface $service, FilenameValidator $typesValidator, ExceptionCreator $exceptionCreator)
+    public function __construct(private BillServiceInterface $service, private FilenameValidator $typesValidator, private ExceptionCreator $exceptionCreator)
     {
-        $this->service = $service;
-        $this->typesValidator = $typesValidator;
-        $this->exceptionCreator = $exceptionCreator;
     }
 
     /**

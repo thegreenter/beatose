@@ -13,12 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SoapServerHandler implements RequestHandlerInterface
 {
-    private AuthSoapService $service;
-
-    private UrlGeneratorInterface $router;
-
-    private ParameterBagInterface $params;
-
     /**
      * SoapServerHandler constructor.
      *
@@ -26,11 +20,8 @@ class SoapServerHandler implements RequestHandlerInterface
      * @param UrlGeneratorInterface $router
      * @param ParameterBagInterface $params
      */
-    public function __construct(AuthSoapService $service, UrlGeneratorInterface $router, ParameterBagInterface $params)
+    public function __construct(private AuthSoapService $service, private UrlGeneratorInterface $router, private ParameterBagInterface $params)
     {
-        $this->service = $service;
-        $this->router = $router;
-        $this->params = $params;
     }
 
     public function handle(Request $request): Response
@@ -47,7 +38,6 @@ class SoapServerHandler implements RequestHandlerInterface
         ob_start();
         $soapServer->handle($request->getContent());
         $response->setContent(ob_get_clean());
-        ob_clean();
 
         return $response;
     }

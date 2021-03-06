@@ -10,15 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends AbstractController
 {
-    private ParameterBagInterface $params;
-
     /**
      * HomeController constructor.
      * @param ParameterBagInterface $params
      */
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(private ParameterBagInterface $params)
     {
-        $this->params = $params;
     }
 
     public function index(): Response

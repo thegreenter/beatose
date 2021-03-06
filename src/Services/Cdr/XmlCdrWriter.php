@@ -10,20 +10,14 @@ use Twig\Environment;
 
 class XmlCdrWriter implements CdrWriterInterface
 {
-    private SignedXml $signer;
-
-    private Environment $twig;
-
     /**
      * XmlCdrWriter constructor.
      *
      * @param SignedXml $signer
      * @param Environment $twig
      */
-    public function __construct(SignedXml $signer, Environment $twig)
+    public function __construct(private SignedXml $signer, private Environment $twig)
     {
-        $this->signer = $signer;
-        $this->twig = $twig;
     }
 
     public function write(ApplicationResponse $applicationResponse): ?string

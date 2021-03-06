@@ -28,16 +28,6 @@ use function Safe\base64_decode;
 
 class BillService implements BillServiceInterface
 {
-    private XmlValidatorInterface $xmlValidator;
-
-    private ExceptionCreator $exceptionCreator;
-
-    private CdrOutputInterface $cdrOut;
-
-    private CpeDocumentRepository $repository;
-
-    private FileStoreInterface $fileStore;
-
     /**
      * BillService constructor.
      * @param XmlValidatorInterface $xmlValidator
@@ -46,13 +36,8 @@ class BillService implements BillServiceInterface
      * @param CpeDocumentRepository $repository
      * @param FileStoreInterface $fileStore
      */
-    public function __construct(XmlValidatorInterface $xmlValidator, ExceptionCreator $exceptionCreator, CdrOutputInterface $cdrOut, CpeDocumentRepository $repository, FileStoreInterface $fileStore)
+    public function __construct(private XmlValidatorInterface $xmlValidator, private ExceptionCreator $exceptionCreator, private CdrOutputInterface $cdrOut, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore)
     {
-        $this->xmlValidator = $xmlValidator;
-        $this->exceptionCreator = $exceptionCreator;
-        $this->cdrOut = $cdrOut;
-        $this->repository = $repository;
-        $this->fileStore = $fileStore;
     }
 
     /**

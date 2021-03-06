@@ -22,7 +22,7 @@ LIVE (Pruebas)
 
 ## Build
 Requerimientos
-- `PHP +7.4`
+- `PHP +8.0`
 - PHP extensiones: `soap`, `sqlite`, `fileinfo`.
 
 Instalar dependencias `composer install`.      
@@ -33,7 +33,7 @@ php composer/DoctrineMigrations.php
 
 Ejecutar
 ```bash
-php -S 127.0.0.1:8000 -t public
+php -S 127.0.0.1:8000 public/index.php
 ```
 
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
