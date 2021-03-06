@@ -38,7 +38,6 @@ class SoapServerHandler implements RequestHandlerInterface
         ob_start();
         $soapServer->handle($request->getContent());
         $response->setContent(ob_get_clean());
-        ob_clean();
 
         return $response;
     }
