@@ -31,8 +31,7 @@ class ExceptionCreator
         return new SoapFault(
             $error->getCode(),
             $this->codeResolver->getValue($error->getCode()),
-            null,
-            $detail,
+            details: $detail,
         );
     }
 
