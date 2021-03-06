@@ -7,7 +7,6 @@
         "php": "^8.0",
         "ext-ctype": "*",
         "ext-dom": "*",
-        "ext-fileinfo": "*",
         "ext-iconv": "*",
         "ext-pdo_sqlite": "*",
         "ext-soap": "*",
