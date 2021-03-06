@@ -12,6 +12,7 @@ use App\Services\Xml\HashExtract;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use DOMDocument;
+use function Safe\base64_decode;
 
 class CdrBridge implements CdrOutputInterface
 {
