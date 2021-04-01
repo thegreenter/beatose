@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<CpeDocument>
  * @method CpeDocument|null find($id, $lockMode = null, $lockVersion = null)
  * @method CpeDocument|null findOneBy(array $criteria, array $orderBy = null)
  * @method CpeDocument[]    findAll()
