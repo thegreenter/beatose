@@ -10,6 +10,7 @@ framework:
 
         routing:
             App\Message\ProcessSummary: async
+            App\Message\ProcessPack: async
 
 when@test:
     framework:

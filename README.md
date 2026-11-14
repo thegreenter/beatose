@@ -12,13 +12,12 @@ Una implementación de SUNAT Soap Server para recepcionar y validar comprobantes
 - Consulta de CDR (_SUNAT no posee un servicio BETA para consultar CDR_).
 - Almacenamiento de comprobantes enviados.
 
-LIVE (Pruebas)
+Credenciales SOAP por defecto (configurables con `SOAP_USER` y `SOAP_PASS`):
 
-|      :rocket: |                                      |
-|--------------:|--------------------------------------|
-|URL            | https://beatose.herokuapp.com/       |    
-|User           | `20123456789MODDATOS`                |
-|Password       | `moddatos`                           |
+|         |                       |
+|--------:|-----------------------|
+|User     | `20123456789MODDATOS` |
+|Password | `moddatos`            |
 
 ## Build
 Requerimientos
@@ -41,8 +40,8 @@ Ejecutar
 php -S 127.0.0.1:8000 public/index.php
 ```
 
-Los resúmenes (`sendSummary`) se procesan en segundo plano, como en SUNAT: `getStatus` responde `98` (en proceso)
-hasta que el consumidor de la cola valide el XML y genere el CDR. En otra terminal:
+Los resúmenes (`sendSummary`) y los lotes (`sendPack`) se procesan en segundo plano, como en SUNAT: `getStatus`
+responde `98` (en proceso) hasta que el consumidor de la cola valide los XML y genere los CDR. En otra terminal:
 ```bash
 php bin/console messenger:consume async -vv
 ```
@@ -54,6 +53,18 @@ Si prefieres procesarlos en la misma petición, usa `MESSENGER_TRANSPORT_DSN=syn
 | `0`                        | Procesado; CDR aceptado (o con observaciones) en `content`  |
 | `99`                       | Procesado con errores; CDR de rechazo en `content`          |
 | `0100`–`1999`              | Excepción al procesar (p. ej. `0306` XML inválido), sin CDR |
+
+#### Lotes (`sendPack`)
+
+- ZIP `{RUC}-LT-{AAAAMMDD}-{correlativo}.zip` con hasta 500 XML `{RUC}-{tipo}-{serie}-{número}.xml` del mismo
+  RUC; tipos: factura (`01`), boleta (`03`), nota de crédito (`07`) y de débito (`08`).
+- Al recibirlo se valida el nombre (`0151`; `0152` si es un resumen) y el ZIP: `0155` vacío, `0156` corrupto,
+  `0157` sin comprobantes, `0158` demasiados comprobantes, `0159` nombre de XML incorrecto, `0160` XML vacío.
+  Un lote enviado por `sendBill` o `sendSummary` responde `0153`.
+- `getStatus` devuelve en `content` un ZIP con un `R-{nombre}.xml` por comprobante: `0` si todos fueron
+  aceptados, `99` si alguno fue rechazado. Si un comprobante tiene una excepción (`0100`–`1999`) se rechaza
+  el lote completo con ese código y sin CDR.
+- El CDR de cada comprobante también se consulta con `getStatusCdr`.
 
 ### Docker + FrankenPHP (modo worker)
 
@@ -115,6 +126,6 @@ El WSDL es fijo, así que el sobre SOAP 1.1 se lee y se escribe directamente con
 |----------------|-------------------|
 |`sendBill`      |:white_check_mark: |
 |`sendSummary`   |:white_check_mark: |
-|`sendPack`      |:hourglass:        |
+|`sendPack`      |:white_check_mark: |
 |`getStatus`     |:white_check_mark: |
 |`getStatusCdr`  |:white_check_mark: |

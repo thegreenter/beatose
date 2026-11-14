@@ -88,6 +88,12 @@ XML;
         $archive->close();
         unlink($tmp);
 
+        return $this->responseCodeFromXml((string) $xml);
+    }
+
+    /** ResponseCode de un CDR en XML. */
+    private function responseCodeFromXml(string $xml): string
+    {
         $doc = new DOMDocument();
         $doc->loadXML($xml);
         $xpath = new DOMXPath($doc);

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services\Bill;
 
+use App\Message\ProcessPack;
 use App\Message\ProcessSummary;
 use App\Repository\CpeDocumentRepository;
 use App\Services\Cdr\CdrOutputInterface;
 use App\Services\File\FileStoreInterface;
 use App\Services\Soap\ExceptionCreator;
+use App\Validator\FilenameValidator;
+use App\Validator\PackValidator;
 use App\Validator\XmlValidatorInterface;
 use App\Model\{CpeCdrResult,
     ErrorCodeList,
@@ -42,8 +45,9 @@ class BillService implements BillServiceInterface
      * @param CpeDocumentRepository $repository
      * @param FileStoreInterface $fileStore
      * @param MessageBusInterface $bus
+     * @param FilenameValidator $filenameValidator
      */
-    public function __construct(private XmlValidatorInterface $xmlValidator, private ExceptionCreator $exceptionCreator, private CdrOutputInterface $cdrOut, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore, private MessageBusInterface $bus)
+    public function __construct(private XmlValidatorInterface $xmlValidator, private ExceptionCreator $exceptionCreator, private CdrOutputInterface $cdrOut, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore, private MessageBusInterface $bus, private FilenameValidator $filenameValidator)
     {
     }
 
@@ -82,18 +86,7 @@ class BillService implements BillServiceInterface
         // Como en SUNAT, aquí solo se valida el nombre y el ZIP (decoradores);
         // el contenido se valida en segundo plano y su resultado se consulta con getStatus.
         $ticket = $this->createTicket();
-        $name = pathinfo((string) $request->fileName, PATHINFO_FILENAME);
-
-        $cpe = ($this->repository->findOneByName($name) ?? new CpeDocument())
-            ->setName($name)
-            ->setTicket($ticket)
-            ->setStateCode(null)
-            ->setHashCpe(null)
-            ->setHashCdr(null)
-            ->setCreateDate(new DateTime());
-
-        $this->fileStore->save(SummaryProcessor::pendingFile($ticket), $request->contentFile);
-        $this->repository->save($cpe);
+        $this->registerTicket($ticket, (string) $request->fileName, SummaryProcessor::pendingFile($ticket), $request->contentFile);
         $this->bus->dispatch(new ProcessSummary($ticket, (string) $request->fileName));
 
         $response = new SendSummaryResponse();
@@ -127,7 +120,11 @@ class BillService implements BillServiceInterface
 
         $code = (int) $cpe->getStateCode();
         $response->status->statusCode = (2000 <= $code && $code <= 3999) ? self::STATUS_WITH_ERRORS : '0';
-        $response->status->content = $this->fileStore->get(bin2hex(base64_decode($cpe->getHashCdr())).'.xml');
+        // El CDR de un lote ya es un ZIP con un CDR por comprobante (PackProcessor).
+        $isPack = $this->filenameValidator->isAllow($cpe->getName(), [PackValidator::TYPE]);
+        $response->status->content = $isPack
+            ? $this->fileStore->get(PackProcessor::cdrFile($cpe->getHashCdr()))
+            : $this->fileStore->get(bin2hex(base64_decode($cpe->getHashCdr())).'.xml');
 
         return $response;
     }
@@ -137,7 +134,16 @@ class BillService implements BillServiceInterface
      */
     public function sendPack(SendPackRequest $request): SendPackResponse
     {
-        throw $this->exceptionCreator->fromCode(ErrorCodeList::XML_CANNOT_PROCESS);
+        // Como sendSummary: el nombre y el ZIP ya se validaron (decoradores); cada
+        // comprobante se valida en segundo plano y su resultado se consulta con getStatus.
+        $ticket = $this->createTicket();
+        $this->registerTicket($ticket, (string) $request->fileName, PackProcessor::pendingFile($ticket), $request->contentFile);
+        $this->bus->dispatch(new ProcessPack($ticket, (string) $request->fileName));
+
+        $response = new SendPackResponse();
+        $response->ticket = $ticket;
+
+        return $response;
     }
 
     /**
@@ -163,6 +169,25 @@ class BillService implements BillServiceInterface
         $response->statusCdr->content = $this->fileStore->get(bin2hex(base64_decode($cpe->getHashCdr())).'.xml');
 
         return $response;
+    }
+
+    /**
+     * Registra un envío asíncrono (resumen o lote) en proceso y guarda su contenido hasta que se procese.
+     */
+    private function registerTicket(string $ticket, string $fileName, string $pendingFile, ?string $content): void
+    {
+        $name = pathinfo($fileName, PATHINFO_FILENAME);
+
+        $cpe = ($this->repository->findOneByName($name) ?? new CpeDocument())
+            ->setName($name)
+            ->setTicket($ticket)
+            ->setStateCode(null)
+            ->setHashCpe(null)
+            ->setHashCdr(null)
+            ->setCreateDate(new DateTime());
+
+        $this->fileStore->save($pendingFile, $content);
+        $this->repository->save($cpe);
     }
 
     private function createTicket(): string
