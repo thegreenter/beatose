@@ -4,49 +4,53 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Services\AuthSoapService;
-use Closure;
-use SoapServer;
-use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Services\Soap\BillServiceEndpoint;
+use App\Services\Soap\EnvelopeReader;
+use App\Services\Soap\EnvelopeWriter;
+use App\Services\Soap\SoapFault;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Throwable;
 
+/**
+ * Servidor SOAP 1.1 del billService, sin ext-soap.
+ *
+ * El WSDL es fijo, así que el sobre se lee y se escribe directamente con DOM.
+ * A diferencia de \SoapServer, nunca llama a exit() ni escribe en la salida
+ * estándar (seguro en el modo worker de FrankenPHP), devuelve HTTP 500 en
+ * los faults (SOAP 1.1 §6.2, como SUNAT) y controla exactamente qué se
+ * responde ante sobres inválidos o errores inesperados.
+ */
 class SoapServerHandler implements RequestHandlerInterface
 {
-    /**
-     * SoapServerHandler constructor.
-     *
-     * @param Closure(): AuthSoapService $serviceFactory devuelve una instancia nueva en cada llamada
-     *                                                  (AuthSoapService no es un servicio compartido)
-     * @param UrlGeneratorInterface $router
-     * @param ParameterBagInterface $params
-     */
     public function __construct(
-        #[AutowireServiceClosure(AuthSoapService::class)]
-        private Closure $serviceFactory,
-        private UrlGeneratorInterface $router,
-        private ParameterBagInterface $params,
+        private EnvelopeReader $reader,
+        private EnvelopeWriter $writer,
+        private BillServiceEndpoint $endpoint,
+        private LoggerInterface $logger,
     ) {
     }
 
     public function handle(Request $request): Response
     {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml; charset=utf-8');
-        $endpoint = $this->router->generate('bill_service', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $wsdlPath = $this->params->get('app.soap_wsdl');
+        try {
+            $soapRequest = $this->reader->read($request->getContent());
+            $payload = $this->endpoint->handle($soapRequest);
 
-        $options = ['uri' => $endpoint];
-        $soapServer = new SoapServer($wsdlPath, $options);
-        // Estado de autenticación aislado por petición.
-        $soapServer->setObject(($this->serviceFactory)());
+            return $this->xml($this->writer->response($soapRequest->operation, $payload), Response::HTTP_OK);
+        } catch (SoapFault $fault) {
+            return $this->xml($this->writer->fault($fault), Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (Throwable $e) {
+            $this->logger->error('Error inesperado en billService.', ['exception' => $e]);
+            $fault = new SoapFault(SoapFault::SERVER, 'Error interno del servidor');
 
-        ob_start();
-        $soapServer->handle($request->getContent());
-        $response->setContent(ob_get_clean());
+            return $this->xml($this->writer->fault($fault), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
-        return $response;
+    private function xml(string $content, int $status): Response
+    {
+        return new Response($content, $status, ['Content-Type' => 'text/xml; charset=utf-8']);
     }
 }

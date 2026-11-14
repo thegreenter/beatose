@@ -87,7 +87,7 @@ docker run --rm -p 8000:80 -v "$PWD":/app beatose:dev
 ```
 
 > En modo worker los servicios de Symfony viven entre peticiones: no guardes estado de una petición en
-> propiedades de servicios compartidos (ver `AuthSoapService`, que se crea de nuevo en cada petición SOAP).
+> propiedades de servicios compartidos (por eso la autenticación de `BillServiceEndpoint` no guarda estado).
 
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
@@ -97,6 +97,17 @@ Las **credenciales SOAP** pueden ser modificadas en el archivo `.env`:
 SOAP_USER=20000001XXXXX
 SOAP_PASS=xxxx
 ```
+
+## Servidor SOAP
+
+El WSDL es fijo, así que el sobre SOAP 1.1 se lee y se escribe directamente con DOM (`src/Services/Soap`), sin
+`\SoapServer`:
+
+- Los faults se responden con HTTP 500 (SOAP 1.1 §6.2, como SUNAT) y `faultcode` con el código de error
+  (p. ej. `0156`); los errores de validación incluyen `<detail><message>`.
+- Sobres mal formados, SOAP 1.2, DTD (bloqueadas para evitar XXE) u operaciones inexistentes devuelven un fault
+  `SOAP-ENV:Client`/`SOAP-ENV:VersionMismatch` en lugar de terminar el proceso.
+- La cabecera WS-Security se lee por nombre local, con cualquier prefijo.
 
 ## Métodos de Servicio
 

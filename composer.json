@@ -10,7 +10,6 @@
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-pdo_sqlite": "*",
-        "ext-soap": "*",
         "ext-xsl": "*",
         "ext-zlib": "*",
         "doctrine/doctrine-bundle": "^3.4",

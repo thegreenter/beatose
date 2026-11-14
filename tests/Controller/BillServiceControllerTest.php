@@ -50,7 +50,7 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::INVALID_USER;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()
@@ -60,6 +60,7 @@ class BillServiceControllerTest extends WebTestCase
     /**
      * Con el kernel en memoria entre peticiones (como el modo worker de
      * FrankenPHP), una petición autenticada no debe autenticar a las siguientes.
+     * La autenticación no guarda estado (BillServiceEndpoint).
      */
     public function testAuthStateDoesNotLeakBetweenRequests(): void
     {
@@ -127,7 +128,7 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::ZIP_INVALID_NAME;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()
@@ -156,7 +157,7 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::ZIP_CORRUPTO;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()

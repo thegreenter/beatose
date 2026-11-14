@@ -6,7 +6,8 @@ FROM dunglas/frankenphp:1-php8.5 AS frankenphp_base
 WORKDIR /app
 
 # Extensiones requeridas en composer.json (dom, openssl, pdo_sqlite, zlib,
-# fileinfo, iconv y ctype ya vienen en la imagen); zip la usa Composer.
+# fileinfo, iconv y ctype ya vienen en la imagen); soap la exige greenter/ws
+# y zip la usa Composer.
 RUN set -eux; \
 	install-php-extensions \
 		opcache \
