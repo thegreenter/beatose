@@ -42,6 +42,27 @@ class BillServiceFlowTest extends WebTestCase
         $this->assertSame('0', $this->cdrResponseCode($content));
     }
 
+    public function testResendBillUpdatesExistingRecord(): void
+    {
+        $client = static::createClient();
+        $envelope = $this->buildEnvelope('sendBill', [
+            'fileName' => self::INVOICE.'.zip',
+            'contentFile' => $this->zipResource(self::INVOICE),
+        ]);
+
+        foreach ([1, 2] as $attempt) {
+            $xpath = $this->postSoap($client, $envelope);
+            $this->assertSame(200, $client->getResponse()->getStatusCode(), "Envío $attempt");
+            $this->assertNotSame('', $xpath->evaluate('string(//ns1:sendBillResponse/applicationResponse)'));
+        }
+
+        $connection = static::getContainer()->get('doctrine.dbal.default_connection');
+        $this->assertSame(1, (int) $connection->fetchOne(
+            'SELECT COUNT(*) FROM cpe_document WHERE name = ?',
+            ['20200464529-01-F001-697'],
+        ));
+    }
+
     public function testSendSummaryAndGetStatus(): void
     {
         $client = static::createClient();

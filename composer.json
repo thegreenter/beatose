@@ -15,7 +15,6 @@
         "ext-zlib": "*",
         "doctrine/doctrine-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^4.0",
-        "doctrine/orm": "^3.7",
         "greenter/cpe-validator": "^5.4",
         "greenter/ubl-validator": "^2.3",
         "greenter/ws": "^5.4",
