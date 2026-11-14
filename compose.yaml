@@ -31,7 +31,7 @@ services:
         published: ${HTTP_PORT:-8000}
         protocol: tcp
 
-  # Procesa en segundo plano los resúmenes recibidos por sendSummary.
+  # Procesa en segundo plano los resúmenes (sendSummary) y lotes (sendPack).
   worker:
     <<: *app
     command: ["php", "bin/console", "messenger:consume", "async", "--time-limit=3600", "--memory-limit=256M"]

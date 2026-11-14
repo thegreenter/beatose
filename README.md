@@ -12,13 +12,12 @@ Una implementación de SUNAT Soap Server para recepcionar y validar comprobantes
 - Consulta de CDR (_SUNAT no posee un servicio BETA para consultar CDR_).
 - Almacenamiento de comprobantes enviados.
 
-LIVE (Pruebas)
+Credenciales SOAP por defecto (configurables con `SOAP_USER` y `SOAP_PASS`):
 
-|      :rocket: |                                      |
-|--------------:|--------------------------------------|
-|URL            | https://beatose.herokuapp.com/       |    
-|User           | `20123456789MODDATOS`                |
-|Password       | `moddatos`                           |
+|         |                       |
+|--------:|-----------------------|
+|User     | `20123456789MODDATOS` |
+|Password | `moddatos`            |
 
 ## Build
 Requerimientos
