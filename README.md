@@ -22,13 +22,18 @@ LIVE (Pruebas)
 
 ## Build
 Requerimientos
-- `PHP +8.0`
-- PHP extensiones: `soap`, `sqlite`, `fileinfo`.
+- `PHP 8.5+`
+- PHP extensiones: `soap`, `pdo_sqlite`, `xsl`, `openssl`, `zlib`, `fileinfo`.
 
 Instalar dependencias `composer install`.      
 Crear base de datos de prueba en la ruta `./var/data.db`, con el siguiente comando:
 ```
 php composer/DoctrineMigrations.php
+```
+
+Ejecutar pruebas
+```bash
+vendor/bin/phpunit
 ```
 
 Ejecutar
