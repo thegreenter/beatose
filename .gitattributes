@@ -1,0 +1,5 @@
+# Archivos que se ejecutan dentro del contenedor Linux: siempre LF,
+# aunque se clone en Windows con core.autocrlf=true.
+*.sh         text eol=lf
+bin/*        text eol=lf
+frankenphp/** text eol=lf
