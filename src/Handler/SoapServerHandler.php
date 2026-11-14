@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Services\AuthSoapService;
+use Closure;
 use SoapServer;
+use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +18,17 @@ class SoapServerHandler implements RequestHandlerInterface
     /**
      * SoapServerHandler constructor.
      *
-     * @param AuthSoapService $service
+     * @param Closure(): AuthSoapService $serviceFactory devuelve una instancia nueva en cada llamada
+     *                                                  (AuthSoapService no es un servicio compartido)
      * @param UrlGeneratorInterface $router
      * @param ParameterBagInterface $params
      */
-    public function __construct(private AuthSoapService $service, private UrlGeneratorInterface $router, private ParameterBagInterface $params)
-    {
+    public function __construct(
+        #[AutowireServiceClosure(AuthSoapService::class)]
+        private Closure $serviceFactory,
+        private UrlGeneratorInterface $router,
+        private ParameterBagInterface $params,
+    ) {
     }
 
     public function handle(Request $request): Response
@@ -33,7 +40,8 @@ class SoapServerHandler implements RequestHandlerInterface
 
         $options = ['uri' => $endpoint];
         $soapServer = new SoapServer($wsdlPath, $options);
-        $soapServer->setObject($this->service);
+        // Estado de autenticación aislado por petición.
+        $soapServer->setObject(($this->serviceFactory)());
 
         ob_start();
         $soapServer->handle($request->getContent());

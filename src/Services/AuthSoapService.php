@@ -16,7 +16,18 @@ use App\Model\{
     ValidationError,
 };
 use App\Services\Soap\ExceptionCreator;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 
+/**
+ * Objeto que atiende las operaciones SOAP de una única petición.
+ *
+ * Guarda el resultado de la cabecera WS-Security, así que NO es compartido
+ * (shared: false): cada petición SOAP debe usar una instancia nueva, creada
+ * por {@see \App\Handler\SoapServerHandler}. Si se reutilizara la misma
+ * instancia (p. ej. en el modo worker de FrankenPHP), una petición
+ * autenticada dejaría autenticadas a las siguientes.
+ */
+#[Autoconfigure(shared: false)]
 class AuthSoapService
 {
     private bool $isAuthenticated = false;
@@ -26,9 +37,9 @@ class AuthSoapService
      * @param BillServiceInterface $billService
      * @param Mapper $mapper
      * @param CredentialStore $credentialStore
-     * @param ExceptionCreator $exceptionCretor
+     * @param ExceptionCreator $exceptionCreator
      */
-    public function __construct(private BillServiceInterface $billService, private Mapper $mapper, private CredentialStore $credentialStore, private ExceptionCreator $exceptionCretor)
+    public function __construct(private BillServiceInterface $billService, private Mapper $mapper, private CredentialStore $credentialStore, private ExceptionCreator $exceptionCreator)
     {
     }
 
@@ -40,13 +51,11 @@ class AuthSoapService
     public function security(object $header): void
     {
         $credential = $this->credentialStore->get();
+        $user = $header->UsernameToken ?? null;
 
-        $user = $header->UsernameToken;
-
-        if ($user->Username === $credential->getUser() &&
-            $user->Password === $credential->getPassword()) {
-            $this->isAuthenticated = true;
-        }
+        $this->isAuthenticated = is_object($user)
+            && $this->equals($credential->getUser(), $user->Username ?? null)
+            && $this->equals($credential->getPassword(), $user->Password ?? null);
     }
 
     public function sendBill(object $request): object
@@ -92,7 +101,15 @@ class AuthSoapService
     private function ensureAuthenticated(): void
     {
         if (!$this->isAuthenticated) {
-            throw $this->exceptionCretor->fromValidation(new ValidationError(ErrorCodeList::INVALID_USER));
+            throw $this->exceptionCreator->fromValidation(new ValidationError(ErrorCodeList::INVALID_USER));
         }
+    }
+
+    /**
+     * Comparación en tiempo constante; un valor ausente nunca coincide.
+     */
+    private function equals(?string $expected, mixed $given): bool
+    {
+        return $expected !== null && is_string($given) && hash_equals($expected, $given);
     }
 }
