@@ -1,18 +1,24 @@
+x-app: &app
+  image: ${IMAGES_PREFIX:-}beatose
+  build:
+    context: .
+    target: frankenphp_prod
+    args:
+      XSLT_URL: ${XSLT_URL:-}
+  restart: unless-stopped
+  environment: &app-env
+    APP_SECRET: ${APP_SECRET:-!ChangeThisSecret!}
+    SOAP_USER: ${SOAP_USER:-20123456789MODDATOS}
+    SOAP_PASS: ${SOAP_PASS:-moddatos}
+    SIGN_PASS: ${SIGN_PASS:-greenter}
+    MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-doctrine://default}
+
 services:
   php:
-    image: ${IMAGES_PREFIX:-}beatose
-    build:
-      context: .
-      target: frankenphp_prod
-      args:
-        XSLT_URL: ${XSLT_URL:-}
-    restart: unless-stopped
+    <<: *app
     environment:
+      <<: *app-env
       SERVER_NAME: ${SERVER_NAME:-:80}
-      APP_SECRET: ${APP_SECRET:-!ChangeThisSecret!}
-      SOAP_USER: ${SOAP_USER:-20123456789MODDATOS}
-      SOAP_PASS: ${SOAP_PASS:-moddatos}
-      SIGN_PASS: ${SIGN_PASS:-greenter}
       # Directivas extra del worker, p. ej. "num 4" (por defecto: 2 x núcleos de CPU)
       FRANKENPHP_WORKER_CONFIG: ${FRANKENPHP_WORKER_CONFIG:-}
     volumes:
@@ -24,6 +30,16 @@ services:
       - target: 80
         published: ${HTTP_PORT:-8000}
         protocol: tcp
+
+  # Procesa en segundo plano los resúmenes recibidos por sendSummary.
+  worker:
+    <<: *app
+    command: ["php", "bin/console", "messenger:consume", "async", "--time-limit=3600", "--memory-limit=256M"]
+    depends_on:
+      - php
+    volumes:
+      - cpe_data:/app/var/data
+      - cpe_files:/app/var/cpe_files
 
 volumes:
   caddy_data:

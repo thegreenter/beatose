@@ -20,4 +20,11 @@ interface FileStoreInterface
      * @return string|null
      */
     public function get(string $filename): ?string;
+
+    /**
+     * Delete saved file (no-op if it doesn't exist)
+     *
+     * @param string $filename
+     */
+    public function delete(string $filename): void;
 }
