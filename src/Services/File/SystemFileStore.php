@@ -52,4 +52,12 @@ class SystemFileStore implements FileStoreInterface
 
         return null;
     }
+
+    public function delete(string $filename): void
+    {
+        $fullPath = $this->uploadDir.DIRECTORY_SEPARATOR.$filename;
+        if (is_file($fullPath)) {
+            unlink($fullPath);
+        }
+    }
 }

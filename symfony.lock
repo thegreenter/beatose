@@ -17,9 +17,6 @@
     "doctrine/cache": {
         "version": "1.11.0"
     },
-    "doctrine/collections": {
-        "version": "1.6.7"
-    },
     "doctrine/common": {
         "version": "3.1.2"
     },
@@ -64,17 +61,8 @@
     "doctrine/inflector": {
         "version": "2.0.3"
     },
-    "doctrine/instantiator": {
-        "version": "1.4.0"
-    },
-    "doctrine/lexer": {
-        "version": "1.2.1"
-    },
     "doctrine/migrations": {
         "version": "3.1.2"
-    },
-    "doctrine/orm": {
-        "version": "2.8.4"
     },
     "doctrine/persistence": {
         "version": "2.1.0"
@@ -251,6 +239,18 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
+    },
+    "symfony/messenger": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.0",
+            "ref": "d8936e2e2230637ef97e5eecc0eea074eecae58b"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
     },
     "symfony/monolog-bridge": {
         "version": "v5.2.7"

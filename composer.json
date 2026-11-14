@@ -10,12 +10,10 @@
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-pdo_sqlite": "*",
-        "ext-soap": "*",
         "ext-xsl": "*",
         "ext-zlib": "*",
         "doctrine/doctrine-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^4.0",
-        "doctrine/orm": "^3.7",
         "greenter/cpe-validator": "^5.4",
         "greenter/ubl-validator": "^2.3",
         "greenter/ws": "^5.4",
@@ -23,10 +21,13 @@
         "greenter/xmldsig": "^5.1",
         "nelexa/zip": "^4.1",
         "symfony/console": "8.1.*",
+        "symfony/doctrine-messenger": "8.1.*",
         "symfony/dotenv": "8.1.*",
         "symfony/flex": "^2.12",
         "symfony/framework-bundle": "8.1.*",
+        "symfony/messenger": "8.1.*",
         "symfony/monolog-bundle": "^4.1",
+        "symfony/runtime": "8.1.*",
         "symfony/twig-bundle": "8.1.*",
         "symfony/yaml": "8.1.*",
         "thecodingmachine/safe": "^3.4",
@@ -41,7 +42,8 @@
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         },
         "optimize-autoloader": true,
         "preferred-install": {

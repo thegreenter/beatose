@@ -6,8 +6,6 @@ namespace App\Services\Soap;
 
 use App\Model\ValidationError;
 use Greenter\Validator\ErrorCodeProviderInterface;
-use SoapFault;
-use stdClass;
 
 class ExceptionCreator
 {
@@ -22,16 +20,10 @@ class ExceptionCreator
 
     public function fromValidation(ValidationError $error): SoapFault
     {
-        $detail = null;
-        if ($error->getDetail() !== null) {
-            $detail = new stdClass();
-            $detail->message = $error->getDetail();
-        }
-
         return new SoapFault(
             $error->getCode(),
-            $this->codeResolver->getValue($error->getCode()),
-            details: $detail,
+            (string) $this->codeResolver->getValue($error->getCode()),
+            $error->getDetail(),
         );
     }
 
@@ -39,7 +31,7 @@ class ExceptionCreator
     {
         return new SoapFault(
             $code,
-            $this->codeResolver->getValue($code),
+            (string) $this->codeResolver->getValue($code),
         );
     }
 }

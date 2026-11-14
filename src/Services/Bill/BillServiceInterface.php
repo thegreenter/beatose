@@ -16,7 +16,7 @@ use App\Model\{
     SendSummaryRequest,
     SendSummaryResponse,
 };
-use SoapFault;
+use App\Services\Soap\SoapFault;
 
 interface BillServiceInterface
 {

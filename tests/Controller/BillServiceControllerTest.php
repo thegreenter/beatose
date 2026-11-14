@@ -50,11 +50,60 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::INVALID_USER;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()
         );
+    }
+
+    /**
+     * Con el kernel en memoria entre peticiones (como el modo worker de
+     * FrankenPHP), una petición autenticada no debe autenticar a las siguientes.
+     * La autenticación no guarda estado (BillServiceEndpoint).
+     */
+    public function testAuthStateDoesNotLeakBetweenRequests(): void
+    {
+        $client = static::createClient();
+        $client->catchExceptions(false);
+        $client->disableReboot();
+
+        $send = function (string $soapContent) use ($client): string {
+            $client->request(
+                'POST',
+                '/ol-ti-itcpe/billService',
+                [],
+                [],
+                ['CONTENT_TYPE' => 'text/xml;charset=UTF-8'],
+                $soapContent,
+            );
+
+            return (string) $client->getResponse()->getContent();
+        };
+        $params = [
+            'user' => '20123456789MODDATOS',
+            'pass' => 'moddatos',
+            'filename' => '20123456789-01-F001-1.zip',
+            'content' => 'xxxxxxxx',
+        ];
+        $invalidUser = '<faultcode>'.ErrorCodeList::INVALID_USER.'</faultcode>';
+
+        // 1. Credenciales válidas: pasa la autenticación y falla en el ZIP.
+        $content = $send($this->buildSoapRequest($params));
+        $this->assertStringContainsString('<faultcode>'.ErrorCodeList::ZIP_CORRUPTO.'</faultcode>', $content);
+
+        // 2. Contraseña incorrecta en el mismo kernel.
+        $content = $send($this->buildSoapRequest(['pass' => 'incorrecta'] + $params));
+        $this->assertStringContainsString($invalidUser, $content);
+
+        // 3. Sin cabecera WS-Security en el mismo kernel.
+        $withoutHeader = preg_replace(
+            '#<SOAP-ENV:Header>.*</SOAP-ENV:Header>#s',
+            '',
+            $this->buildSoapRequest($params),
+        );
+        $content = $send($withoutHeader);
+        $this->assertStringContainsString($invalidUser, $content);
     }
 
     public function testInvalidDocSendBillSoap(): void
@@ -79,7 +128,7 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::ZIP_INVALID_NAME;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()
@@ -108,7 +157,7 @@ class BillServiceControllerTest extends WebTestCase
         );
 
         $errorCode = ErrorCodeList::ZIP_CORRUPTO;
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
         $this->assertStringContainsStringIgnoringCase(
             "<faultcode>$errorCode</faultcode>",
             $client->getResponse()->getContent()

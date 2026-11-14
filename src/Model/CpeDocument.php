@@ -2,43 +2,41 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Model;
 
-use App\Repository\CpeDocumentRepository;
 use DateTime;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CpeDocumentRepository::class)]
+/**
+ * Registro de un comprobante recibido (tabla cpe_document).
+ *
+ * @see \App\Repository\CpeDocumentRepository
+ */
 class CpeDocument
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
-    // @phpstan-ignore property.unusedType (Doctrine assigns the generated id via reflection)
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 64, unique: true)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::STRING, length: 16, nullable: true)]
     private ?string $stateCode = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $hashCpe = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $hashCdr = null;
 
-    #[ORM\Column(type: Types::STRING, length: 64, nullable: true)]
     private ?string $ticket = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTime $createDate = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): ?string

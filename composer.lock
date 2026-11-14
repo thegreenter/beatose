@@ -4,94 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd0921f5be1ca126378bbb0e4f4c3d3b",
+    "content-hash": "ed27075c0722b48062699c025819cf30",
     "packages": [
-        {
-            "name": "doctrine/collections",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/collections.git",
-                "reference": "7c2f25ed928553a3de389ccb99aa46c0eedb2d4d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/7c2f25ed928553a3de389ccb99aa46c0eedb2d4d",
-                "reference": "7c2f25ed928553a3de389ccb99aa46c0eedb2d4d",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/deprecations": "^1",
-                "php": "^8.4",
-                "symfony/polyfill-php86": "^1.36"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^14",
-                "ext-json": "*",
-                "phpstan/phpstan": "^2.1.30",
-                "phpstan/phpstan-phpunit": "^2.0.7",
-                "phpunit/phpunit": "^12.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Collections\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Collections library that adds additional functionality on top of PHP arrays.",
-            "homepage": "https://www.doctrine-project.org/projects/collections.html",
-            "keywords": [
-                "array",
-                "collections",
-                "iterators",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/collections/issues",
-                "source": "https://github.com/doctrine/collections/tree/3.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fcollections",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-04-29T20:41:02+00:00"
-        },
         {
             "name": "doctrine/dbal",
             "version": "4.5.1",
@@ -551,240 +465,6 @@
             "time": "2026-01-29T07:11:08+00:00"
         },
         {
-            "name": "doctrine/inflector",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/inflector.git",
-                "reference": "46351b6812b7b6d52b82c3efa5dfb786a198ec88"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/46351b6812b7b6d52b82c3efa5dfb786a198ec88",
-                "reference": "46351b6812b7b6d52b82c3efa5dfb786a198ec88",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^12.0 || ^14.0",
-                "phpstan/phpstan": "^1.12 || ^2.0",
-                "phpstan/phpstan-phpunit": "^1.4 || ^2.0",
-                "phpstan/phpstan-strict-rules": "^1.6 || ^2.0",
-                "phpunit/phpunit": "^8.5 || ^12.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Inflector\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Inflector is a small library that can perform string manipulations with regard to upper/lowercase and singular/plural forms of words.",
-            "homepage": "https://www.doctrine-project.org/projects/inflector.html",
-            "keywords": [
-                "inflection",
-                "inflector",
-                "lowercase",
-                "manipulation",
-                "php",
-                "plural",
-                "singular",
-                "strings",
-                "uppercase",
-                "words"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/2.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finflector",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-10-26T08:14:14+00:00"
-        },
-        {
-            "name": "doctrine/instantiator",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "23da848e1a2308728fe5fdddabf4be17ff9720c7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/23da848e1a2308728fe5fdddabf4be17ff9720c7",
-                "reference": "23da848e1a2308728fe5fdddabf4be17ff9720c7",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.4"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^14",
-                "ext-pdo": "*",
-                "ext-phar": "*",
-                "phpbench/phpbench": "^1.2",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-phpunit": "^2.0",
-                "phpunit/phpunit": "^10.5.58"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "https://ocramius.github.io/"
-                }
-            ],
-            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
-            "homepage": "https://www.doctrine-project.org/projects/instantiator.html",
-            "keywords": [
-                "constructor",
-                "instantiate"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/instantiator/issues",
-                "source": "https://github.com/doctrine/instantiator/tree/2.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finstantiator",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-01-05T06:47:08+00:00"
-        },
-        {
-            "name": "doctrine/lexer",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/lexer.git",
-                "reference": "71d305eaa6480d3d3460c7d053d1da7749fa9cca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/71d305eaa6480d3d3460c7d053d1da7749fa9cca",
-                "reference": "71d305eaa6480d3d3460c7d053d1da7749fa9cca",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^14",
-                "phpstan/phpstan": "^2",
-                "phpunit/phpunit": "^10.5.58 || ^12.5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Lexer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
-            "keywords": [
-                "annotations",
-                "docblock",
-                "lexer",
-                "parser",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/lexer/issues",
-                "source": "https://github.com/doctrine/lexer/tree/3.0.3"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Flexer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-10-01T06:59:29+00:00"
-        },
-        {
             "name": "doctrine/migrations",
             "version": "3.9.8",
             "source": {
@@ -886,96 +566,6 @@
                 }
             ],
             "time": "2026-10-04T12:35:58+00:00"
-        },
-        {
-            "name": "doctrine/orm",
-            "version": "3.7.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/orm.git",
-                "reference": "4487f850401c0e1f27891cce5897fa90b3055c2a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/4487f850401c0e1f27891cce5897fa90b3055c2a",
-                "reference": "4487f850401c0e1f27891cce5897fa90b3055c2a",
-                "shasum": ""
-            },
-            "require": {
-                "composer-runtime-api": "^2",
-                "doctrine/collections": "^2.2 || ^3.1",
-                "doctrine/dbal": "^3.8.2 || ^4",
-                "doctrine/deprecations": "^0.5.3 || ^1",
-                "doctrine/event-manager": "^2.1.1",
-                "doctrine/inflector": "^1.4 || ^2.0",
-                "doctrine/instantiator": "^1.3 || ^2",
-                "doctrine/lexer": "^3",
-                "doctrine/persistence": "^3.3.1 || ^4",
-                "ext-ctype": "*",
-                "php": "^8.1",
-                "psr/cache": "^1 || ^2 || ^3",
-                "symfony/console": "^5.4 || ^6.0 || ^7.0 || ^8.0",
-                "symfony/polyfill-php86": "^1.37",
-                "symfony/var-exporter": "^6.3.9 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^14.0",
-                "phpbench/phpbench": "^1.0",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "2.2.14",
-                "phpstan/phpstan-deprecation-rules": "^2",
-                "phpunit/phpunit": "^10.5.0 || ^11.5",
-                "psr/log": "^1 || ^2 || ^3",
-                "symfony/cache": "^5.4 || ^6.2 || ^7.0 || ^8.0"
-            },
-            "suggest": {
-                "ext-deepclone": "Improves performance when not using native lazy objects (Symfony 8.1+)",
-                "ext-dom": "Provides support for XSD validation for XML mapping files",
-                "symfony/cache": "Provides cache support for Setup Tool with doctrine/cache 2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\ORM\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com"
-                }
-            ],
-            "description": "Object-Relational-Mapper for PHP",
-            "homepage": "https://www.doctrine-project.org/projects/orm.html",
-            "keywords": [
-                "database",
-                "orm"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.7.6"
-            },
-            "time": "2026-10-30T12:19:09+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2065,6 +1655,54 @@
             "time": "2021-02-03T23:26:27+00:00"
         },
         {
+            "name": "psr/clock",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/clock.git",
+                "reference": "e41a24703d4560fd0acb709162f73b8adfc3aa0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/clock/zipball/e41a24703d4560fd0acb709162f73b8adfc3aa0d",
+                "reference": "e41a24703d4560fd0acb709162f73b8adfc3aa0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Clock\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for reading the clock.",
+            "homepage": "https://github.com/php-fig/clock",
+            "keywords": [
+                "clock",
+                "now",
+                "psr",
+                "psr-20",
+                "time"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/clock/issues",
+                "source": "https://github.com/php-fig/clock/tree/1.0.0"
+            },
+            "time": "2022-11-25T14:36:26+00:00"
+        },
+        {
             "name": "psr/container",
             "version": "2.0.2",
             "source": {
@@ -2601,6 +2239,83 @@
             "time": "2026-09-26T07:05:14+00:00"
         },
         {
+            "name": "symfony/clock",
+            "version": "v8.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/clock.git",
+                "reference": "945ea3b64d6da9c1c2c354fe5c07b27455df6442"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/clock/zipball/945ea3b64d6da9c1c2c354fe5c07b27455df6442",
+                "reference": "945ea3b64d6da9c1c2c354fe5c07b27455df6442",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "psr/clock": "^1.0"
+            },
+            "provide": {
+                "psr/clock-implementation": "1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/now.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\Clock\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Decouples applications from the system clock",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "clock",
+                "psr20",
+                "time"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/clock/tree/v8.1.9"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-10-12T14:32:04+00:00"
+        },
+        {
             "name": "symfony/config",
             "version": "v8.1.11",
             "source": {
@@ -3034,6 +2749,84 @@
                 }
             ],
             "time": "2026-10-18T14:56:39+00:00"
+        },
+        {
+            "name": "symfony/doctrine-messenger",
+            "version": "v8.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/doctrine-messenger.git",
+                "reference": "74e6045c9725a3d8cf23e7c557140f2dc1ebb1f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/doctrine-messenger/zipball/74e6045c9725a3d8cf23e7c557140f2dc1ebb1f7",
+                "reference": "74e6045c9725a3d8cf23e7c557140f2dc1ebb1f7",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^4.3",
+                "php": ">=8.4.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/event-dispatcher": "^7.4|^8.0",
+                "symfony/messenger": "^8.1",
+                "symfony/service-contracts": "^2.5|^3"
+            },
+            "conflict": {
+                "doctrine/persistence": "<1.3"
+            },
+            "require-dev": {
+                "doctrine/persistence": "^1.3|^2|^3|^4",
+                "symfony/property-access": "^7.4|^8.0",
+                "symfony/serializer": "^7.4|^8.0"
+            },
+            "type": "symfony-messenger-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Messenger\\Bridge\\Doctrine\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Doctrine Messenger Bridge",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/doctrine-messenger/tree/v8.1.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-11-01T19:30:44+00:00"
         },
         {
             "name": "symfony/dotenv",
@@ -3903,6 +3696,98 @@
             "time": "2026-11-04T11:29:46+00:00"
         },
         {
+            "name": "symfony/messenger",
+            "version": "v8.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/messenger.git",
+                "reference": "9e155bedfc1cd0a76bcedc775e651f392874b3df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/messenger/zipball/9e155bedfc1cd0a76bcedc775e651f392874b3df",
+                "reference": "9e155bedfc1cd0a76bcedc775e651f392874b3df",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "psr/log": "^1|^2|^3",
+                "symfony/clock": "^7.4|^8.0",
+                "symfony/deprecation-contracts": "^2.5|^3"
+            },
+            "conflict": {
+                "symfony/console": "<7.4",
+                "symfony/dependency-injection": "<8.1",
+                "symfony/event-dispatcher-contracts": "<2.5",
+                "symfony/lock": "<7.4",
+                "symfony/serializer": "<7.4.4|>=8.0,<8.0.4"
+            },
+            "require-dev": {
+                "psr/cache": "^1.0|^2.0|^3.0",
+                "symfony/console": "^7.4|^8.0",
+                "symfony/dependency-injection": "^8.1",
+                "symfony/event-dispatcher": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/lock": "^7.4|^8.0",
+                "symfony/process": "^7.4|^8.0",
+                "symfony/property-access": "^7.4|^8.0",
+                "symfony/rate-limiter": "^7.4|^8.0",
+                "symfony/routing": "^7.4|^8.0",
+                "symfony/serializer": "^7.4.4|^8.0.4",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/stopwatch": "^7.4|^8.0",
+                "symfony/validator": "^7.4|^8.0",
+                "symfony/var-dumper": "^7.4|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Messenger\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Roze",
+                    "email": "samuel.roze@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Helps applications send and receive messages to/from other applications or via message queues",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/messenger/tree/v8.1.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-11-03T10:51:22+00:00"
+        },
+        {
             "name": "symfony/monolog-bridge",
             "version": "v8.1.10",
             "source": {
@@ -4399,86 +4284,6 @@
             "time": "2026-10-28T09:35:49+00:00"
         },
         {
-            "name": "symfony/polyfill-php86",
-            "version": "v1.43.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php86.git",
-                "reference": "8840df45b24f33a49dc419fa18dc0057231ae1d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php86/zipball/8840df45b24f33a49dc419fa18dc0057231ae1d8",
-                "reference": "8840df45b24f33a49dc419fa18dc0057231ae1d8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "thanks": {
-                    "url": "https://github.com/symfony/polyfill",
-                    "name": "symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php86\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.6+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php86/tree/v1.43.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-09-25T15:46:47+00:00"
-        },
-        {
             "name": "symfony/routing",
             "version": "v8.1.11",
             "source": {
@@ -4557,6 +4362,90 @@
                 }
             ],
             "time": "2026-11-04T08:39:20+00:00"
+        },
+        {
+            "name": "symfony/runtime",
+            "version": "v8.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/runtime.git",
+                "reference": "c673bbd5997f0039b27810b5e1f4eb70b172917b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/runtime/zipball/c673bbd5997f0039b27810b5e1f4eb70b172917b",
+                "reference": "c673bbd5997f0039b27810b5e1f4eb70b172917b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^2.0",
+                "php": ">=8.4.1"
+            },
+            "conflict": {
+                "symfony/error-handler": "<7.4"
+            },
+            "require-dev": {
+                "composer/composer": "^2.6",
+                "symfony/console": "^7.4|^8.0",
+                "symfony/dependency-injection": "^7.4|^8.0",
+                "symfony/dotenv": "^7.4|^8.0",
+                "symfony/http-foundation": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Symfony\\Component\\Runtime\\Internal\\ComposerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Runtime\\": "",
+                    "Symfony\\Runtime\\Symfony\\Component\\": "Internal/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Enables decoupling PHP applications from global state",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "runtime"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/runtime/tree/v8.1.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-11-01T19:30:44+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -5620,6 +5509,96 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "doctrine/inflector",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "46351b6812b7b6d52b82c3efa5dfb786a198ec88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/46351b6812b7b6d52b82c3efa5dfb786a198ec88",
+                "reference": "46351b6812b7b6d52b82c3efa5dfb786a198ec88",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^12.0 || ^14.0",
+                "phpstan/phpstan": "^1.12 || ^2.0",
+                "phpstan/phpstan-phpunit": "^1.4 || ^2.0",
+                "phpstan/phpstan-strict-rules": "^1.6 || ^2.0",
+                "phpunit/phpunit": "^8.5 || ^12.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Inflector\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "PHP Doctrine Inflector is a small library that can perform string manipulations with regard to upper/lowercase and singular/plural forms of words.",
+            "homepage": "https://www.doctrine-project.org/projects/inflector.html",
+            "keywords": [
+                "inflection",
+                "inflector",
+                "lowercase",
+                "manipulation",
+                "php",
+                "plural",
+                "singular",
+                "strings",
+                "uppercase",
+                "words"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/inflector/issues",
+                "source": "https://github.com/doctrine/inflector/tree/2.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finflector",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-10-26T08:14:14+00:00"
+        },
         {
             "name": "myclabs/deep-copy",
             "version": "1.14.0",
@@ -7872,7 +7851,6 @@
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-pdo_sqlite": "*",
-        "ext-soap": "*",
         "ext-xsl": "*",
         "ext-zlib": "*"
     },

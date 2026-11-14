@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Cdr;
 
-use App\Entity\CpeDocument;
 use App\Model\CpeCdrResult;
+use App\Model\CpeDocument;
 use App\Repository\CpeDocumentRepository;
 use App\Services\File\FileStoreInterface;
 use App\Services\Xml\HashExtract;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use DOMDocument;
 use function Safe\base64_decode;
 
@@ -21,11 +20,10 @@ class CdrBridge implements CdrOutputInterface
      * @param AppCdrCreatorInterface $appCdrCreator
      * @param CdrWriterInterface $cdrWriter
      * @param HashExtract $hashExtractor
-     * @param EntityManagerInterface $entityManager
      * @param CpeDocumentRepository $repository
      * @param FileStoreInterface $fileStore
      */
-    public function __construct(private AppCdrCreatorInterface $appCdrCreator, private CdrWriterInterface $cdrWriter, private HashExtract $hashExtractor, private EntityManagerInterface $entityManager, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore)
+    public function __construct(private AppCdrCreatorInterface $appCdrCreator, private CdrWriterInterface $cdrWriter, private HashExtract $hashExtractor, private CpeDocumentRepository $repository, private FileStoreInterface $fileStore)
     {
     }
 
@@ -34,14 +32,12 @@ class CdrBridge implements CdrOutputInterface
         $appCdr = $this->appCdrCreator->create($document, $result);
         $cdr = $this->cdrWriter->write($appCdr);
 
-        $cpe = $this->repository->findOneByName($appCdr->getFilename());
-
-        if ($cpe === null) {
-            $cpe = new CpeDocument();
-        }
+        // Un resumen ya tiene su registro (creado por sendSummary) identificado por ticket.
+        $cpe = $result->getTicket() !== null ? $this->repository->findOneByTicket($result->getTicket()) : null;
+        $cpe ??= $this->repository->findOneByName($appCdr->getFilename()) ?? new CpeDocument();
 
         $cpe
-            ->setName($appCdr->getFilename())
+            ->setName($cpe->getName() ?? $appCdr->getFilename())
             ->setStateCode($result->getCodeResult())
             ->setHashCpe($this->hashExtractor->fromDoc($document))
             ->setHashCdr($this->hashExtractor->fromXml($cdr))
@@ -52,8 +48,7 @@ class CdrBridge implements CdrOutputInterface
         $this->fileStore->save($this->getHexHash($cpe->getHashCpe()).'.xml', $document->saveXML());
         $this->fileStore->save($this->getHexHash($cpe->getHashCdr()).'.xml', $cdr);
 
-        $this->entityManager->persist($cpe);
-        $this->entityManager->flush();
+        $this->repository->save($cpe);
 
         return $cdr;
     }

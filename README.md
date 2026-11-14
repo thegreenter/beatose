@@ -41,6 +41,54 @@ Ejecutar
 php -S 127.0.0.1:8000 public/index.php
 ```
 
+Los resúmenes (`sendSummary`) se procesan en segundo plano, como en SUNAT: `getStatus` responde `98` (en proceso)
+hasta que el consumidor de la cola valide el XML y genere el CDR. En otra terminal:
+```bash
+php bin/console messenger:consume async -vv
+```
+Si prefieres procesarlos en la misma petición, usa `MESSENGER_TRANSPORT_DSN=sync://` en `.env.local`.
+
+| `getStatus` → `statusCode` | Significado                                                 |
+|----------------------------|-------------------------------------------------------------|
+| `98`                       | En proceso, sin CDR                                         |
+| `0`                        | Procesado; CDR aceptado (o con observaciones) en `content`  |
+| `99`                       | Procesado con errores; CDR de rechazo en `content`          |
+| `0100`–`1999`              | Excepción al procesar (p. ej. `0306` XML inválido), sin CDR |
+
+### Docker + FrankenPHP (modo worker)
+
+La imagen usa [FrankenPHP](https://frankenphp.dev) en **modo worker**: el kernel de Symfony arranca una sola vez
+y queda en memoria atendiendo las peticiones, gracias a la integración nativa de `symfony/runtime`.
+
+```bash
+docker compose up --build
+```
+
+El servicio queda en http://localhost:8000/ol-ti-itcpe/billService?wsdl. Variables útiles (en el entorno o en un `.env` junto a `compose.yaml`):
+
+| Variable                   | Descripción                                                                        |
+|----------------------------|------------------------------------------------------------------------------------|
+| `XSLT_URL`                 | URL del ZIP con los XSL de validación de SUNAT (se descarga al construir la imagen) |
+| `SOAP_USER`, `SOAP_PASS`   | Credenciales SOAP                                                                  |
+| `SIGN_PASS`                | Contraseña del certificado `keys/cert.pfx` con el que se firma el CDR              |
+| `HTTP_PORT`                | Puerto publicado (por defecto `8000`)                                              |
+| `SERVER_NAME`              | `:80` (HTTP) por defecto; un dominio activa HTTPS automático                       |
+| `FRANKENPHP_WORKER_CONFIG` | Directivas extra del worker, p. ej. `num 4`                                        |
+| `MESSENGER_TRANSPORT_DSN`  | Cola de resúmenes (por defecto `doctrine://default`)                               |
+
+El servicio `worker` consume la cola de resúmenes. La base SQLite (`var/data`) y los XML recibidos y generados
+(`var/cpe_files`) se guardan en volúmenes compartidos por ambos servicios.
+
+Para desarrollo, con el código montado y los workers reiniciándose al editar archivos:
+
+```bash
+docker build --target frankenphp_dev -t beatose:dev .
+docker run --rm -p 8000:80 -v "$PWD":/app beatose:dev
+```
+
+> En modo worker los servicios de Symfony viven entre peticiones: no guardes estado de una petición en
+> propiedades de servicios compartidos (por eso la autenticación de `BillServiceEndpoint` no guarda estado).
+
 La especificación del servicio la encontrarás en http://127.0.0.1:8000/ol-ti-itcpe/billService?wsdl
 
 Las **credenciales SOAP** pueden ser modificadas en el archivo `.env`:
@@ -49,6 +97,17 @@ Las **credenciales SOAP** pueden ser modificadas en el archivo `.env`:
 SOAP_USER=20000001XXXXX
 SOAP_PASS=xxxx
 ```
+
+## Servidor SOAP
+
+El WSDL es fijo, así que el sobre SOAP 1.1 se lee y se escribe directamente con DOM (`src/Services/Soap`), sin
+`\SoapServer`:
+
+- Los faults se responden con HTTP 500 (SOAP 1.1 §6.2, como SUNAT) y `faultcode` con el código de error
+  (p. ej. `0156`); los errores de validación incluyen `<detail><message>`.
+- Sobres mal formados, SOAP 1.2, DTD (bloqueadas para evitar XXE) u operaciones inexistentes devuelven un fault
+  `SOAP-ENV:Client`/`SOAP-ENV:VersionMismatch` en lugar de terminar el proceso.
+- La cabecera WS-Security se lee por nombre local, con cualquier prefijo.
 
 ## Métodos de Servicio
 
