@@ -15,7 +15,10 @@ use App\Model\SendPackResponse;
 use App\Model\SendSummaryRequest;
 use App\Model\SendSummaryResponse;
 use App\Services\Soap\ExceptionCreator;
+use App\Services\Zip\InvalidZipException;
+use App\Services\Zip\XmlPackZip;
 use App\Services\Zip\XmlZipInterface;
+use App\Validator\PackValidator;
 
 class ZipFormatBillDecorator implements BillServiceInterface
 {
@@ -24,8 +27,10 @@ class ZipFormatBillDecorator implements BillServiceInterface
      * @param BillServiceInterface $service
      * @param XmlZipInterface $zipper
      * @param ExceptionCreator $exceptionCreator
+     * @param XmlPackZip $packZip
+     * @param PackValidator $packValidator
      */
-    public function __construct(private BillServiceInterface $service, private XmlZipInterface $zipper, private ExceptionCreator $exceptionCreator)
+    public function __construct(private BillServiceInterface $service, private XmlZipInterface $zipper, private ExceptionCreator $exceptionCreator, private XmlPackZip $packZip, private PackValidator $packValidator)
     {
     }
 
@@ -72,7 +77,8 @@ class ZipFormatBillDecorator implements BillServiceInterface
         $response = $this->service->getStatus($request);
 
         $xmlContent = $response->status->content;
-        if ($xmlContent !== null) {
+        // El CDR de un lote ya viene como ZIP (un CDR por comprobante).
+        if ($xmlContent !== null && !$this->isZip($xmlContent)) {
             $name = $request->ticket;
             $response->status->content = $this->zipper->compress('R-'.$name.'.zip', $xmlContent)->getContent();
         }
@@ -86,6 +92,18 @@ class ZipFormatBillDecorator implements BillServiceInterface
      */
     public function sendPack(SendPackRequest $request): SendPackResponse
     {
+        // El ZIP del lote se valida al recibirlo; se descomprime de nuevo al procesarlo (PackProcessor).
+        try {
+            $files = $this->packZip->decompress($request->contentFile);
+        } catch (InvalidZipException $e) {
+            throw $this->exceptionCreator->fromValidation($e->getError());
+        }
+
+        $error = $this->packValidator->validate((string) $request->fileName, $files);
+        if ($error !== null) {
+            throw $this->exceptionCreator->fromValidation($error);
+        }
+
         return $this->service->sendPack($request);
     }
 
@@ -108,5 +126,10 @@ class ZipFormatBillDecorator implements BillServiceInterface
         }
 
         return $response;
+    }
+
+    private function isZip(string $content): bool
+    {
+        return str_starts_with($content, "PK\x03\x04");
     }
 }

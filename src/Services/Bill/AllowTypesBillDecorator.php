@@ -4,6 +4,7 @@ namespace App\Services\Bill;
 
 use App\Services\Soap\ExceptionCreator;
 use App\Validator\FilenameValidator;
+use App\Validator\PackValidator;
 use App\Model\{ErrorCodeList,
     GetStatusCdrRequest,
     GetStatusCdrResponse,
@@ -20,6 +21,12 @@ use Greenter\Validator\Entity\DocumentType;
 
 class AllowTypesBillDecorator implements BillServiceInterface
 {
+    private const SUMMARY_TYPES = [
+        DocumentType::RESUMEN_DIARIO,
+        DocumentType::COMUNICACION_BAJA,
+        DocumentType::RESUMEN_REVERSION,
+    ];
+
     /**
      * AllowTypesBillDecorator constructor.
      *
@@ -46,6 +53,7 @@ class AllowTypesBillDecorator implements BillServiceInterface
             DocumentType::RETENCION,
             DocumentType::GUIA_REMISION,
         ];
+        $this->assertNotPack($request->fileName);
         if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
             throw $this->exceptionCreator->fromValidation(
                 new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
@@ -61,12 +69,8 @@ class AllowTypesBillDecorator implements BillServiceInterface
      */
     public function sendSummary(SendSummaryRequest $request): SendSummaryResponse
     {
-        $allowedTypes = [
-            DocumentType::RESUMEN_DIARIO,
-            DocumentType::COMUNICACION_BAJA,
-            DocumentType::RESUMEN_REVERSION,
-        ];
-        if (!$this->typesValidator->isAllow($request->fileName, $allowedTypes)) {
+        $this->assertNotPack($request->fileName);
+        if (!$this->typesValidator->isAllow($request->fileName, self::SUMMARY_TYPES)) {
             throw $this->exceptionCreator->fromValidation(
                 new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
             );
@@ -90,6 +94,15 @@ class AllowTypesBillDecorator implements BillServiceInterface
      */
     public function sendPack(SendPackRequest $request): SendPackResponse
     {
+        if ($this->typesValidator->isAllow($request->fileName, self::SUMMARY_TYPES)) {
+            throw $this->exceptionCreator->fromCode(ErrorCodeList::ZIP_IS_SUMMARY);
+        }
+        if (!$this->typesValidator->isAllow($request->fileName, [PackValidator::TYPE])) {
+            throw $this->exceptionCreator->fromValidation(
+                new ValidationError(ErrorCodeList::ZIP_INVALID_NAME)
+            );
+        }
+
         return $this->service->sendPack($request);
     }
 
@@ -100,5 +113,15 @@ class AllowTypesBillDecorator implements BillServiceInterface
     public function getStatusCdr(GetStatusCdrRequest $request): GetStatusCdrResponse
     {
         return $this->service->getStatusCdr($request);
+    }
+
+    /**
+     * Un lote solo se envía por sendPack.
+     */
+    private function assertNotPack(?string $fileName): void
+    {
+        if ($this->typesValidator->isAllow($fileName, [PackValidator::TYPE])) {
+            throw $this->exceptionCreator->fromCode(ErrorCodeList::ZIP_IS_PACK);
+        }
     }
 }
