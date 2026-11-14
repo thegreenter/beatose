@@ -27,6 +27,7 @@
         "symfony/flex": "^2.12",
         "symfony/framework-bundle": "8.1.*",
         "symfony/monolog-bundle": "^4.1",
+        "symfony/runtime": "8.1.*",
         "symfony/twig-bundle": "8.1.*",
         "symfony/yaml": "8.1.*",
         "thecodingmachine/safe": "^3.4",
@@ -41,7 +42,8 @@
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         },
         "optimize-autoloader": true,
         "preferred-install": {

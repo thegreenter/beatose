@@ -1,0 +1,40 @@
+# Configuración de FrankenPHP/Caddy para beatOSE.
+# https://frankenphp.dev/docs/config/
+{
+	skip_install_trust
+
+	{$CADDY_GLOBAL_OPTIONS}
+
+	frankenphp {
+		{$FRANKENPHP_CONFIG}
+	}
+}
+
+{$CADDY_EXTRA_CONFIG}
+
+# Desarrollo: reinicia los workers al cambiar el código
+# (FRANKENPHP_WORKER_CONFIG="import dev_watch", ver Dockerfile).
+(dev_watch) {
+	watch ./src/**/*.php
+	watch ./config/**/*.{php,yaml,yml}
+	watch ./templates/**/*.twig
+	watch ./.env
+}
+
+# Por defecto escucha en HTTP plano (:80): los clientes SOAP de prueba no
+# confían en la CA interna de Caddy. Usa SERVER_NAME=tu-dominio.com para HTTPS.
+{$SERVER_NAME::80} {
+	root /app/public
+	encode zstd br gzip
+
+	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+	php_server {
+		# Modo worker: el kernel de Symfony arranca una sola vez y atiende
+		# muchas peticiones (ver symfony/runtime FrankenPhpWorkerRunner).
+		worker {
+			file /app/public/index.php
+			{$FRANKENPHP_WORKER_CONFIG}
+		}
+	}
+}
