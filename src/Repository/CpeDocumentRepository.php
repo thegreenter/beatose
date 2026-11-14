@@ -10,10 +10,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<CpeDocument>
- * @method CpeDocument|null find($id, $lockMode = null, $lockVersion = null)
- * @method CpeDocument|null findOneBy(array $criteria, array $orderBy = null)
- * @method CpeDocument[]    findAll()
- * @method CpeDocument[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CpeDocumentRepository extends ServiceEntityRepository
 {

@@ -13,7 +13,7 @@ class BillServiceControllerTest extends WebTestCase
 {
     use BillServiceControllerTrait;
 
-    public function testGetWsdl()
+    public function testGetWsdl(): void
     {
         $client = static::createClient();
         $client->catchExceptions(false);
@@ -28,7 +28,7 @@ class BillServiceControllerTest extends WebTestCase
         $this->assertStringContainsStringIgnoringCase('wsdl', $doc->documentElement->nodeName);
     }
 
-    public function testAuthNoValidSoap()
+    public function testAuthNoValidSoap(): void
     {
         $soapContent = $this->buildSoapRequest([
             'user' => '2222',
@@ -57,7 +57,7 @@ class BillServiceControllerTest extends WebTestCase
         );
     }
 
-    public function testInvalidDocSendBillSoap()
+    public function testInvalidDocSendBillSoap(): void
     {
         $soapContent = $this->buildSoapRequest([
             'user' => '20123456789MODDATOS',
@@ -86,7 +86,7 @@ class BillServiceControllerTest extends WebTestCase
         );
     }
 
-    public function testInvalidZipSendBillSoap()
+    public function testInvalidZipSendBillSoap(): void
     {
         $soapContent = $this->buildSoapRequest([
             'user' => '20123456789MODDATOS',
@@ -115,7 +115,7 @@ class BillServiceControllerTest extends WebTestCase
         );
     }
 
-//    public function testSendBillSoap()
+//    public function testSendBillSoap(): void
 //    {
 //        $filename = '20123456789-01-F001-1';
 //        $xml = file_get_contents(__DIR__.'/../Resources/20123456789-01-F001-1.xml');

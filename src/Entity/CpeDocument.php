@@ -6,49 +6,35 @@ namespace App\Entity;
 
 use App\Repository\CpeDocumentRepository;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CpeDocumentRepository::class)
- */
+#[ORM\Entity(repositoryClass: CpeDocumentRepository::class)]
 class CpeDocument
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    // @phpstan-ignore property.unusedType (Doctrine assigns the generated id via reflection)
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=64, unique=true)
-     */
-    private ?string $name;
+    #[ORM\Column(type: Types::STRING, length: 64, unique: true)]
+    private ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
-    private ?string $stateCode;
+    #[ORM\Column(type: Types::STRING, length: 16, nullable: true)]
+    private ?string $stateCode = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $hashCpe;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $hashCpe = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $hashCdr;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $hashCdr = null;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
-    private ?string $ticket;
+    #[ORM\Column(type: Types::STRING, length: 64, nullable: true)]
+    private ?string $ticket = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?DateTime $createDate;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $createDate = null;
 
     public function getId(): ?int
     {

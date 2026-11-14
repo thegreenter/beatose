@@ -35,7 +35,7 @@ class DomXmlParser implements XmlParserInterface
         return new DOMXPath($doc);
     }
 
-    private function getNode(DOMXPath $xpath, string $query, DOMNode $context = null): ?DOMElement
+    private function getNode(DOMXPath $xpath, string $query, ?DOMNode $context = null): ?DOMElement
     {
         $nodes = $xpath->query($query, $context);
         if ($nodes->length == 0) {

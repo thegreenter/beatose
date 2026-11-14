@@ -6,38 +6,44 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+
 jobs:
   build:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.0'
-        extensions: soap,openssl,zlib,xsl
+        php-version: '8.5'
+        extensions: soap, openssl, zlib, xsl, pdo_sqlite
+        tools: composer:v2
 
     - name: Validate composer.json and composer.lock
-      run: composer validate
+      run: composer validate --strict
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v6
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-8.5-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-php-8.5-
 
     - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress
+
+    - name: Security audit
+      run: composer audit
 
     - name: PHPStan Lint
       run: composer run-script lint:ci
 
     - name: Unit Tests
-      run: php bin/phpunit
+      run: vendor/bin/phpunit

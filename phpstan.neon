@@ -1,6 +1,5 @@
 parameters:
     level: 6
+    phpVersion: 80500
     paths:
     - src
-    ignoreErrors:
-    - '#Parameter \$details of class SoapFault constructor expects string, stdClass\|null given\.#'
