@@ -111,3 +111,7 @@ services:
 
     Greenter\Validator\Xml\XslValidatorInterface:
         class: Greenter\Validator\Xml\XslValidator
+
+when@test:
+    parameters:
+        app.upload_dir: '%kernel.project_dir%/var/test_cpe_files'
