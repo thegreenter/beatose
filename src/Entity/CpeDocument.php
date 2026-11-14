@@ -15,6 +15,7 @@ class CpeDocument
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
+    // @phpstan-ignore property.unusedType (Doctrine assigns the generated id via reflection)
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 64, unique: true)]
